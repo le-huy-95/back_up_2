@@ -526,6 +526,7 @@ const Products = (props) => {
 
             if (res && +res.EC === 0) {
                 history.push("/Products")
+                await fetchProjectUser()
 
                 setProductAfterCreate(res.DT)
 
@@ -539,6 +540,7 @@ const Products = (props) => {
                 if (data && +data.EC === 0) {
                     let ImageId = data.DT;
                     await assignDataToProjectImage(projectId, ImageId)
+                    await fetchProjectUser()
 
 
 

@@ -153,7 +153,7 @@ const ModalCreate = (props) => {
 
         }
 
-        if (_userdata["group"] == 4) {
+        if (_userdata["group"] == 3) {
             _userdata[name] = value
             _userdata["Position"] = ""
             _userdata["shippingUnit_Id"] = ""
@@ -422,21 +422,42 @@ const ModalCreate = (props) => {
                             }
 
                         </div>
-                        {userdata.group == 2 || userdata.group == 4 ?
+                        {userdata.group == 2 || userdata.group == 3 ?
                             <></>
                             :
+                            // <div className='col-12 col-sm-6 form-group'>
+                            //     <label >Position (<span className='red'>*</span>)</label>
+                            //     <input
+
+                            //         type="text"
+                            //         className={validInput.Position ? "form-control" : "form-control is-invalid"}
+                            //         value={userdata.Position}
+                            //         onChange={(event) => handleOnchangeInput(event.target.value, "Position")}
+                            //     />
+                            // </div>
                             <div className='col-12 col-sm-6 form-group'>
-                                <label >Position (<span className='red'>*</span>)</label>
-                                <input
+                             <label >Position (<span className='red'>*</span>)</label>
+                            <select
+                                className={validInput.Position ? "form-control" : "form-control is-invalid"}
+                                onChange={(event) => handleOnchangeInput(event.target.value, "Position")}
+                                value={userdata.Position}
+                           >
+                                <option value="Đơn vị">Lựa chọn chức vụ</option>
+                                <option value="Nhân viên lấy hàng">Nhân viên lấy hàng</option>
+                                <option value="Nhân viên kho hàng">Nhân viên kho hàng</option>
+                                <option value="Nhân viên giao Kế toán">Nhân viên kho hàng</option>
 
-                                    type="text"
-                                    className={validInput.Position ? "form-control" : "form-control is-invalid"}
-                                    value={userdata.Position}
-                                    onChange={(event) => handleOnchangeInput(event.target.value, "Position")}
-                                />
-                            </div>}
 
-                        {userdata.group == 2 || userdata.group == 4 ?
+                                
+
+
+                            </select >
+                             </div>
+
+                            }
+                            
+
+                        {userdata.group == 2 || userdata.group == 3 ?
                             <></>
                             :
                             <div className='col-12 col-sm-6 form-group'>

@@ -82,6 +82,7 @@ const DetailProduct = (props) => {
     const handleChangeStatusEditChat = (item) => {
         setChangeStatusChatProject(!changeStatusChatProject)
         setdataChatProduct(item)
+        console.log("item",item)
         setchatEditContent(item.text)
     }
     const handleCancelChangeStatusEditChat = (item) => {
@@ -187,7 +188,8 @@ const DetailProduct = (props) => {
         ProductId: ProductId,
         image: imageUser,
         chatContent: chatContent,
-        CreatedBy: user.account.username
+        CreatedByName: user.account.username,
+        CreatedByPhone:user.account.phone,
 
 
     }
@@ -665,9 +667,12 @@ const DetailProduct = (props) => {
         getProvince()
 
     }, [])
-
+    const handleRefeshChat = async () => {
+      
+        await getProjects()
+    }
     return (
-        <div className='Contact-container '>
+        <div className='Contact-container ' onClick={()=>handleRefeshChat()}>
             <div className='left  '>
                 <Sidebar collapsed={collapsed} />
 
@@ -1712,16 +1717,23 @@ const DetailProduct = (props) => {
 
                                                                                                         </div>
                                                                                                         <div className='create-by-user d-flex justify-content-end'>
-                                                                                                            Send by:  {item.CreatedBy}
+                                                                                                            Send by:  {item.CreatedByName}
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div className='col-2 d-flex align-items-center' style={{ paddingBottom: "61px" }}>
-                                                                                                        <button className='btn btn-warning ' style={{ borderRadius: "50%" }} onClick={() => handleChangeStatusEditChat(item)}>
+                                                                                                       {item.CreatedByPhone === user.account.phone 
+                                                                                                       &&
+                                                                                                       <>
+                                                                                                          <button className='btn btn-warning ' style={{ borderRadius: "50%" }} onClick={() => handleChangeStatusEditChat(item)}>
                                                                                                             <i class="fa fa-pencil-square" aria-hidden="true"></i>
                                                                                                         </button>
                                                                                                         <button className='btn btn-danger mx-3' style={{ borderRadius: "50%" }} onClick={() => handlDeleteChatProject(item.id)}>
                                                                                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                                                                        </button>
+                                                                                                        </button> 
+                                                                                                       </>
+                                                                                                      
+                                                                                                       }
+                                                                                                       
                                                                                                     </div>
                                                                                                 </>
                                                                                             }
@@ -1756,6 +1768,7 @@ const DetailProduct = (props) => {
                                                                                     className='chat-input col-8'
                                                                                     onChange={(event) => setchatContent(event.target.value)}
                                                                                     value={chatContent}
+                                                                                    onClick={()=>handleRefeshChat()}
                                                                                 />
 
                                                                                 <div className='icon col-1'>

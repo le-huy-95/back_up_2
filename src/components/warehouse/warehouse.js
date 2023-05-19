@@ -135,10 +135,10 @@ const Warehouse = (props) => {
     };
     useEffect(() => {
         fetchProjectUser();
-    }, [currentPage])
-    useEffect(() => {
         getAllInWarehouse()
-    }, [])
+
+    }, [currentPage])
+   
 
     const getDataWithcurrentPage = async () => {
         let currentPageAfterRefesh = +localStorage.getItem("Page one warehouse")

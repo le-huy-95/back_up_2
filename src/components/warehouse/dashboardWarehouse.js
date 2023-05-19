@@ -182,7 +182,8 @@ const DashboardWarehouse = (props) => {
                                 Warehouse Dashboard
                             </span>
                         </div>
-                        <div className='row all  my-3'>
+                        <div className='container'>
+                        <div className='row all    my-3'>
                             <div className='title-all my-3'>
                                 <span className='icon-all mx-3'>
                                     <i class="fa fa-info" aria-hidden="true"></i>
@@ -298,6 +299,7 @@ const DashboardWarehouse = (props) => {
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
+                        </div>
                         </div>
                         <div className=' main my-5'>
                             <div className='container '>

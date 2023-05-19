@@ -46,7 +46,7 @@ const UserGroupBoss = (props) => {
 
 
     const fetchUser = async () => {
-        let GroupId = 3
+        let GroupId = 4
         let res = await showListbyGroup(currentPage, currentLimit, +GroupId)
 
         if (res && +res.EC === 0) {
@@ -60,6 +60,7 @@ const UserGroupBoss = (props) => {
                 setIsloading(true)
                 setListUser3(res.DT.dataUser)
                 setListUserlenght(res.DT.totalUser)
+                console.log("res.DT.totalUser",res.DT.totalUser)
                 let dataExxport = []
                 res.DT.dataUser.forEach((item) => {
                     dataExxport.push({
@@ -125,7 +126,7 @@ const UserGroupBoss = (props) => {
 
     const fetchUserAfterRefesh = async () => {
         let currentPageAfterRefesh = +localStorage.getItem("infomation Page userBoss")
-        let GroupId = 3
+        let GroupId = 4
 
         let res = await showListbyGroup(currentPageAfterRefesh, currentLimit, GroupId)
 
@@ -147,7 +148,7 @@ const UserGroupBoss = (props) => {
     }
 
     useEffect(() => {
-        window.history.pushState('', '', `?page=${localStorage.getItem("infomation Page userBoss")}&limit=${currentLimit}&GroupId=3`);
+        window.history.pushState('', '', `?page=${localStorage.getItem("infomation Page userBoss")}&limit=${currentLimit}&GroupId=4`);
 
         fetchUserAfterRefesh()
     }, [window.location.reload])
@@ -312,7 +313,7 @@ const UserGroupBoss = (props) => {
 
                             </div>
 
-                            <div className='col-2 my-2 content boder-bottom' style={{ borderBottom: "5px solid #61dafb", cursor: "pointer" }}>Staff ({listUserlenght.length})</div>
+                            <div className='col-2 my-2 content boder-bottom' style={{ borderBottom: "5px solid #61dafb", cursor: "pointer" }}>Staff ({listUserlenght})</div>
 
 
                         </div>

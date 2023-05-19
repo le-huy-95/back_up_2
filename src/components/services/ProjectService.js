@@ -111,6 +111,24 @@ const getDataDashboardProductWithMounth = (created_By) => {
 const getDataDashboardProductWithUser = (created_By) => {
     return axios.get(`/api/v4/getProductDashboarWithCustomer?created_By=${created_By}`)
 }
+const getProjectWithPaginationWithEmployer = (page, limit, unitId) => {
+    return axios.get(`/api/v4/getProjectWithEmployer?page=${page}&limit=${limit}&unitId=${unitId}`)
+}
+const getProjectWithPaginationWithEmployerWithFlag =(unitId) => {
+    return axios.get(`/api/v4/getProjectWithEmployerWithFlag?unitId=${unitId}`)
+}
+const updateFlagInProject = (id , unit , flag) => {
+    return axios.put("/api/v4/project/Employer/update/status-flag", {id , unit , flag })
+}
+const getProjectWithPaginationWithEmployerPickUp = (page, limit, unitId) => {
+    return axios.get(`/api/v4/getProjectWithEmployerPickUp?page=${page}&limit=${limit}&unitId=${unitId}`)
+}
+const getProjectWithPaginationWithEmployerPickUp_user = (unitId, username, phone) => {
+    return axios.get(`/api/v4/getProjectWithEmployerPickUp/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
+}
+const updatePickupInProject = (unitId , id , username,phone,status_pickup_Id) => {
+    return axios.put("/api/v4/project/Employer/update/name_pickup", {unitId , id , username,phone,status_pickup_Id})
+}
 export {
     getProjectWithPagination, fetchProjectByid, CreateProject, getSaleChannel, getStastusPayment,
     updateProject, deleteProject, createChatProject, updateProjectChat, deleteChatProject, getDataSearch,
@@ -120,5 +138,7 @@ export {
     getDataSearchInWarehouse, getAllNumberSatusProductInWarehouse, getListWarehouseWithPaginationproductStatusId,
     getWarehouseForDashboard, getAllNumberMoneyInWarehouse, getDataWithTimeInWarehouse, getDataDashboardProduct,
     getDataDashboardProductWithAge, getDataDashboardProductWithTimeInWarehouse, getDataDashboardProductWithMounth,
-    getDataDashboardProductWithUser
+    getDataDashboardProductWithUser,getProjectWithPaginationWithEmployer,getProjectWithPaginationWithEmployerWithFlag,
+    updateFlagInProject,getProjectWithPaginationWithEmployerPickUp,getProjectWithPaginationWithEmployerPickUp_user,
+    updatePickupInProject
 }

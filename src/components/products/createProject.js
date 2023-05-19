@@ -281,11 +281,7 @@ const CreateNewProject = (props) => {
 
 
 
-    useEffect(() => {
 
-        handleRenderCost()
-
-    }, [])
 
     useEffect(() => {
         getProvinceCustomer()
@@ -296,7 +292,9 @@ const CreateNewProject = (props) => {
         getAllSaleChannel()
         getAllStastusPayment()
         getnameProduct()
-    }, [])
+        handleRenderCost()
+
+    }, [showModalCreatNewProject])
 
 
     const handleCloseModale = () => {

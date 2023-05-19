@@ -46,14 +46,14 @@ const UserGroupBoss = (props) => {
 
 
     const fetchUser = async () => {
-        let GroupId = 4
+        let GroupId = 3
         let res = await showListbyGroup(currentPage, currentLimit, +GroupId)
 
         if (res && +res.EC === 0) {
             setTotalPage(res.DT.totalPage)
             // khi truyền vào 1 trang không có dữ liệu và các trang trước có dữ liệu thì khi xóa sẽ về trang trươc
             if (res.DT.totalPage > 0 && res.DT.dataUser.length === 0) {
-                let GroupId = 4
+                let GroupId = 3
                 setCurrentPage(+res.DT.totalPage)
                 await showListbyGroup(+res.DT.totalPage, currentLimit, +GroupId)
                 console.log("listUser", listUser4)
@@ -127,7 +127,7 @@ const UserGroupBoss = (props) => {
 
     const fetchUserAfterRefesh = async () => {
         let currentPageAfterRefesh = +localStorage.getItem("infomation Page userBoss")
-        let GroupId = 4
+        let GroupId = 3
 
         let res = await showListbyGroup(currentPageAfterRefesh, currentLimit, GroupId)
 
@@ -172,7 +172,7 @@ const UserGroupBoss = (props) => {
 
 
     useEffect(() => {
-        window.history.pushState('', '', `?page=${localStorage.getItem("infomation Page userBoss")}&limit=${currentLimit}&GroupId=4`);
+        window.history.pushState('', '', `?page=${localStorage.getItem("infomation Page userBoss")}&limit=${currentLimit}&GroupId=3`);
 
         fetchUserAfterRefesh()
     }, [window.location.reload])
