@@ -545,7 +545,7 @@ const Products = (props) => {
 
 
                 } else {
-                    toast.error(res.EM)
+                    toast.error("bạn gặp vấn đề , vui lòng kiểm tra lại thông tin")
 
                 }
 

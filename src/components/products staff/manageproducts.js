@@ -192,10 +192,9 @@ const Manageproducts = (props) => {
                                                     <td>{moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}</td>
                                                     <td> {item?.name_customer}</td>
                                                     <td>
-                                                         <b>{item?.Status_Pickup?.status ? item?.Status_Pickup?.status : "chưa lấy hàng"}</b> 
+                                                         {item?.Status_Pickup?.status ? item?.Status_Pickup?.status : "chưa lấy hàng"}
                                                         <br/>
                                                        <b> 
-                                                        <hr/>
                                                         <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>
                                                         </span> : 
                                                         <br/>
@@ -343,7 +342,7 @@ const Manageproducts = (props) => {
                                                     <td>{item?.receiveMoneyId?.status ? item?.receiveMoneyId?.status : "chưa thanh toán "}</td>
                                                     <td>{item.createdBy}</td>
                                                     <td>
-                                                        <span style={{ color: "blue", cursor: "pointer" }} title='chuyển trang thái đơn hàng gấp' onClick={()=>updateFlag(item)}>
+                                                        <span className='mx-2' style={{ color: "blue", cursor: "pointer" }} title='chuyển trang thái đơn hàng gấp' onClick={()=>updateFlag(item)}>
                                                             <i class="fa fa-toggle-off" aria-hidden="true"></i>
 
                                                         </span>

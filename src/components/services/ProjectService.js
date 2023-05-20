@@ -129,6 +129,10 @@ const getProjectWithPaginationWithEmployerPickUp_user = (unitId, username, phone
 const updatePickupInProject = (unitId , id , username,phone,status_pickup_Id) => {
     return axios.put("/api/v4/project/Employer/update/name_pickup", {unitId , id , username,phone,status_pickup_Id})
 }
+
+const getProjectWithPaginationWithEmployerWarhouse = (page, limit, unitId) => {
+    return axios.get(`/api/v4/getProjectWithEmployerWarehouse?page=${unitId}&limit=${limit}&unitId=${unitId}`)
+}
 export {
     getProjectWithPagination, fetchProjectByid, CreateProject, getSaleChannel, getStastusPayment,
     updateProject, deleteProject, createChatProject, updateProjectChat, deleteChatProject, getDataSearch,
@@ -140,5 +144,5 @@ export {
     getDataDashboardProductWithAge, getDataDashboardProductWithTimeInWarehouse, getDataDashboardProductWithMounth,
     getDataDashboardProductWithUser,getProjectWithPaginationWithEmployer,getProjectWithPaginationWithEmployerWithFlag,
     updateFlagInProject,getProjectWithPaginationWithEmployerPickUp,getProjectWithPaginationWithEmployerPickUp_user,
-    updatePickupInProject
+    updatePickupInProject,getProjectWithPaginationWithEmployerWarhouse
 }

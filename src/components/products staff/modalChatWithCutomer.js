@@ -100,7 +100,7 @@ const ModalChatWithCutomer = (props) => {
         ProductId: ProductId,
         image: imageUser,
         chatContent: chatContent,
-        CreatedByName: user.account.username,
+        CreatedByName: user.account.Position,
         CreatedByPhone:user.account.phone,
 
     }

@@ -28,8 +28,9 @@ const Pickup = (props) => {
     }
 
     const updatePickup = async (item) => {
+        console.log("item",item)
         if(!item.User_PickUp && !item.Number_PickUp){
-            let res = await updatePickupInProject(item.id,+user.account.shippingUnit_Id ,user.account.username ,user.account.phone ,1)
+            let res = await updatePickupInProject(+user.account.shippingUnit_Id,item.id ,user.account.username ,user.account.phone ,1)
             if (res && +res.EC === 0) {
                 await fetchProjectUserWithUsername()
                 await fetchProjectUser()            
@@ -38,7 +39,7 @@ const Pickup = (props) => {
             }
         }
         if(item.User_PickUp && item.Number_PickUp){   
-        let res = await updatePickupInProject(item.id,+user.account.shippingUnit_Id ,null , null,null)
+        let res = await updatePickupInProject(+user.account.shippingUnit_Id ,item.id ,null , null,null)
             if (res && +res.EC === 0) {
                 await fetchProjectUserWithUsername()
                 await fetchProjectUser()                
@@ -49,7 +50,7 @@ const Pickup = (props) => {
 
     }
        const completePickup = async(item)=>{
-        let res = await updatePickupInProject(item.id,+user.account.shippingUnit_Id ,user.account.username ,user.account.phone ,2)
+        let res = await updatePickupInProject(+user.account.shippingUnit_Id ,item.id ,user.account.username ,user.account.phone ,2)
         if (res && +res.EC === 0) {
             await fetchProjectUserWithUsername()
             await fetchProjectUser()                
@@ -83,17 +84,15 @@ const Pickup = (props) => {
             }
             if (res.DT.totalPage > 0 && res.DT.dataProject.length > 0) {
                 let data = res.DT.dataProject
+                console.log("data",data)
 
                 if (data) {
                     setListProjectbyStaffPickup(data)
-                    SetIsLoading(true)
                 }
             }
             if (res.DT.totalPage === 0 && res.DT.dataProject.length === 0) {
                 let data = res.DT.dataProject
-
                 setListProjectbyStaffPickup(data)
-                SetIsLoading(true)
 
             }
         }
@@ -105,6 +104,11 @@ const Pickup = (props) => {
     useEffect(() => {
         fetchProjectUser();
         fetchProjectUserWithUsername()
+        const today = moment();
+console.log(
+  "Today's date is: " + 
+  today.format('YYYY-MM-DD')
+);
     }, [currentPage])
     return (
         <div className='employer-pickup-container '>
@@ -221,7 +225,7 @@ const Pickup = (props) => {
                                                return(
                                                 <tbody>
 
-                                                <tr class="table-warning">
+                                                <tr className={ item?.statuspickupId === null || item?.statuspickupId === 1 ? "table-warning" : "table-success" }>
                                                      {item?.flag === true ?
                                                                         <td>
                                                                             <span style={{ fontSize: "20px", color: "red" }}>
@@ -255,7 +259,7 @@ const Pickup = (props) => {
                                                     }
                                                      { item?.statuspickupId === 2  &&
 
-                                                  <button className='btn btn-danger'> Đã hoàn thành</button>
+                                                  <button className='btn btn-success'> Đã hoàn thành</button>
 
                                                   }
                                                

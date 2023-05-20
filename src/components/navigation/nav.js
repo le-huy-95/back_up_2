@@ -3,6 +3,8 @@ import './nav.scss'
 import { NavLink, Link } from "react-router-dom"
 import { useLocation, useHistory } from 'react-router-dom';
 import { UserContext } from "../../contexApi/UserContext"
+import { ThemeContext } from "../../contexApi/ThemeContext"
+
 import { LogOutUser } from "../services/userService"
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -15,6 +17,10 @@ const NavHeader = (props) => {
     const location = useLocation()
     const history = useHistory()
     const { user, logout } = React.useContext(UserContext);
+    const { color, handleChangerColorTheme } = React.useContext(ThemeContext);
+useEffect(()=>{
+    console.log("color",color)
+})
 
     const [show, setShow] = useState(false)
     const handleShowNotificationModal = () => {
@@ -119,7 +125,7 @@ const NavHeader = (props) => {
 
                                 </Nav.Item>
                                 <Nav>
-                                    <div className="nav-link  image" title='Change language'>
+                                    <div className="nav-link  image" title='Change language' onClick={()=>handleChangerColorTheme()}>
                                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/2000px-Flag_of_Vietnam.svg.png" alt="" />
                                     </div >
                                 </Nav>

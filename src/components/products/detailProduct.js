@@ -660,7 +660,7 @@ const DetailProduct = (props) => {
         getAllStastusPayment()
         getnameProduct()
         getAllSaleChannel()
-
+        
     }, [])
     useEffect(() => {
         getProvinceCustomer()
@@ -1722,7 +1722,7 @@ const DetailProduct = (props) => {
                                                                                                     </div>
                                                                                                     <div className='col-2 d-flex align-items-center' style={{ paddingBottom: "61px" }}>
                                                                                                        {item.CreatedByPhone === user.account.phone 
-                                                                                                       &&
+                                                                                                       && 
                                                                                                        <>
                                                                                                           <button className='btn btn-warning ' style={{ borderRadius: "50%" }} onClick={() => handleChangeStatusEditChat(item)}>
                                                                                                             <i class="fa fa-pencil-square" aria-hidden="true"></i>
@@ -1813,28 +1813,47 @@ const DetailProduct = (props) => {
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div id="content">
-                                                                    <ul class="timeline-1 text-black">
-                                                                        <li class="event" data-date="12:30 - 1:00pm">
-                                                                            <h4 class="mb-3">Registration</h4>
-                                                                            <p>Get here on time, it's first come first serve. Be late, get turned away.</p>
-                                                                        </li>
-                                                                        <li class="event" data-date="2:30 - 4:00pm">
-                                                                            <h4 class="mb-3 pt-3">Opening Ceremony</h4>
-                                                                            <p>Get ready for an exciting event, this will kick off in amazing fashion with MOP &amp; Busta
-                                                                                Rhymes as an opening show.</p>
-                                                                        </li>
-                                                                        <li class="event" data-date="5:00 - 8:00pm">
-                                                                            <h4 class="mb-3 pt-3">Main Event</h4>
-                                                                            <p>This is where it all goes down. You will compete head to head with your friends and rivals. Get
-                                                                                ready!</p>
-                                                                        </li>
-                                                                        <li class="event" data-date="8:30 - 9:30pm">
-                                                                            <h4 class="mb-3 pt-3">Closing Ceremony</h4>
-                                                                            <p class="mb-0">See how is the victor and who are the losers. The big stage is where the winners
-                                                                                bask in their
-                                                                                own glory.</p>
-                                                                        </li>
-                                                                    </ul>
+                                                                   
+                                                                            <ul class="timeline-1 text-black" >
+                                                                            <li class="event" data-date={moment(`${projects.createdAt}`).format(" DD/MM/YYYY  HH:mm:ss ")}>
+                                                                                <h4 class="mb-3" >Tạo đơn</h4>
+                                                                               
+                                                                            </li>
+                                                                       {!projects.statuspickupId  && 
+                                                                            <li class="event"  style={{opacity:"0.7"}}>
+                                                                               <h4 class="mb-3 pt-3">chưa Lấy hàng</h4>
+                                                                            </li>
+                                                                        }
+                                                                        {projects.statuspickupId  &&
+                                                                            <li class="event" data-date={moment(`${projects?.Status_Pickup?.createdAt}`).format(" DD/MM/YYYY  HH:mm:ss ")}>
+                                                                                <h4 class="mb-3">{projects?.Status_Pickup?.status}</h4>
+                                                                                <span> Nhân viên lấy hàng : <b>{projects?.User_PickUp}</b>  </span>
+                                                                                <br/>
+                                                                                <span> Số điện thoại : <b>{projects?.Number_PickUp}</b>  </span>
+
+                                                                                </li>
+
+                                                                        }
+                                                                             {!projects.statuswarehouseId  && 
+                                                                            <li class="event"  style={{opacity:"0.7"}} >
+                                                                               <h4 class="mb-3 pt-3">chưa Nhập kho</h4>
+                                                                            </li>
+                                                                        }
+                                                                        {projects?.Status_Warehouse?.status  &&
+                                                                            <li class="event" data-date={moment(`${projects?.Status_Warehouse?.createdAt}`).format(" DD/MM/YYYY  HH:mm:ss ")}>
+                                                                                <h4 class="mb-3">{projects?.Status_Warehouse?.status}</h4>
+                                                                                </li>
+
+                                                                        }
+                                                                            <li class="event" data-date="8:30 - 9:30pm">
+                                                                                <h4 class="mb-3 pt-3">Closing Ceremony</h4>
+                                                                                <p class="mb-0">See how is the victor and who are the losers. The big stage is where the winners
+                                                                                    bask in their
+                                                                                    own glory.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                   
+                                                                   
                                                                 </div>
                                                             </div>
                                                         </div>

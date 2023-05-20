@@ -4,7 +4,7 @@ import SidebarStaff from "../sidebar/sidebar staff"
 import { Link, NavLink, useHistory } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import { UserContext } from "../../contexApi/UserContext"
-import { getProjectWithPagination } from "../services/ProjectService"
+import { getProjectWithPaginationWithEmployerWarhouse } from "../services/ProjectService"
 import ReactPaginate from 'react-paginate';
 import ModalChatWithCutomer from "./modalChatWithCutomer"
 
@@ -12,7 +12,7 @@ const Warehouse_staff = (props) => {
     let history = useHistory()
     const { user } = React.useContext(UserContext);
     const [collapsed, setCollapsed] = useState(false)
-    const [listProjectbyUser, setListProjectbyUser] = useState([])
+    const [ListProjectbyStaffWarehouse, setListProjectbyStaffWarehouse] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [currentLimit, setCurrentLimit] = useState(6)
     const [isLoading, SetIsLoading] = useState(false)
@@ -24,21 +24,27 @@ const Warehouse_staff = (props) => {
     }
     const fetchProjectUser = async () => {
 
-        let res = await getProjectWithPagination(currentPage, currentLimit, user.account.username)
+        let res = await getProjectWithPaginationWithEmployerWarhouse(currentPage, currentLimit, +user.account.shippingUnit_Id
+            )
         if (res && +res.EC === 0) {
             setTotalPage(+res.DT.totalPage)
             if (res.DT.totalPage > 0 && res.DT.dataProject.length === 0) {
                 setCurrentPage(+res.DT.totalPage)
-                await getProjectWithPagination(+res.DT.totalPage, currentLimit)
+                await getProjectWithPaginationWithEmployerWarhouse(+res.DT.totalPage,currentLimit, +user.account.shippingUnit_Id
+                    )
             }
             if (res.DT.totalPage > 0 && res.DT.dataProject.length > 0) {
                 let data = res.DT.dataProject
+                console.log("data",data)
 
                 if (data) {
-                    console.log("data", data)
-                    setListProjectbyUser(data)
-                    SetIsLoading(true)
+                    setListProjectbyStaffWarehouse(data)
                 }
+            }
+            if (res.DT.totalPage === 0 && res.DT.dataProject.length === 0) {
+                let data = res.DT.dataProject
+                setListProjectbyStaffWarehouse(data)
+
             }
         }
     }
@@ -106,18 +112,20 @@ const Warehouse_staff = (props) => {
                                         <div className='title-employer-warehouse my-3'>Tất cả đơn hàng (5)</div>
                                         <hr />
                                         <div className='sub-title-employer-warehouse'>
+                                      
                                             <div className='sub-left '>
-                                                <div className='color mx-3'></div>
+                                                <div className=' mx-3' style={{color:"red"}}><i class="fa fa-flag" aria-hidden="true"></i>
+                                                 </div>
                                                 <div className='NameColor'> Đơn gấp</div>
 
                                             </div>
-                                            <div className='sub-title-employer-warehouse-right ' >
+                                            <div className='sub-title-employer-pickup-right ' >
                                                 < ReactPaginate
                                                     nextLabel="next >"
                                                     onPageChange={handlePageClick}
                                                     pageRangeDisplayed={2}
                                                     marginPagesDisplayed={3}
-                                                    pageCount={10}
+                                                    pageCount={totalPage}
                                                     previousLabel="< previous"
                                                     pageClassName="page-item"
                                                     pageLinkClassName="page-link"
@@ -135,17 +143,20 @@ const Warehouse_staff = (props) => {
 
                                                 />
                                             </div>
+                                            </div>
+                                           
 
-                                        </div>
                                         <table class="table table-bordered table-body-employer-warehouse">
                                             <thead>
                                                 <tr >
+                                                    <th></th>
                                                     <th scope="col">No</th>
+                                                    <th scope="col">Id</th>
+
                                                     <th scope="col">Mã đơn</th>
                                                     <th scope="col">Mặt hàng</th>
                                                     <th scope="col">Số lượng </th>
                                                     <th scope="col"> Trạng thái đơn hàng</th>
-                                                    <th scope="col"> Tình trạng hàng hoá</th>
 
                                                     <th scope="col"> Nhân viên xử lý</th>
                                                     <th scope="col">Thao tác</th>
@@ -153,39 +164,47 @@ const Warehouse_staff = (props) => {
 
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            {ListProjectbyStaffWarehouse &&  ListProjectbyStaffWarehouse.length>0
+                                                     &&
+                                            
+                                            ListProjectbyStaffWarehouse.map((item,index)=>{
+                                                return(
+                                                      <tbody key={`item-${index}`}>
 
-                                                <tr class="table-danger">
-                                                    <td>1</td>
-                                                    <td>abcssasadsa</td>
-                                                    <td>bánh mochi</td>
-                                                    <td>2</td>
-                                                    <td>Đã nhập kho</td>
-                                                    <td>Tốt  </td>
+                                                       <tr >
+                                                       {item?.flag === true ?
+                                                                        <td>
+                                                                            <span style={{ fontSize: "20px", color: "red" }}>
+                                                                                <i class="fa fa-flag" aria-hidden="true"></i>
+                                                                            </span>
+                                                                        </td>
+                                                                        :
+                                                                        <td></td>
 
-                                                    <td>Anh Tú</td>
+                                                                    }
+                                                       <td >{(currentPage - 1) * currentLimit + index + 1}</td>
 
-                                                    <td>
-                                                        <button className='btn btn-danger'> Nhận đơn</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody>
+                                                       <td>{item.id}</td>
+                                                        <td>{item.order}</td>
+                                                        <td> {item?.Warehouse?.product}</td>
+                                                        <td>{item.quantity}</td>
+                                                        <td>{item.statuswarehouseId ? item.statuswarehouseId : "chưa nhập kho"}</td>
+    
+ <td> 
+                                                          {item?.User_Warehouse ?  item?.User_Warehouse : "chưa ai nhận đơn"}
+                                                                 <br/>
+                                                                {item?.Number_Warehouse ?  item?.Number_Warehouse : ""}
 
-                                                <tr class="table-danger">
-                                                    <td>1</td>
-                                                    <td>abcssasadsa</td>
-                                                    <td>bánh mochi</td>
-                                                    <td>2</td>
-                                                    <td>Đã nhập kho </td>
-                                                    <td>Tốt  </td>
-
-                                                    <td>Anh tùng</td>
-                                                    <td>
-                                                        <button className='btn btn-danger'> Nhận đơn</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+                                                    </td>    
+                                                        <td>
+                                                            <button className='btn btn-danger'> Nhận đơn</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                    )
+                                            })}
+                                           
+                                           
                                         </table>
                                     </div>
 
