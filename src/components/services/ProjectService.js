@@ -114,11 +114,11 @@ const getDataDashboardProductWithUser = (created_By) => {
 const getProjectWithPaginationWithEmployer = (page, limit, unitId) => {
     return axios.get(`/api/v4/getProjectWithEmployer?page=${page}&limit=${limit}&unitId=${unitId}`)
 }
-const getProjectWithPaginationWithEmployerWithFlag =(unitId) => {
+const getProjectWithPaginationWithEmployerWithFlag = (unitId) => {
     return axios.get(`/api/v4/getProjectWithEmployerWithFlag?unitId=${unitId}`)
 }
-const updateFlagInProject = (id , unit , flag) => {
-    return axios.put("/api/v4/project/Employer/update/status-flag", {id , unit , flag })
+const updateFlagInProject = (id, unit, flag) => {
+    return axios.put("/api/v4/project/Employer/update/status-flag", { id, unit, flag })
 }
 const getProjectWithPaginationWithEmployerPickUp = (page, limit, unitId) => {
     return axios.get(`/api/v4/getProjectWithEmployerPickUp?page=${page}&limit=${limit}&unitId=${unitId}`)
@@ -126,8 +126,8 @@ const getProjectWithPaginationWithEmployerPickUp = (page, limit, unitId) => {
 const getProjectWithPaginationWithEmployerPickUp_user = (unitId, username, phone) => {
     return axios.get(`/api/v4/getProjectWithEmployerPickUp/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
 }
-const updatePickupInProject = (unitId , id , username,phone,status_pickup_Id) => {
-    return axios.put("/api/v4/project/Employer/update/name_pickup", {unitId , id , username,phone,status_pickup_Id})
+const updatePickupInProject = (unitId, id, username, phone, status_pickup_Id) => {
+    return axios.put("/api/v4/project/Employer/update/name_pickup", { unitId, id, username, phone, status_pickup_Id })
 }
 
 const getProjectWithPaginationWithEmployerWarhouse = (page, limit, unitId) => {
@@ -136,8 +136,8 @@ const getProjectWithPaginationWithEmployerWarhouse = (page, limit, unitId) => {
 const getProjectWithPaginationWithEmployerWarehouse_user = (unitId, username, phone) => {
     return axios.get(`/api/v4/getProjectWithEmployerWarehouse/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
 }
-const updateWarehouseInProject = (id, unitId, StatusProduct , username,phone,status_warehouse_Id) => {
-    return axios.put("/api/v4/project/Employer/update/name_Warehouse",  {id, unitId ,StatusProduct , username ,phone  ,status_warehouse_Id})
+const updateWarehouseInProject = (id, unitId, StatusProduct, username, phone, status_warehouse_Id) => {
+    return axios.put("/api/v4/project/Employer/update/name_Warehouse", { id, unitId, StatusProduct, username, phone, status_warehouse_Id })
 }
 const getProjectWithPaginationWithEmployerDelivery = (page, limit, unitId) => {
     return axios.get(`/api/v4/getProjectWithEmployerDelivery?page=${page}&limit=${limit}&unitId=${unitId}`)
@@ -145,17 +145,20 @@ const getProjectWithPaginationWithEmployerDelivery = (page, limit, unitId) => {
 const getProjectWithPaginationWithEmployerDelivery_user = (unitId, username, phone) => {
     return axios.get(`/api/v4/getProjectWithEmployerDelivery/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
 }
-const updateDeliveryInProject = (id, unitId ,status_delivery , username ,phone  ,text,textOne) => {
-    return axios.put("/api/v4/project/Employer/update/name_Delivery",  {id, unitId ,status_delivery , username ,phone  ,text,textOne})
+const updateDeliveryInProject = (id, unitId, status_delivery, username, phone, text, textOne) => {
+    return axios.put("/api/v4/project/Employer/update/name_Delivery", { id, unitId, status_delivery, username, phone, text, textOne })
 }
-const getProjectWithPaginationWithALlStatusPickup = (page, limit, unitId ,statuspickupId) => {
+const getProjectWithPaginationWithALlStatusPickup = (page, limit, unitId, statuspickupId) => {
     return axios.get(`/api/v4/getProjectWithEmployer/All/Status_pickup?page=${page}&limit=${limit}&unitId=${unitId}&statuspickupId=${statuspickupId}`)
 }
-const getProjectWithPaginationWithALlStatusWarehouse = (page, limit, unitId ,statuswarehouseId) => {
+const getProjectWithPaginationWithALlStatusWarehouse = (page, limit, unitId, statuswarehouseId) => {
     return axios.get(`/api/v4/getProjectWithEmployer/All/Status_warehouse?page=${page}&limit=${limit}&unitId=${unitId}&statuswarehouseId=${statuswarehouseId}`)
 }
-const getProjectWithPaginationWithALlStatusDelivery = (page, limit, unitId ,statusDeliveryId) => {
+const getProjectWithPaginationWithALlStatusDelivery = (page, limit, unitId, statusDeliveryId) => {
     return axios.get(`/api/v4/getProjectWithEmployer/All/Status_Delivery?page=${page}&limit=${limit}&unitId=${unitId}&statusDeliveryId=${statusDeliveryId}`)
+}
+const getAllStatusProductWithEmployer = (unitId) => {
+    return axios.get(`/api/v4/getProjectWithEmployer/All/number_all?unitId=${unitId}`)
 }
 export {
     getProjectWithPagination, fetchProjectByid, CreateProject, getSaleChannel, getStastusPayment,
@@ -166,10 +169,10 @@ export {
     getDataSearchInWarehouse, getAllNumberSatusProductInWarehouse, getListWarehouseWithPaginationproductStatusId,
     getWarehouseForDashboard, getAllNumberMoneyInWarehouse, getDataWithTimeInWarehouse, getDataDashboardProduct,
     getDataDashboardProductWithAge, getDataDashboardProductWithTimeInWarehouse, getDataDashboardProductWithMounth,
-    getDataDashboardProductWithUser,getProjectWithPaginationWithEmployer,getProjectWithPaginationWithEmployerWithFlag,
-    updateFlagInProject,getProjectWithPaginationWithEmployerPickUp,getProjectWithPaginationWithEmployerPickUp_user,
-    updatePickupInProject,getProjectWithPaginationWithEmployerWarhouse,getProjectWithPaginationWithEmployerWarehouse_user,
-    updateWarehouseInProject,getProjectWithPaginationWithEmployerDelivery,getProjectWithPaginationWithEmployerDelivery_user,
-    updateDeliveryInProject,getProjectWithPaginationWithALlStatusPickup,getProjectWithPaginationWithALlStatusWarehouse,
-    getProjectWithPaginationWithALlStatusDelivery
+    getDataDashboardProductWithUser, getProjectWithPaginationWithEmployer, getProjectWithPaginationWithEmployerWithFlag,
+    updateFlagInProject, getProjectWithPaginationWithEmployerPickUp, getProjectWithPaginationWithEmployerPickUp_user,
+    updatePickupInProject, getProjectWithPaginationWithEmployerWarhouse, getProjectWithPaginationWithEmployerWarehouse_user,
+    updateWarehouseInProject, getProjectWithPaginationWithEmployerDelivery, getProjectWithPaginationWithEmployerDelivery_user,
+    updateDeliveryInProject, getProjectWithPaginationWithALlStatusPickup, getProjectWithPaginationWithALlStatusWarehouse,
+    getProjectWithPaginationWithALlStatusDelivery, getAllStatusProductWithEmployer
 }

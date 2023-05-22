@@ -70,28 +70,39 @@ const NavHeader = (props) => {
                                         <NavDropdown.Item href='/role' >Role</NavDropdown.Item>
                                         <NavDropdown.Item href='/grouprole'>Group-role</NavDropdown.Item>
                                     </NavDropdown>
-                                    <NavDropdown title="Customer" id="basic-nav-dropdown" className='dropdown'>
-                                        <NavDropdown.Item href='/dashboard_Product'>Dashboard Product</NavDropdown.Item>
-                                        <NavDropdown.Item href='/dashboard_Warehouse'>Dashboard Warehouse</NavDropdown.Item>
-                                        <NavDropdown.Item href='/Products' >Product</NavDropdown.Item>
-                                        <NavDropdown.Item href='/Warehouse' >Warehouse</NavDropdown.Item>
-                                    </NavDropdown>
+                                    {!user.account.Position &&
+                                        <NavDropdown title="Customer" id="basic-nav-dropdown" className='dropdown'>
+                                            <NavDropdown.Item href='/dashboard_Product'>Dashboard Product</NavDropdown.Item>
+                                            <NavDropdown.Item href='/dashboard_Warehouse'>Dashboard Warehouse</NavDropdown.Item>
+                                            <NavDropdown.Item href='/Products' >Product</NavDropdown.Item>
+                                            <NavDropdown.Item href='/Warehouse' >Warehouse</NavDropdown.Item>
+                                        </NavDropdown>
+                                    }
+
 
                                     <NavDropdown title="employer" id="basic-nav-dropdown" className='dropdown'>
                                         <NavDropdown.Item href='/order-processing'>Manage</NavDropdown.Item>
-                                          <NavDropdown.Item href='/Pickup_staff'>Pick up</NavDropdown.Item>
+                                        {user?.account?.Position === "Nhân viên lấy hàng" &&
+                                            <NavDropdown.Item href='/Pickup_staff'>Pick up</NavDropdown.Item>
 
-                                        
-                                        <NavDropdown.Item href='/Warehouse_staff'>Warehouse</NavDropdown.Item>
 
-                                        
-                                        <NavDropdown.Item href='/Delivery_staff'>Delivery</NavDropdown.Item>
+                                        }
 
-                                        
+                                        {user?.account?.Position === "Nhân viên kho hàng" &&
+                                            <NavDropdown.Item href='/Warehouse_staff'>Warehouse</NavDropdown.Item>
+
+                                        }
+                                        {user?.account?.Position === "Nhân viên giao hàng" &&
+                                            <NavDropdown.Item href='/Delivery_staff'>Delivery</NavDropdown.Item>
+
+                                        }
+
+
+
 
                                         <NavDropdown.Item href='/Overview'>Overview</NavDropdown.Item>
 
-                                        
+
                                     </NavDropdown>
                                 </Nav>
                                 <Nav>
@@ -130,7 +141,7 @@ const NavHeader = (props) => {
 
                                 </Nav.Item>
                                 <Nav>
-                                    <div className="nav-link  image" title='Change language' onClick={()=>handleChangerColorTheme()}>
+                                    <div className="nav-link  image" title='Change language' onClick={() => handleChangerColorTheme()}>
                                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/2000px-Flag_of_Vietnam.svg.png" alt="" />
                                     </div >
                                 </Nav>

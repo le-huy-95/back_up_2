@@ -4,7 +4,7 @@ import SidebarStaff from "../sidebar/sidebar staff"
 import { Link, NavLink, useHistory } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import { UserContext } from "../../contexApi/UserContext"
-import { getProjectWithPaginationWithALlStatusWarehouse } from "../services/ProjectService"
+import { getProjectWithPaginationWithALlStatusWarehouse, getAllStatusProductWithEmployer } from "../services/ProjectService"
 import ReactPaginate from 'react-paginate';
 import ModalChatWithCutomer from "./modalChatWithCutomer"
 import moment from "moment"
@@ -27,13 +27,22 @@ const ManageproductsNoWarehouse = (props) => {
     const [totalPage, setTotalPage] = useState(0)
     const [showModal, setShowModal] = useState(false)
     const [dataChatOne, setDataChatOnet] = useState([])
+    const [dataNumber, setdataNumber] = useState([])
 
     const handleShowModal = (item) => {
         setShowModal(!showModal)
         setDataChatOnet(item)
     }
 
+    const fetchAllNumberProject = async () => {
+        let res = await getAllStatusProductWithEmployer(+user.account.shippingUnit_Id)
+        if (res && +res.EC === 0) {
+            setdataNumber(res.DT[0])
+        } else {
+            toast.error(res.EM)
+        }
 
+    }
 
 
     const fetchProjectUser = async () => {
@@ -75,6 +84,7 @@ const ManageproductsNoWarehouse = (props) => {
 
 
     useEffect(() => {
+        fetchAllNumberProject()
         fetchProjectUser();
         let currentUrlParams = new URLSearchParams(window.location.search);
         currentUrlParams.set('page', currentPage);
@@ -175,47 +185,47 @@ const ManageproductsNoWarehouse = (props) => {
                                     <div className='container my-3'>
                                         <div className='row mx-3'>
                                             <div className='col-4 my-2 content ' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/order-processing" style={{ textDecoration: "none", color: "#474141" }}>  Tất cả đơn hàng</Link>
+                                                <Link to="/order-processing" style={{ textDecoration: "none", color: "#474141" }}>Tất cả đơn hàng ({dataNumber.allNum})</Link>
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_No_Pickup" style={{ textDecoration: "none", color: "#474141" }}>Đơn chưa lấy hàng</Link>
+                                                <Link to="/Manageproducts_No_Pickup" style={{ textDecoration: "none", color: "#474141" }}>Đơn chưa lấy hàng ({dataNumber.no_pick_up})</Link>
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_Picking" style={{ textDecoration: "none", color: "#474141" }}> Đơn đang lấy hàng</Link>
+                                                <Link to="/Manageproducts_Picking" style={{ textDecoration: "none", color: "#474141" }}> Đơn đang lấy hàng ({dataNumber.picking_up})</Link>
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_pick_ok" style={{ textDecoration: "none", color: "#474141" }}>Đơn đã lấy hàng</Link>
+                                                <Link to="/Manageproducts_pick_ok" style={{ textDecoration: "none", color: "#474141" }}>Đơn đã lấy hàng ({dataNumber.pickupOk})</Link>
                                             </div>
                                             <div className='col-4 content' style={{ backgroundColor: "#61dafb", cursor: "pointer" }}>
-                                                Đơn  chưa nhập kho
+                                                Đơn chưa nhập kho ({dataNumber.no_warehouse})
 
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_Warehouse_status_one" style={{ textDecoration: "none", color: "#474141" }}>Đơn  đã nhập kho</Link>
+                                                <Link to="/Manageproducts_Warehouse_status_one" style={{ textDecoration: "none", color: "#474141" }}>Đơn đã nhập kho ({dataNumber.warehouseStatusOne})</Link>
 
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_Warehouse_status_two" style={{ textDecoration: "none", color: "#474141" }}>Đơn đã xuất kho </Link>
+                                                <Link to="/Manageproducts_Warehouse_status_two" style={{ textDecoration: "none", color: "#474141" }}>Đơn đã xuất kho ({dataNumber.warehouseStatusTwo})</Link>
 
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_No_delivery" style={{ textDecoration: "none", color: "#474141" }}> Đơn chưa giao hàng </Link>
+                                                <Link to="/Manageproducts_No_delivery" style={{ textDecoration: "none", color: "#474141" }}> Đơn chưa giao hàng ({dataNumber.No_delivery})</Link>
 
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_delivery_One" style={{ textDecoration: "none", color: "#474141" }}>Đơn đang giao hàng </Link>
+                                                <Link to="/Manageproducts_delivery_One" style={{ textDecoration: "none", color: "#474141" }}>Đơn đang giao hàng ({dataNumber.deliveryStatusOne})</Link>
 
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_delivery_Two" style={{ textDecoration: "none", color: "#474141" }}>Đơn giao hàng thành công</Link>
+                                                <Link to="/Manageproducts_delivery_Two" style={{ textDecoration: "none", color: "#474141" }}>Đơn giao hàng thành công ({dataNumber.delivery_ok})</Link>
 
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_delivery_Three" style={{ textDecoration: "none", color: "#474141" }}>  Đơn huỷ giao hàng </Link>
+                                                <Link to="/Manageproducts_delivery_Three" style={{ textDecoration: "none", color: "#474141" }}>Đơn huỷ giao hàng ({dataNumber.delivery_cancel})</Link>
 
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_delivery_Four" style={{ textDecoration: "none", color: "#474141" }}>  Đơn giao lại sau </Link>
+                                                <Link to="/Manageproducts_delivery_Four" style={{ textDecoration: "none", color: "#474141" }}>Đơn giao lại sau ({dataNumber.delivery_again})</Link>
 
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
@@ -309,12 +319,18 @@ const ManageproductsNoWarehouse = (props) => {
 
                                                                 </td>
                                                                 <td>
-                                                                    <span style={{ color: "red", fontWeight: "700" }}>
+                                                                    <span style={{ color: "red" }}>
                                                                         {item?.Status_Warehouse?.status ? item?.Status_Warehouse?.status : "chưa xử lý"}
 
                                                                     </span>
+
                                                                 </td>
-                                                                <td>{item?.Status_Delivery?.status ? item?.Status_Delivery?.status : "chưa giao hàng"}</td>
+                                                                <td>
+                                                                    <span >
+                                                                        {item?.Status_Delivery?.status ? item?.Status_Delivery?.status : "chưa giao hàng"}
+
+                                                                    </span>
+                                                                </td>
                                                                 <td>{item?.receiveMoneyId?.status ? item?.receiveMoneyId?.status : "chưa thanh toán "}</td>
                                                                 <td>{item.createdBy}</td>
                                                                 <td>
