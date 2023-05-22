@@ -62,6 +62,18 @@ const Login = (props) => {
             localStorage.setItem("Page three warehouse", 1)
             localStorage.setItem("Page four warehouse", 1)
             localStorage.setItem("Page five warehouse", 1)
+            localStorage.setItem("infomation Page employer", 1)
+            localStorage.setItem("infomation Page employer one", 1)
+            localStorage.setItem("infomation Page employer two", 1)
+            localStorage.setItem("infomation Page employer three", 1)
+            localStorage.setItem("infomation Page employer four", 1)
+            localStorage.setItem("infomation Page employer five", 1)
+            localStorage.setItem("infomation Page employer six", 1)
+            localStorage.setItem("infomation Page employer seven", 1)
+            localStorage.setItem("infomation Page employer eight", 1)
+            localStorage.setItem("infomation Page employer night", 1)
+            localStorage.setItem("infomation Page employer ten", 1)
+
 
             login(data)
             history.push("/")

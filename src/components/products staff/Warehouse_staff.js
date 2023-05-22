@@ -4,15 +4,19 @@ import SidebarStaff from "../sidebar/sidebar staff"
 import { Link, NavLink, useHistory } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import { UserContext } from "../../contexApi/UserContext"
-import { getProjectWithPaginationWithEmployerWarhouse } from "../services/ProjectService"
+import { getProjectWithPaginationWithEmployerWarhouse, getProjectWithPaginationWithEmployerWarehouse_user, updateWarehouseInProject } from "../services/ProjectService"
 import ReactPaginate from 'react-paginate';
 import ModalChatWithCutomer from "./modalChatWithCutomer"
+import { toast } from 'react-toastify'
+import moment from "moment"
 
 const Warehouse_staff = (props) => {
     let history = useHistory()
     const { user } = React.useContext(UserContext);
     const [collapsed, setCollapsed] = useState(false)
     const [ListProjectbyStaffWarehouse, setListProjectbyStaffWarehouse] = useState([])
+    const [listProjectbyUsernameStaffWarehouse, setlistProjectbyUsernameStaffWarehouse] = useState([])
+
     const [currentPage, setCurrentPage] = useState(1)
     const [currentLimit, setCurrentLimit] = useState(6)
     const [isLoading, SetIsLoading] = useState(false)
@@ -22,20 +26,67 @@ const Warehouse_staff = (props) => {
     const handleShowModal = () => {
         setShowModal(!showModal)
     }
+    const complete = async (item) => {
+        let res = await updateWarehouseInProject(item.id, +user.account.shippingUnit_Id, "", user.account.username, user.account.phone, 2)
+        if (res && +res.EC === 0) {
+            await fetchProjectUserWithUsername()
+            await fetchProjectUser()
+        } else {
+            toast.error(res.EM)
+        }
+    }
+
+    const updateWArehouse = async (item) => {
+        if (!item.User_Warehouse && !item.Number_Warehouse && !item.Status_product) {
+
+            let res = await updateWarehouseInProject(item.id, +user.account.shippingUnit_Id, "", user.account.username, user.account.phone, 1)
+            if (res && +res.EC === 0) {
+                await fetchProjectUserWithUsername()
+                await fetchProjectUser()
+            } else {
+                toast.error(res.EM)
+            }
+        }
+        if (item.User_Warehouse && item.Number_Warehouse) {
+            let res = await updateWarehouseInProject(item.id, +user.account.shippingUnit_Id, null, null, null, null)
+            if (res && +res.EC === 0) {
+
+                await fetchProjectUserWithUsername()
+                await fetchProjectUser()
+            } else {
+                toast.error(res.EM)
+            }
+        }
+    }
+
+
+    const fetchProjectUserWithUsername = async () => {
+        let res = await getProjectWithPaginationWithEmployerWarehouse_user(+user.account.shippingUnit_Id, user.account.username, user.account.phone)
+        if (res && +res.EC === 0) {
+            console.log("res", res.DT)
+            setlistProjectbyUsernameStaffWarehouse(res.DT)
+        } else {
+            toast.error(res.EM)
+        }
+
+    }
+
+
+
     const fetchProjectUser = async () => {
 
         let res = await getProjectWithPaginationWithEmployerWarhouse(currentPage, currentLimit, +user.account.shippingUnit_Id
-            )
+        )
         if (res && +res.EC === 0) {
             setTotalPage(+res.DT.totalPage)
             if (res.DT.totalPage > 0 && res.DT.dataProject.length === 0) {
                 setCurrentPage(+res.DT.totalPage)
-                await getProjectWithPaginationWithEmployerWarhouse(+res.DT.totalPage,currentLimit, +user.account.shippingUnit_Id
-                    )
+                await getProjectWithPaginationWithEmployerWarhouse(+res.DT.totalPage, currentLimit, +user.account.shippingUnit_Id
+                )
             }
             if (res.DT.totalPage > 0 && res.DT.dataProject.length > 0) {
                 let data = res.DT.dataProject
-                console.log("data",data)
+                console.log("data", data)
 
                 if (data) {
                     setListProjectbyStaffWarehouse(data)
@@ -54,6 +105,7 @@ const Warehouse_staff = (props) => {
 
     useEffect(() => {
         fetchProjectUser();
+        fetchProjectUserWithUsername()
     }, [currentPage])
     return (
         <div className='employer-warehouse-container '>
@@ -99,23 +151,23 @@ const Warehouse_staff = (props) => {
                                 <div className='name-page-employer-warehouse'>
                                     <h4> List Warehouse </h4>
                                     <div className='more-employer-warehouse'>
-                                       <b>Giao hàng tiết kiệm</b> 
+                                        <b>Giao hàng tiết kiệm</b>
 
 
                                     </div>
-                                    <span> nhân viên Kho</span>
-                                    <span> Kho 123</span>
+                                    <b> nhân viên Kho</b>
+                                    <span> Kho hà nội</span>
 
                                 </div>
                                 <div className='table-wrapper-employer-warehouse my-5'>
                                     <div className='container'>
-                                        <div className='title-employer-warehouse my-3'>Tất cả đơn hàng (5)</div>
+                                        <div className='title-employer-warehouse my-3'>Tất cả đơn hàng ({ListProjectbyStaffWarehouse.length})</div>
                                         <hr />
                                         <div className='sub-title-employer-warehouse'>
-                                      
+
                                             <div className='sub-left '>
-                                                <div className=' mx-3' style={{color:"red"}}><i class="fa fa-flag" aria-hidden="true"></i>
-                                                 </div>
+                                                <div className=' mx-3' style={{ color: "red" }}><i class="fa fa-flag" aria-hidden="true"></i>
+                                                </div>
                                                 <div className='NameColor'> Đơn gấp</div>
 
                                             </div>
@@ -143,12 +195,12 @@ const Warehouse_staff = (props) => {
 
                                                 />
                                             </div>
-                                            </div>
-                                           
+                                        </div>
+
 
                                         <table class="table table-bordered table-body-employer-warehouse">
                                             <thead>
-                                                <tr >
+                                                <tr className='table-secondary'>
                                                     <th></th>
                                                     <th scope="col">No</th>
                                                     <th scope="col">Id</th>
@@ -157,6 +209,7 @@ const Warehouse_staff = (props) => {
                                                     <th scope="col">Mặt hàng</th>
                                                     <th scope="col">Số lượng </th>
                                                     <th scope="col"> Trạng thái đơn hàng</th>
+                                                    <th scope="col"> Thời gian tạo đơn</th>
 
                                                     <th scope="col"> Nhân viên xử lý</th>
                                                     <th scope="col">Thao tác</th>
@@ -164,47 +217,54 @@ const Warehouse_staff = (props) => {
 
                                                 </tr>
                                             </thead>
-                                            {ListProjectbyStaffWarehouse &&  ListProjectbyStaffWarehouse.length>0
-                                                     &&
-                                            
-                                            ListProjectbyStaffWarehouse.map((item,index)=>{
-                                                return(
-                                                      <tbody key={`item-${index}`}>
+                                            {ListProjectbyStaffWarehouse && ListProjectbyStaffWarehouse.length > 0
+                                                &&
 
-                                                       <tr >
-                                                       {item?.flag === true ?
-                                                                        <td>
-                                                                            <span style={{ fontSize: "20px", color: "red" }}>
-                                                                                <i class="fa fa-flag" aria-hidden="true"></i>
-                                                                            </span>
-                                                                        </td>
-                                                                        :
-                                                                        <td></td>
+                                                ListProjectbyStaffWarehouse.map((item, index) => {
+                                                    return (
+                                                        <tbody key={`item-${index}`}>
 
-                                                                    }
-                                                       <td >{(currentPage - 1) * currentLimit + index + 1}</td>
+                                                            <tr >
+                                                                {item?.flag === true ?
+                                                                    <td>
+                                                                        <span style={{ fontSize: "20px", color: "red" }}>
+                                                                            <i class="fa fa-flag" aria-hidden="true"></i>
+                                                                        </span>
+                                                                    </td>
+                                                                    :
+                                                                    <td></td>
 
-                                                       <td>{item.id}</td>
-                                                        <td>{item.order}</td>
-                                                        <td> {item?.Warehouse?.product}</td>
-                                                        <td>{item.quantity}</td>
-                                                        <td>{item.statuswarehouseId ? item.statuswarehouseId : "chưa nhập kho"}</td>
-    
- <td> 
-                                                          {item?.User_Warehouse ?  item?.User_Warehouse : "chưa ai nhận đơn"}
-                                                                 <br/>
-                                                                {item?.Number_Warehouse ?  item?.Number_Warehouse : ""}
+                                                                }
+                                                                <td >{(currentPage - 1) * currentLimit + index + 1}</td>
 
-                                                    </td>    
-                                                        <td>
-                                                            <button className='btn btn-danger'> Nhận đơn</button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
+                                                                <td>{item.id}</td>
+                                                                <td>{item.order}</td>
+                                                                <td> {item?.Warehouse?.product}</td>
+                                                                <td>{item.quantity}</td>
+                                                                <td>
+                                                                    <span style={{ color: "red", fontWeight: "500" }}>  {item?.Status_Warehouse?.status ? item?.Status_Warehouse?.status : "chưa nhập kho"}</span>
+                                                                </td>
+                                                                <td>{moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}</td>
+
+                                                                <td>
+                                                                    {item?.User_Warehouse ? item?.User_Warehouse : "chưa ai nhận đơn"}
+                                                                    <br />
+                                                                    {item?.Number_Warehouse ? item?.Number_Warehouse : ""}
+
+                                                                </td>
+                                                                {!item?.User_Warehouse &&
+                                                                    <td>
+                                                                        <button className='btn btn-danger' onClick={() => updateWArehouse(item)}> Nhận đơn</button>
+                                                                    </td>
+                                                                }
+
+
+                                                            </tr>
+                                                        </tbody>
                                                     )
-                                            })}
-                                           
-                                           
+                                                })}
+
+
                                         </table>
                                     </div>
 
@@ -212,17 +272,17 @@ const Warehouse_staff = (props) => {
                                 </div>
                                 <div className='table-wrapper-employer-warehouse-One my-5'>
                                     <div className='container'>
-                                        <div className='title-employer-warehouse-One my-3'>Đơn bạn đã nhận (5)</div>
+                                        <div className='title-employer-warehouse-One my-3'>Đơn bạn đã nhận ({listProjectbyUsernameStaffWarehouse.length})</div>
                                         <hr />
                                         <table class="table table-bordered table-body-employer-warehouse-One">
-                                        <thead>
+                                            <thead>
                                                 <tr >
-                                                    <th scope="col">No</th>
+                                                    <th></th>
+                                                    <th scope="col">Id</th>
                                                     <th scope="col">Mã đơn</th>
                                                     <th scope="col">Mặt hàng</th>
                                                     <th scope="col">Số lượng </th>
-                                                    <th scope="col"> Trạng thái đơn hàng</th>
-                                                    <th scope="col"> Tình trạng hàng hoá</th>
+                                                    <th scope="col">Trạng thái đơn hàng </th>
 
                                                     <th scope="col"> Nhân viên xử lý</th>
                                                     <th scope="col">Thao tác</th>
@@ -230,46 +290,58 @@ const Warehouse_staff = (props) => {
 
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            {listProjectbyUsernameStaffWarehouse && listProjectbyUsernameStaffWarehouse.length > 0
+                                                &&
+                                                listProjectbyUsernameStaffWarehouse.map((item, index) => {
+                                                    return (
+                                                        <tbody key={`item-${index}`}>
 
-                                                <tr class="table-primary">
-                                                <td>1</td>
-                                                    <td>abcssasadsa</td>
-                                                    <td>bánh mochi</td>
-                                                    <td>2</td>
-                                                    <td>Chưa nhập kho</td>
-                                                    <td>Tốt </td>
+                                                            <tr>
+                                                                {item?.flag === 1 ?
+                                                                    <td>
+                                                                        <span style={{ fontSize: "20px", color: "red" }}>
+                                                                            <i class="fa fa-flag" aria-hidden="true"></i>
+                                                                        </span>
+                                                                    </td>
+                                                                    :
+                                                                    <td></td>
 
-                                                    <td>Anh tùng</td>
+                                                                }
+                                                                <td>{item.id}</td>
+                                                                <td>{item.order}</td>
+                                                                <td> {item?.Warehouse?.product}</td>
+                                                                <td>{item.quantity}</td>
+                                                                <td>
+                                                                    <span style={{ color: "red", fontWeight: "500" }}>  {item?.Status_Warehouse?.status ? item?.Status_Warehouse?.status : "chưa nhập kho"}</span>
+                                                                </td>
 
-                                                    <td>
-                                                        <button className='btn btn-success mx-3 my-1'> Hoàn thành</button>
-                                                        <br/>
-                                                        <button className='btn btn-warning mx-3 my-1'>Hủy nhận đơn</button>
+                                                                <td>
+                                                                    {item?.User_Warehouse ? item?.User_Warehouse : "chưa ai nhận đơn"}
+                                                                    <br />
+                                                                    {item?.Number_Warehouse ? item?.Number_Warehouse : ""}
 
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody>
+                                                                </td>
+                                                                {item.statuswarehouseId === 2 ?
+                                                                    <td>
+                                                                        <button className='btn btn-info mx-3 my-1' > Đã xong</button>
+                                                                    </td>
 
-                                                <tr class="table-primary">
-                                                <td>1</td>
-                                                    <td>abcssasadsa</td>
-                                                    <td>bánh mochi</td>
-                                                    <td>2</td>
-                                                    <td>Chưa nhập kho</td>
-                                                    <td>Tốt </td>
+                                                                    :
+                                                                    <td>
+                                                                        <button className='btn btn-success mx-3 my-1' onClick={() => complete(item)}> Hoàn thành</button>
+                                                                        <br />
+                                                                        <button className='btn btn-warning mx-3 my-1' onClick={() => updateWArehouse(item)}>Hủy nhận đơn</button>
 
-                                                    <td>Anh tùng</td>
+                                                                    </td>
+                                                                }
 
-                                                    <td>
-                                                        <button className='btn btn-success mx-3 my-1'> Hoàn thành</button>
-                                                        <br/>
-                                                        <button className='btn btn-warning mx-3 my-1'>Hủy nhận đơn</button>
+                                                            </tr>
+                                                        </tbody>
+                                                    )
+                                                })
+                                            }
 
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+
                                         </table>
                                     </div>
 

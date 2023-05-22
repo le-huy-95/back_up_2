@@ -4,25 +4,23 @@ import SidebarStaff from "../sidebar/sidebar staff"
 import { Link, NavLink, useHistory } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import { UserContext } from "../../contexApi/UserContext"
-import { getProjectWithPaginationWithEmployer, getProjectWithPaginationWithEmployerWithFlag, updateFlagInProject } from "../services/ProjectService"
+import { getProjectWithPaginationWithALlStatusPickup } from "../services/ProjectService"
 import ReactPaginate from 'react-paginate';
 import ModalChatWithCutomer from "./modalChatWithCutomer"
 import moment from "moment"
 import { toast } from 'react-toastify'
-const Manageproducts = (props) => {
+const ManageproductsPicking = (props) => {
     let history = useHistory()
     const { user } = React.useContext(UserContext);
     const [collapsed, setCollapsed] = useState(false)
-    const [listProjectbyUnit, setListProjectbyUnit] = useState([])
-    const [listProjectbyUnitLenght, setListProjectbyUnitLenghtt] = useState([])
+    const [listProjectbyAllstatusPIckup, setListProjectbyAllstatusPIckup] = useState([])
 
-    const [listProjectbyUnitWithFlag, setListProjectbyUnitWithFlag] = useState([])
 
     const [currentPage, setCurrentPage] = useState(
-        localStorage.getItem("infomation Page employer") ? localStorage.getItem("infomation Page employer") : 1
+        localStorage.getItem("infomation Page employer two") ? localStorage.getItem("infomation Page employer two") : 1
 
     )
-    const [currentLimit, setCurrentLimit] = useState(4)
+    const [currentLimit, setCurrentLimit] = useState(1)
     const [isLoading, SetIsLoading] = useState(false)
     const [totalPage, setTotalPage] = useState(0)
     const [showModal, setShowModal] = useState(false)
@@ -34,64 +32,33 @@ const Manageproducts = (props) => {
     }
 
 
-    const updateFlag = async (item) => {
-        if (item.flag == 1) {
-            let res = await updateFlagInProject(item.id, +user.account.shippingUnit_Id, 0)
-            if (res && +res.EC === 0) {
-                await fetchProjectUserWithFlag()
-                await fetchProjectUser()
-            } else {
-                toast.error(res.EM)
-            }
-        }
-        if (item.flag == 0) {
-            let res = await updateFlagInProject(item.id, +user.account.shippingUnit_Id, 1)
-            if (res && +res.EC === 0) {
-                await fetchProjectUserWithFlag()
-                await fetchProjectUser()
-            } else {
-                toast.error(res.EM)
-            }
-        }
-
-    }
-    const fetchProjectUserWithFlag = async () => {
-        let res = await getProjectWithPaginationWithEmployerWithFlag(+user.account.shippingUnit_Id)
-        if (res && +res.EC === 0) {
-            setListProjectbyUnitWithFlag(res.DT)
-        } else {
-            toast.error(res.EM)
-        }
-
-    }
 
     const fetchProjectUser = async () => {
 
-        let res = await getProjectWithPaginationWithEmployer(currentPage, currentLimit, +user.account.shippingUnit_Id
+        let res = await getProjectWithPaginationWithALlStatusPickup(currentPage, currentLimit, +user.account.shippingUnit_Id, 1
         )
         if (res && +res.EC === 0) {
             setTotalPage(+res.DT.totalPage)
             if (res.DT.totalPage > 0 && res.DT.dataProject.length === 0) {
                 setCurrentPage(+res.DT.totalPage)
-                await getProjectWithPaginationWithEmployer(+res.DT.totalPage, currentLimit, +user.account.shippingUnit_Id
+                await getProjectWithPaginationWithALlStatusPickup(+res.DT.totalPage, currentLimit, +user.account.shippingUnit_Id, 1
                 )
             }
             if (res.DT.totalPage > 0 && res.DT.dataProject.length > 0) {
                 let data = res.DT.dataProject
 
                 if (data) {
-                    setListProjectbyUnitLenghtt(res.DT.totalProject)
-                    setListProjectbyUnit(data)
+                    setListProjectbyAllstatusPIckup(res.DT.totalProject)
+                    setListProjectbyAllstatusPIckup(data)
                     SetIsLoading(true)
-                    console.log("res.DT", res.DT.dataProject)
 
                 }
             }
             if (res.DT.totalPage === 0 && res.DT.dataProject.length === 0) {
                 let data = res.DT.dataProject
-                setListProjectbyUnitLenghtt(res.DT.totalProject)
+                setListProjectbyAllstatusPIckup(res.DT.totalProject)
 
-                setListProjectbyUnit(data)
+                setListProjectbyAllstatusPIckup(data)
                 SetIsLoading(true)
 
             }
@@ -99,10 +66,9 @@ const Manageproducts = (props) => {
     }
     const handlePageClick = (event) => {
         setCurrentPage(+event.selected + 1)
-        localStorage.setItem("infomation Page employer", +event.selected + 1)
+        localStorage.setItem("infomation Page employer two", +event.selected + 1)
+
     }
-
-
     useEffect(() => {
         fetchProjectUser();
         let currentUrlParams = new URLSearchParams(window.location.search);
@@ -111,47 +77,49 @@ const Manageproducts = (props) => {
 
         history.push(window.location.pathname + "?" + currentUrlParams.toString());
     }, [currentPage])
+
     const fetchProjectUserAfterRefesh = async () => {
-        let currentPagelocalStorage = +localStorage.getItem("infomation Page employer")
-        let res = await getProjectWithPaginationWithEmployer(+currentPagelocalStorage, currentLimit, +user.account.shippingUnit_Id
+        let currentPagelocalStorage = +localStorage.getItem("infomation Page employer two")
+
+        let res = await getProjectWithPaginationWithALlStatusPickup(+currentPagelocalStorage, currentLimit, +user.account.shippingUnit_Id, 1
         )
         if (res && +res.EC === 0) {
             setTotalPage(+res.DT.totalPage)
             if (res.DT.totalPage > 0 && res.DT.dataProject.length === 0) {
                 setCurrentPage(+res.DT.totalPage)
-                await getProjectWithPaginationWithEmployer(+res.DT.totalPage, currentLimit, +user.account.shippingUnit_Id
+                await getProjectWithPaginationWithALlStatusPickup(+res.DT.totalPage, currentLimit, +user.account.shippingUnit_Id, 1
                 )
             }
             if (res.DT.totalPage > 0 && res.DT.dataProject.length > 0) {
                 let data = res.DT.dataProject
 
                 if (data) {
-                    setListProjectbyUnitLenghtt(res.DT.totalProject)
-                    setListProjectbyUnit(data)
+                    setListProjectbyAllstatusPIckup(res.DT.totalProject)
+                    setListProjectbyAllstatusPIckup(data)
                     SetIsLoading(true)
-                    console.log("res.DT", res.DT.dataProject)
 
                 }
             }
             if (res.DT.totalPage === 0 && res.DT.dataProject.length === 0) {
                 let data = res.DT.dataProject
-                setListProjectbyUnitLenghtt(res.DT.totalProject)
+                setListProjectbyAllstatusPIckup(res.DT.totalProject)
 
-                setListProjectbyUnit(data)
+                setListProjectbyAllstatusPIckup(data)
                 SetIsLoading(true)
 
             }
         }
     }
+
     useEffect(() => {
-        window.history.pushState('', '', `?page=${localStorage.getItem("infomation Page employer")}&limit=${currentLimit}`);
+        window.history.pushState('', '', `?page=${localStorage.getItem("infomation Page employer two")}&limit=${currentLimit}`);
 
         fetchProjectUserAfterRefesh()
     }, [window.location.reload])
     useEffect(() => {
+        fetchProjectUser();
+    }, [currentPage])
 
-        fetchProjectUserWithFlag()
-    }, [])
     return (
         <div className='employer-container '>
             <div className='left-employer  '>
@@ -206,12 +174,14 @@ const Manageproducts = (props) => {
                                 <div className='sort my-3'>
                                     <div className='container my-3'>
                                         <div className='row mx-3'>
-                                            <div className='col-4 my-2 content ' style={{ backgroundColor: "#61dafb", cursor: "pointer" }}>Tất cả đơn hàng </div>
+                                            <div className='col-4 my-2 content ' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
+                                                <Link to="/order-processing" style={{ textDecoration: "none", color: "#474141" }}>  Tất cả đơn hàng</Link>
+                                            </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                                 <Link to="/Manageproducts_No_Pickup" style={{ textDecoration: "none", color: "#474141" }}>Đơn chưa lấy hàng</Link>
                                             </div>
-                                            <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_Picking" style={{ textDecoration: "none", color: "#474141" }}> Đơn đang lấy hàng</Link>
+                                            <div className='col-4 content' style={{ backgroundColor: "#61dafb", cursor: "pointer" }}>
+                                                Đơn đang lấy hàng
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                                 <Link to="/Manageproducts_pick_ok" style={{ textDecoration: "none", color: "#474141" }}>Đơn đã lấy hàng</Link>
@@ -219,10 +189,10 @@ const Manageproducts = (props) => {
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                                 <Link to="/Manageproducts_No_Warehouse" style={{ textDecoration: "none", color: "#474141" }}>  Đơn  chưa nhập kho </Link>
 
-
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                                 <Link to="/Manageproducts_Warehouse_status_one" style={{ textDecoration: "none", color: "#474141" }}>Đơn  đã nhập kho</Link>
+
 
                                             </div>
                                             <div className='col-4 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
@@ -262,147 +232,10 @@ const Manageproducts = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='table-wrapper-employer my-5'>
 
-                                    <div className='container'>
-                                        <div className='title-employer my-3'>Đơn hàng cần xử lý gấp ({listProjectbyUnitWithFlag.length})</div>
-                                        <hr />
-                                        <table class="table table-bordered table-body-employer">
-                                            <thead>
-                                                <tr className='table-secondary'>
-                                                    <th scope="col">id</th>
-
-                                                    <th scope="col">Mã đơn</th>
-                                                    <th scope="col">Mặt hàng</th>
-                                                    <th scope="col">Số lượng</th>
-                                                    <th scope="col">Thời gian tạo</th>
-                                                    <th scope="col">Người nhận</th>
-                                                    <th scope="col" style={{ width: "150px" }}>T/T lấy hàng</th>
-                                                    <th scope="col" style={{ width: "150px" }}>T/T Nhập kho</th>
-                                                    <th scope="col" style={{ width: "150px" }}>T/T Giao hàng</th>
-                                                    <th scope="col" style={{ width: "150px" }}>T/T Thanh toán </th>
-                                                    <th scope="col">Người tạo đơn</th>
-                                                    <th scope="col">Thao tác</th>
-
-                                                </tr>
-                                            </thead>
-                                            {listProjectbyUnitWithFlag && listProjectbyUnitWithFlag.length > 0
-                                                ?
-
-                                                listProjectbyUnitWithFlag.map((item, index) => {
-                                                    return (
-                                                        <tbody key={`list-${index}`}>
-
-                                                            <tr class="table-danger">
-                                                                <td>{item.id}</td>
-                                                                <td>{item.order}</td>
-                                                                <td>{item?.Warehouse?.product}</td>
-                                                                <td>{item.quantity}</td>
-                                                                <td>{moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}</td>
-                                                                <td> {item?.name_customer}</td>
-                                                                <td>
-                                                                    <span style={{ color: "red" }}>
-                                                                        {item?.Status_Pickup?.status ? item?.Status_Pickup?.status : "chưa lấy hàng"}
-                                                                    </span>
-                                                                    <br />
-                                                                    {item.User_PickUp && item.Number_PickUp &&
-                                                                        <span>Nhân viên :
-                                                                            <br />
-
-                                                                            <b>{item.User_PickUp}-{item.Number_PickUp} </b>
-
-                                                                        </span>
-
-                                                                    }
-
-                                                                </td>
-
-                                                                <td>
-
-                                                                    <span style={{ color: "red" }}>
-                                                                        {item?.Status_Warehouse?.status ? item?.Status_Warehouse?.status : "chưa xử lý"}
-                                                                    </span>
-                                                                    <br />
-                                                                    {item.User_Warehouse && item.Number_Warehouse
-                                                                        &&
-                                                                        <span>Nhân viên :
-                                                                            <br />
-
-                                                                            <b>{item.User_Warehouse}-{item.Number_Warehouse} </b>
-                                                                        </span>
-
-                                                                    }
-
-
-                                                                </td>
-                                                                <td>
-                                                                    <span style={{ color: "red" }}>
-                                                                        {item?.Status_Delivery?.status ? item?.Status_Delivery?.status : "chưa giao hàng"}
-                                                                    </span>
-                                                                    <br />
-                                                                    {item.User_Delivery && item.Number_Delivery &&
-                                                                        <span>Nhân viên :
-                                                                            <br />
-
-                                                                            <b>{item.User_Delivery}-{item.Number_Delivery}</b>
-                                                                        </span>
-
-                                                                    }
-
-                                                                </td>
-                                                                <td>
-                                                                    <span style={{ color: "red" }}>
-                                                                        {item?.Status_Received_money?.status ? item?.Status_Received_money?.status : "chưa thanh toán "}
-                                                                    </span>
-                                                                    <br />
-                                                                    {item.User_Overview && item.Number_Overview &&
-                                                                        <span>Nhân viên :
-                                                                            <br />
-                                                                            <b>{item.User_Overview}-{item.Number_Overview} </b>
-                                                                        </span>
-                                                                    }
-                                                                </td>
-                                                                <td>{item.createdBy}</td>                                                    <td>
-                                                                    <span className='mx-2' style={{ color: "red", cursor: "pointer" }} title='chuyển trang thái đơn hàng bình thường' onClick={() => updateFlag(item)}>
-                                                                        <i class="fa fa-toggle-on" aria-hidden="true"></i>
-
-                                                                    </span>
-                                                                    <br />
-                                                                    <span className='mx-2' style={{ color: "red", cursor: "pointer" }} title='Nhắn tin với Người tạo đơn' onClick={() => handleShowModal(item)}>
-                                                                        <i class="fa fa-comments" aria-hidden="true"></i>
-
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    )
-
-                                                }
-
-
-                                                )
-                                                :
-                                                <tr class="table-danger">
-                                                    <td colSpan={14}>
-                                                        <div className='d-flex align-item-center justify-content-center'>
-
-                                                            <h5> Không có đơn hàng nào ở trang thái cần xử lý gấp</h5>
-
-                                                        </div>
-
-                                                    </td>
-
-                                                </tr>
-                                            }
-
-                                        </table>
-                                    </div>
-
-
-                                </div>
                                 <div className='table-wrapper-employer-one'>
                                     <div className='container'>
-                                        <div className='title-employer-one my-3'>Đơn hàng trạng thái bình thường ({listProjectbyUnitLenght})</div>
+                                        <div className='title-employer-one my-3'>Tất cả đơn hàng đang lấy ({listProjectbyAllstatusPIckup.length})</div>
                                         <hr />
                                         <div className='sub'>
                                             < ReactPaginate
@@ -452,9 +285,9 @@ const Manageproducts = (props) => {
 
                                                 </tr>
                                             </thead>
-                                            {listProjectbyUnit && listProjectbyUnit.length > 0
+                                            {listProjectbyAllstatusPIckup && listProjectbyAllstatusPIckup.length > 0
                                                 ?
-                                                listProjectbyUnit.map((item, index) => {
+                                                listProjectbyAllstatusPIckup.map((item, index) => {
                                                     return (
 
                                                         <tbody key={`item-${index}`}>
@@ -477,18 +310,17 @@ const Manageproducts = (props) => {
                                                                     {item.User_PickUp && item.Number_PickUp &&
                                                                         <span>Nhân viên :
                                                                             <br />
-
-                                                                            <b>{item.User_PickUp}-{item.Number_PickUp} </b>
-
+                                                                            <b>{item.User_PickUp}-{item.Number_PickUp}</b>
                                                                         </span>
 
                                                                     }
+
 
                                                                 </td>
 
                                                                 <td>
 
-                                                                    <span style={{ color: "red" }}>
+                                                                    <span >
                                                                         {item?.Status_Warehouse?.status ? item?.Status_Warehouse?.status : "chưa xử lý"}
                                                                     </span>
                                                                     <br />
@@ -496,8 +328,7 @@ const Manageproducts = (props) => {
                                                                         &&
                                                                         <span>Nhân viên :
                                                                             <br />
-
-                                                                            <b>{item.User_Warehouse}-{item.Number_Warehouse} </b>
+                                                                            <b>{item.User_Warehouse}-{item.Number_Warehouse}</b>
                                                                         </span>
 
                                                                     }
@@ -505,14 +336,13 @@ const Manageproducts = (props) => {
 
                                                                 </td>
                                                                 <td>
-                                                                    <span style={{ color: "red" }}>
+                                                                    <span >
                                                                         {item?.Status_Delivery?.status ? item?.Status_Delivery?.status : "chưa giao hàng"}
                                                                     </span>
                                                                     <br />
                                                                     {item.User_Delivery && item.Number_Delivery &&
                                                                         <span>Nhân viên :
                                                                             <br />
-
                                                                             <b>{item.User_Delivery}-{item.Number_Delivery}</b>
                                                                         </span>
 
@@ -520,7 +350,7 @@ const Manageproducts = (props) => {
 
                                                                 </td>
                                                                 <td>
-                                                                    <span style={{ color: "red" }}>
+                                                                    <span >
                                                                         {item?.Status_Received_money?.status ? item?.Status_Received_money?.status : "chưa thanh toán "}
                                                                     </span>
                                                                     <br />
@@ -532,12 +362,8 @@ const Manageproducts = (props) => {
                                                                     }
                                                                 </td>
                                                                 <td>{item.createdBy}</td>
-
                                                                 <td>
-                                                                    <span className='mx-2' style={{ color: "blue", cursor: "pointer" }} title='chuyển trang thái đơn hàng gấp' onClick={() => updateFlag(item)}>
-                                                                        <i class="fa fa-toggle-off" aria-hidden="true"></i>
 
-                                                                    </span>
                                                                     <span className='mx-2' style={{ color: "blue", cursor: "pointer" }} title='Nhắn tin với Người tạo đơn' onClick={() => handleShowModal(item)}>
                                                                         <i class="fa fa-comments" aria-hidden="true"></i>
 
@@ -553,7 +379,7 @@ const Manageproducts = (props) => {
                                                     <td colSpan={14}>
                                                         <div className='d-flex align-item-center justify-content-center'>
 
-                                                            <h5> Đơn hàng ở trạng thái bình thường đã được xử lý hết và chưa phát sinh đơn hàng mới</h5>
+                                                            <h5> Đơn hàng đã được xử lý hết và chưa phát sinh đơn hàng mới</h5>
 
                                                         </div>
 
@@ -592,4 +418,4 @@ const Manageproducts = (props) => {
 
 }
 
-export default Manageproducts;
+export default ManageproductsPicking;

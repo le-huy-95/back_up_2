@@ -82,7 +82,7 @@ const DetailProduct = (props) => {
     const handleChangeStatusEditChat = (item) => {
         setChangeStatusChatProject(!changeStatusChatProject)
         setdataChatProduct(item)
-        console.log("item",item)
+        console.log("item", item)
         setchatEditContent(item.text)
     }
     const handleCancelChangeStatusEditChat = (item) => {
@@ -189,7 +189,7 @@ const DetailProduct = (props) => {
         image: imageUser,
         chatContent: chatContent,
         CreatedByName: user.account.username,
-        CreatedByPhone:user.account.phone,
+        CreatedByPhone: user.account.phone,
 
 
     }
@@ -379,8 +379,9 @@ const DetailProduct = (props) => {
 
 
         setProjects(_projects)
-
     }
+
+
 
 
     const handleUpdateImage = async () => {
@@ -660,7 +661,8 @@ const DetailProduct = (props) => {
         getAllStastusPayment()
         getnameProduct()
         getAllSaleChannel()
-        
+        // const today = moment();
+        // console.log(today.format());
     }, [])
     useEffect(() => {
         getProvinceCustomer()
@@ -668,11 +670,11 @@ const DetailProduct = (props) => {
 
     }, [])
     const handleRefeshChat = async () => {
-      
+
         await getProjects()
     }
     return (
-        <div className='Contact-container ' onClick={()=>handleRefeshChat()}>
+        <div className='Contact-container ' onClick={() => handleRefeshChat()}>
             <div className='left  '>
                 <Sidebar collapsed={collapsed} />
 
@@ -909,9 +911,8 @@ const DetailProduct = (props) => {
                                                                                         className='form-control'
                                                                                         value={projects.Note}
                                                                                         onChange={(event) => handleOnchangeInput(event.target.value, "Note")}
-
-
                                                                                     />
+
                                                                                 </div>
 
 
@@ -921,10 +922,11 @@ const DetailProduct = (props) => {
                                                                                 <div className='item-info py-1 d-flex align-items-center justify-content-between'>
                                                                                     <div className='container'>
                                                                                         <div className='row'>
-                                                                                            <div className='item-info_name  '>
+                                                                                            <label className='item-info_name  '>
                                                                                                 T/T thanh toán :
-                                                                                            </div>
+                                                                                            </label>
                                                                                             <select
+
                                                                                                 className="form-select mt-2"
                                                                                                 onChange={(event) => handleOnchangeInput(event.target.value, "statusPaymentId")}
                                                                                                 value={
@@ -945,6 +947,7 @@ const DetailProduct = (props) => {
 
 
                                                                                             </select >
+
                                                                                         </div>
                                                                                     </div>
 
@@ -1721,19 +1724,19 @@ const DetailProduct = (props) => {
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div className='col-2 d-flex align-items-center' style={{ paddingBottom: "61px" }}>
-                                                                                                       {item.CreatedByPhone === user.account.phone 
-                                                                                                       && 
-                                                                                                       <>
-                                                                                                          <button className='btn btn-warning ' style={{ borderRadius: "50%" }} onClick={() => handleChangeStatusEditChat(item)}>
-                                                                                                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
-                                                                                                        </button>
-                                                                                                        <button className='btn btn-danger mx-3' style={{ borderRadius: "50%" }} onClick={() => handlDeleteChatProject(item.id)}>
-                                                                                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                                                                        </button> 
-                                                                                                       </>
-                                                                                                      
-                                                                                                       }
-                                                                                                       
+                                                                                                        {item.CreatedByPhone === user.account.phone
+                                                                                                            &&
+                                                                                                            <>
+                                                                                                                <button className='btn btn-warning ' style={{ borderRadius: "50%" }} onClick={() => handleChangeStatusEditChat(item)}>
+                                                                                                                    <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                                                                                                </button>
+                                                                                                                <button className='btn btn-danger mx-3' style={{ borderRadius: "50%" }} onClick={() => handlDeleteChatProject(item.id)}>
+                                                                                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                                                                                </button>
+                                                                                                            </>
+
+                                                                                                        }
+
                                                                                                     </div>
                                                                                                 </>
                                                                                             }
@@ -1768,7 +1771,7 @@ const DetailProduct = (props) => {
                                                                                     className='chat-input col-8'
                                                                                     onChange={(event) => setchatContent(event.target.value)}
                                                                                     value={chatContent}
-                                                                                    onClick={()=>handleRefeshChat()}
+                                                                                    onClick={() => handleRefeshChat()}
                                                                                 />
 
                                                                                 <div className='icon col-1'>
@@ -1813,47 +1816,47 @@ const DetailProduct = (props) => {
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div id="content">
-                                                                   
-                                                                            <ul class="timeline-1 text-black" >
-                                                                            <li class="event" data-date={moment(`${projects.createdAt}`).format(" DD/MM/YYYY  HH:mm:ss ")}>
-                                                                                <h4 class="mb-3" >Tạo đơn</h4>
-                                                                               
-                                                                            </li>
-                                                                       {!projects.statuspickupId  && 
-                                                                            <li class="event"  style={{opacity:"0.7"}}>
-                                                                               <h4 class="mb-3 pt-3">chưa Lấy hàng</h4>
+
+                                                                    <ul class="timeline-1 text-black" >
+                                                                        <li class="event" data-date={moment(`${projects.createdAt}`).format(" DD/MM/YYYY  HH:mm:ss ")}>
+                                                                            <h4 class="mb-3" >Tạo đơn</h4>
+
+                                                                        </li>
+                                                                        {!projects.statuspickupId &&
+                                                                            <li class="event" style={{ opacity: "0.7" }}>
+                                                                                <h4 class="mb-3 pt-3">chưa Lấy hàng</h4>
                                                                             </li>
                                                                         }
-                                                                        {projects.statuspickupId  &&
+                                                                        {projects.statuspickupId &&
                                                                             <li class="event" data-date={moment(`${projects?.Status_Pickup?.createdAt}`).format(" DD/MM/YYYY  HH:mm:ss ")}>
                                                                                 <h4 class="mb-3">{projects?.Status_Pickup?.status}</h4>
                                                                                 <span> Nhân viên lấy hàng : <b>{projects?.User_PickUp}</b>  </span>
-                                                                                <br/>
+                                                                                <br />
                                                                                 <span> Số điện thoại : <b>{projects?.Number_PickUp}</b>  </span>
 
-                                                                                </li>
+                                                                            </li>
 
                                                                         }
-                                                                             {!projects.statuswarehouseId  && 
-                                                                            <li class="event"  style={{opacity:"0.7"}} >
-                                                                               <h4 class="mb-3 pt-3">chưa Nhập kho</h4>
+                                                                        {!projects.statuswarehouseId &&
+                                                                            <li class="event" style={{ opacity: "0.7" }} >
+                                                                                <h4 class="mb-3 pt-3">chưa Nhập kho</h4>
                                                                             </li>
                                                                         }
-                                                                        {projects?.Status_Warehouse?.status  &&
+                                                                        {projects?.Status_Warehouse?.status &&
                                                                             <li class="event" data-date={moment(`${projects?.Status_Warehouse?.createdAt}`).format(" DD/MM/YYYY  HH:mm:ss ")}>
                                                                                 <h4 class="mb-3">{projects?.Status_Warehouse?.status}</h4>
-                                                                                </li>
+                                                                            </li>
 
                                                                         }
-                                                                            <li class="event" data-date="8:30 - 9:30pm">
-                                                                                <h4 class="mb-3 pt-3">Closing Ceremony</h4>
-                                                                                <p class="mb-0">See how is the victor and who are the losers. The big stage is where the winners
-                                                                                    bask in their
-                                                                                    own glory.</p>
-                                                                            </li>
-                                                                        </ul>
-                                                                   
-                                                                   
+                                                                        <li class="event" data-date="8:30 - 9:30pm">
+                                                                            <h4 class="mb-3 pt-3">Closing Ceremony</h4>
+                                                                            <p class="mb-0">See how is the victor and who are the losers. The big stage is where the winners
+                                                                                bask in their
+                                                                                own glory.</p>
+                                                                        </li>
+                                                                    </ul>
+
+
                                                                 </div>
                                                             </div>
                                                         </div>

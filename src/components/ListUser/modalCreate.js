@@ -445,7 +445,8 @@ const ModalCreate = (props) => {
                                 <option value="Đơn vị">Lựa chọn chức vụ</option>
                                 <option value="Nhân viên lấy hàng">Nhân viên lấy hàng</option>
                                 <option value="Nhân viên kho hàng">Nhân viên kho hàng</option>
-                                <option value="Nhân viên giao Kế toán">Nhân viên kho hàng</option>
+                                <option value="Nhân viên giao hàng">Nhân viên giao hàng</option>
+                                <option value="Nhân viên  Kế toán">Nhân viên kế toán</option>
 
 
                                 

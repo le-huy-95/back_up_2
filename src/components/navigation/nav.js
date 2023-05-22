@@ -18,9 +18,7 @@ const NavHeader = (props) => {
     const history = useHistory()
     const { user, logout } = React.useContext(UserContext);
     const { color, handleChangerColorTheme } = React.useContext(ThemeContext);
-useEffect(()=>{
-    console.log("color",color)
-})
+
 
     const [show, setShow] = useState(false)
     const handleShowNotificationModal = () => {
@@ -81,9 +79,16 @@ useEffect(()=>{
 
                                     <NavDropdown title="employer" id="basic-nav-dropdown" className='dropdown'>
                                         <NavDropdown.Item href='/order-processing'>Manage</NavDropdown.Item>
-                                        <NavDropdown.Item href='/Pickup_staff'>Pick up</NavDropdown.Item>
+                                          <NavDropdown.Item href='/Pickup_staff'>Pick up</NavDropdown.Item>
+
+                                        
                                         <NavDropdown.Item href='/Warehouse_staff'>Warehouse</NavDropdown.Item>
+
+                                        
                                         <NavDropdown.Item href='/Delivery_staff'>Delivery</NavDropdown.Item>
+
+                                        
+
                                         <NavDropdown.Item href='/Overview'>Overview</NavDropdown.Item>
 
                                         

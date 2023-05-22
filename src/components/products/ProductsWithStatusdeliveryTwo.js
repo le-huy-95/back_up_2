@@ -920,10 +920,14 @@ const ProductsWithStatusdeliveryTwo = (props) => {
 
                                                                         }
 
-                                                                        {item?.Status_Delivery?.status === "Đơn đã giao" &&
+                                                                        {/* {item?.Status_Delivery?.status === "Đơn đã giao" &&
                                                                             <td style={{ color: "gray", fontWeight: "700" }} >{item?.Status_Payment?.status ?
                                                                                 <div style={{ backgroundColor: "gray", width: "20px", height: "20px", borderRadius: "50%" }}></div>
                                                                                 : "Đang xử lý"}</td>
+                                                                        } */}
+                                                                        {item?.Status_Delivery?.status === "Đơn đã giao" &&
+                                                                            <td style={{ color: "gray", fontWeight: "700" }}> {item?.Status_Delivery?.status ? item?.Status_Delivery?.status : "Đang xử lý"}</td>
+
                                                                         }
                                                                         {/* <td>{item.money}</td> */}
                                                                         <td>{item.total}</td>

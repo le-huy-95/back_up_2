@@ -24,7 +24,6 @@ const ModalChatWithCutomer = (props) => {
     const [showDeleteProduct, setShowDeleteProduct] = useState(false);
 
     const ProductId = dataChatOne?.id
-    console.log("ProductId",ProductId)
     const getProjects = async () => {
         let res = await fetchProjectByid(ProductId)
         if (res && +res.EC === 0) {

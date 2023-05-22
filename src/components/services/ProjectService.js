@@ -131,7 +131,31 @@ const updatePickupInProject = (unitId , id , username,phone,status_pickup_Id) =>
 }
 
 const getProjectWithPaginationWithEmployerWarhouse = (page, limit, unitId) => {
-    return axios.get(`/api/v4/getProjectWithEmployerWarehouse?page=${unitId}&limit=${limit}&unitId=${unitId}`)
+    return axios.get(`/api/v4/getProjectWithEmployerWarehouse?page=${page}&limit=${limit}&unitId=${unitId}`)
+}
+const getProjectWithPaginationWithEmployerWarehouse_user = (unitId, username, phone) => {
+    return axios.get(`/api/v4/getProjectWithEmployerWarehouse/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
+}
+const updateWarehouseInProject = (id, unitId, StatusProduct , username,phone,status_warehouse_Id) => {
+    return axios.put("/api/v4/project/Employer/update/name_Warehouse",  {id, unitId ,StatusProduct , username ,phone  ,status_warehouse_Id})
+}
+const getProjectWithPaginationWithEmployerDelivery = (page, limit, unitId) => {
+    return axios.get(`/api/v4/getProjectWithEmployerDelivery?page=${page}&limit=${limit}&unitId=${unitId}`)
+}
+const getProjectWithPaginationWithEmployerDelivery_user = (unitId, username, phone) => {
+    return axios.get(`/api/v4/getProjectWithEmployerDelivery/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
+}
+const updateDeliveryInProject = (id, unitId ,status_delivery , username ,phone  ,text,textOne) => {
+    return axios.put("/api/v4/project/Employer/update/name_Delivery",  {id, unitId ,status_delivery , username ,phone  ,text,textOne})
+}
+const getProjectWithPaginationWithALlStatusPickup = (page, limit, unitId ,statuspickupId) => {
+    return axios.get(`/api/v4/getProjectWithEmployer/All/Status_pickup?page=${page}&limit=${limit}&unitId=${unitId}&statuspickupId=${statuspickupId}`)
+}
+const getProjectWithPaginationWithALlStatusWarehouse = (page, limit, unitId ,statuswarehouseId) => {
+    return axios.get(`/api/v4/getProjectWithEmployer/All/Status_warehouse?page=${page}&limit=${limit}&unitId=${unitId}&statuswarehouseId=${statuswarehouseId}`)
+}
+const getProjectWithPaginationWithALlStatusDelivery = (page, limit, unitId ,statusDeliveryId) => {
+    return axios.get(`/api/v4/getProjectWithEmployer/All/Status_Delivery?page=${page}&limit=${limit}&unitId=${unitId}&statusDeliveryId=${statusDeliveryId}`)
 }
 export {
     getProjectWithPagination, fetchProjectByid, CreateProject, getSaleChannel, getStastusPayment,
@@ -144,5 +168,8 @@ export {
     getDataDashboardProductWithAge, getDataDashboardProductWithTimeInWarehouse, getDataDashboardProductWithMounth,
     getDataDashboardProductWithUser,getProjectWithPaginationWithEmployer,getProjectWithPaginationWithEmployerWithFlag,
     updateFlagInProject,getProjectWithPaginationWithEmployerPickUp,getProjectWithPaginationWithEmployerPickUp_user,
-    updatePickupInProject,getProjectWithPaginationWithEmployerWarhouse
+    updatePickupInProject,getProjectWithPaginationWithEmployerWarhouse,getProjectWithPaginationWithEmployerWarehouse_user,
+    updateWarehouseInProject,getProjectWithPaginationWithEmployerDelivery,getProjectWithPaginationWithEmployerDelivery_user,
+    updateDeliveryInProject,getProjectWithPaginationWithALlStatusPickup,getProjectWithPaginationWithALlStatusWarehouse,
+    getProjectWithPaginationWithALlStatusDelivery
 }
