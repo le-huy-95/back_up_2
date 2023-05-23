@@ -48,12 +48,16 @@ const Login = (props) => {
             let phone = res.DT.phone
             let username = res.DT.username;
             let token = res.DT.access_token
+            let shippingUnit_Id = res.DT.shippingUnit_Id
+            let Position = res.DT.Position
             // console.log(token)
             let data = {
                 isAuthenticated: true,
                 token,
-                account: { groupWithRound, email, username, phone }
+                account: { groupWithRound, email, username, phone, shippingUnit_Id, Position }
             }
+            console.log("data", data)
+
             // login --contextApi(gan thong tin dang nhap vao login -contextapi)
             localStorage.setItem("jwt", token)
             localStorage.setItem("infomation Page", 1)

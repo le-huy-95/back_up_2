@@ -78,32 +78,34 @@ const NavHeader = (props) => {
                                             <NavDropdown.Item href='/Warehouse' >Warehouse</NavDropdown.Item>
                                         </NavDropdown>
                                     }
+                                    {user?.account?.groupWithRound?.name === "staff" &&
+                                        <NavDropdown title="employer" id="basic-nav-dropdown" className='dropdown'>
+                                            <NavDropdown.Item href='/order-processing'>Manage</NavDropdown.Item>
+                                            {user?.account?.groupWithRound?.name === "staff" && user?.account?.Position === "Nhân viên lấy hàng" &&
+                                                <NavDropdown.Item href='/Pickup_staff'>Pick up</NavDropdown.Item>
 
 
-                                    <NavDropdown title="employer" id="basic-nav-dropdown" className='dropdown'>
-                                        <NavDropdown.Item href='/order-processing'>Manage</NavDropdown.Item>
-                                        {user?.account?.Position === "Nhân viên lấy hàng" &&
-                                            <NavDropdown.Item href='/Pickup_staff'>Pick up</NavDropdown.Item>
+                                            }
 
+                                            {user?.account?.groupWithRound?.name === "staff" && user?.account?.Position === "Nhân viên kho hàng" &&
+                                                <NavDropdown.Item href='/Warehouse_staff'>Warehouse</NavDropdown.Item>
 
-                                        }
+                                            }
+                                            {user?.account?.groupWithRound?.name === "staff" && user?.account?.Position === "Nhân viên giao hàng" &&
+                                                <NavDropdown.Item href='/Delivery_staff'>Delivery</NavDropdown.Item>
 
-                                        {user?.account?.Position === "Nhân viên kho hàng" &&
-                                            <NavDropdown.Item href='/Warehouse_staff'>Warehouse</NavDropdown.Item>
-
-                                        }
-                                        {user?.account?.Position === "Nhân viên giao hàng" &&
-                                            <NavDropdown.Item href='/Delivery_staff'>Delivery</NavDropdown.Item>
-
-                                        }
+                                            }
 
 
 
 
-                                        <NavDropdown.Item href='/Overview'>Overview</NavDropdown.Item>
+                                            <NavDropdown.Item href='/Overview'>Overview</NavDropdown.Item>
 
 
-                                    </NavDropdown>
+                                        </NavDropdown>
+                                    }
+
+
                                 </Nav>
                                 <Nav>
                                     {user && user.isAuthenticated === true ?

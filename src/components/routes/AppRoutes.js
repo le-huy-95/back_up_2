@@ -47,6 +47,8 @@ import ManageproductsDeliveryStatusOne from "../products staff/manageproducts-st
 import ManageproductsDeliveryStatusTwo from "../products staff/manageproducts-status-two-delivery"
 import ManageproductsDeliveryStatusThree from "../products staff/manageproducts-status-three-delivery"
 import ManageproductsDeliveryStatusFour from "../products staff/manageproducts-status-four-delivery"
+import PickUpNoStatus from "../products staff/PickUpNoStatus"
+import PickUpStatusOne from "../products staff/PickUpStatusOne"
 const AppRoutes = (props) => {
 
     return (
@@ -73,31 +75,35 @@ const AppRoutes = (props) => {
                 />
                 <PrivateRoutes path="/listuserbygroupStaff" component={UserGroupStaff}
                 />
-                  <PrivateRoutes path="/Manageproducts_delivery_Four" component={ManageproductsDeliveryStatusFour}
+                <PrivateRoutes path="/Pick_up_status_one" component={PickUpStatusOne}
                 />
-                 <PrivateRoutes path="/Manageproducts_delivery_Three" component={ManageproductsDeliveryStatusThree}
+                <PrivateRoutes path="/Pick_up_no_status" component={PickUpNoStatus}
                 />
-                 <PrivateRoutes path="/Manageproducts_delivery_Two" component={ManageproductsDeliveryStatusTwo}
+                <PrivateRoutes path="/Manageproducts_delivery_Four" component={ManageproductsDeliveryStatusFour}
                 />
-                 <PrivateRoutes path="/Manageproducts_delivery_One" component={ManageproductsDeliveryStatusOne}
+                <PrivateRoutes path="/Manageproducts_delivery_Three" component={ManageproductsDeliveryStatusThree}
                 />
-                 <PrivateRoutes path="/Manageproducts_No_delivery" component={ManageproductsNoDelivery}
+                <PrivateRoutes path="/Manageproducts_delivery_Two" component={ManageproductsDeliveryStatusTwo}
                 />
-                  <PrivateRoutes path="/Manageproducts_Warehouse_status_two" component={ManageproductsStatustwo}
+                <PrivateRoutes path="/Manageproducts_delivery_One" component={ManageproductsDeliveryStatusOne}
+                />
+                <PrivateRoutes path="/Manageproducts_No_delivery" component={ManageproductsNoDelivery}
+                />
+                <PrivateRoutes path="/Manageproducts_Warehouse_status_two" component={ManageproductsStatustwo}
                 />
                 <PrivateRoutes path="/Manageproducts_Warehouse_status_one" component={ManageproductsStatusOne}
                 />
                 <PrivateRoutes path="/Manageproducts_No_Warehouse" component={ManageproductsNoWarehouse}
                 />
-                 <PrivateRoutes path="/Manageproducts_No_Pickup" component={ManageproductsNoPickup}
+                <PrivateRoutes path="/Manageproducts_No_Pickup" component={ManageproductsNoPickup}
                 />
-                 <PrivateRoutes path="/Manageproducts_pick_ok" component={ManageproductsPickOk}
+                <PrivateRoutes path="/Manageproducts_pick_ok" component={ManageproductsPickOk}
                 />
-                 <PrivateRoutes path="/Manageproducts_Picking" component={ManageproductsPicking}
+                <PrivateRoutes path="/Manageproducts_Picking" component={ManageproductsPicking}
                 />
-                  <PrivateRoutes path="/Overview" component={Overview}
+                <PrivateRoutes path="/Overview" component={Overview}
                 />
-                 <PrivateRoutes path="/Delivery_staff" component={Delivery_staff}
+                <PrivateRoutes path="/Delivery_staff" component={Delivery_staff}
                 />
                 <PrivateRoutes path="/Warehouse_staff" component={Warehouse_staff}
                 />

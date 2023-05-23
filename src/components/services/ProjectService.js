@@ -126,8 +126,8 @@ const getProjectWithPaginationWithEmployerPickUp = (page, limit, unitId) => {
 const getProjectWithPaginationWithEmployerPickUp_user = (unitId, username, phone) => {
     return axios.get(`/api/v4/getProjectWithEmployerPickUp/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
 }
-const updatePickupInProject = (unitId, id, username, phone, status_pickup_Id) => {
-    return axios.put("/api/v4/project/Employer/update/name_pickup", { unitId, id, username, phone, status_pickup_Id })
+const updatePickupInProject = (unitId, id, username, phone, status_pickup_Id, pickup_time, pickupDone_time) => {
+    return axios.put("/api/v4/project/Employer/update/name_pickup", { unitId, id, username, phone, status_pickup_Id, pickup_time, pickupDone_time })
 }
 
 const getProjectWithPaginationWithEmployerWarhouse = (page, limit, unitId) => {
@@ -160,6 +160,23 @@ const getProjectWithPaginationWithALlStatusDelivery = (page, limit, unitId, stat
 const getAllStatusProductWithEmployer = (unitId) => {
     return axios.get(`/api/v4/getProjectWithEmployer/All/number_all?unitId=${unitId}`)
 }
+
+const getDataSearchByEmplyer = (data, positon, unitId) => {
+    return axios.get(`/api/v4/Project/search/product/employer?data=${data}&positon=${positon}&unitId=${unitId}`)
+}
+
+const getDataSortByPickup = (unitId, statuspickup) => {
+    return axios.get(`/api/v4/Project/allStatusInProduct?unitId=${unitId}&statuspickup=${statuspickup}`)
+}
+const getDataSortByWarehouse = (unitId, statuswarehouse) => {
+    return axios.get(`/api/v4/Project/allStatusInProduct?unitId=${unitId}&statuswarehouse=${statuswarehouse}`)
+}
+const getDataSortByDelivery = (unitId, statusDelivery) => {
+    return axios.get(`/api/v4/Project/allStatusInProduct?unitId=${unitId}&statusDelivery=${statusDelivery}`)
+}
+const getDataSortByOverview = (unitId, receiveMoney) => {
+    return axios.get(`/api/v4/Project/allStatusInProduct?unitId=${unitId}&receiveMoney=${receiveMoney}`)
+}
 export {
     getProjectWithPagination, fetchProjectByid, CreateProject, getSaleChannel, getStastusPayment,
     updateProject, deleteProject, createChatProject, updateProjectChat, deleteChatProject, getDataSearch,
@@ -174,5 +191,6 @@ export {
     updatePickupInProject, getProjectWithPaginationWithEmployerWarhouse, getProjectWithPaginationWithEmployerWarehouse_user,
     updateWarehouseInProject, getProjectWithPaginationWithEmployerDelivery, getProjectWithPaginationWithEmployerDelivery_user,
     updateDeliveryInProject, getProjectWithPaginationWithALlStatusPickup, getProjectWithPaginationWithALlStatusWarehouse,
-    getProjectWithPaginationWithALlStatusDelivery, getAllStatusProductWithEmployer
+    getProjectWithPaginationWithALlStatusDelivery, getAllStatusProductWithEmployer, getDataSearchByEmplyer, getDataSortByPickup,
+    getDataSortByWarehouse, getDataSortByDelivery, getDataSortByOverview
 }
