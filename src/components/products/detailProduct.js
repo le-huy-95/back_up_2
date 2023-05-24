@@ -82,7 +82,6 @@ const DetailProduct = (props) => {
     const handleChangeStatusEditChat = (item) => {
         setChangeStatusChatProject(!changeStatusChatProject)
         setdataChatProduct(item)
-        console.log("item", item)
         setchatEditContent(item.text)
     }
     const handleCancelChangeStatusEditChat = (item) => {
@@ -171,8 +170,8 @@ const DetailProduct = (props) => {
     const getImagebyUser = async () => {
         let res = await fetchImagebyUser(user.account.email)
         if (res && +res.EC === 0) {
-            if (res.DT[0]?.image) {
-                let imagebase64 = new Buffer(res.DT[0]?.image, 'base64').toString("binary")
+            if (res.DT[0].image) {
+                let imagebase64 = new Buffer(res.DT[0].image, 'base64').toString("binary")
                 setImageUser(imagebase64)
             } else {
                 setImageUser("")
@@ -188,8 +187,7 @@ const DetailProduct = (props) => {
         ProductId: ProductId,
         image: imageUser,
         chatContent: chatContent,
-        CreatedByName: user.account.username,
-        CreatedByPhone: user.account.phone,
+        CreatedBy: user.account.username
 
 
     }
@@ -379,9 +377,8 @@ const DetailProduct = (props) => {
 
 
         setProjects(_projects)
+
     }
-
-
 
 
     const handleUpdateImage = async () => {
@@ -661,20 +658,16 @@ const DetailProduct = (props) => {
         getAllStastusPayment()
         getnameProduct()
         getAllSaleChannel()
-        // const today = moment();
-        // console.log(today.format());
+
     }, [])
     useEffect(() => {
         getProvinceCustomer()
         getProvince()
 
     }, [])
-    const handleRefeshChat = async () => {
 
-        await getProjects()
-    }
     return (
-        <div className='Contact-container ' onClick={() => handleRefeshChat()}>
+        <div className='Contact-container '>
             <div className='left  '>
                 <Sidebar collapsed={collapsed} />
 
@@ -705,13 +698,13 @@ const DetailProduct = (props) => {
                                 </span>
                                 <Link to="/detailProduct"> Detail Product </Link>
                             </div>
-                            {/* <div className='col search'>
+                            <div className='col search'>
                                 <div className='search-icon'>
                                     <i className="fa fa-search" aria-hidden="true"></i>
 
                                 </div>
                                 <input type="text" placeholder='Search infomation' />
-                            </div> */}
+                            </div>
                         </div>
                         <button className='btn btn-primary btn-BackPage mx-3'>
                             <span>
@@ -911,8 +904,9 @@ const DetailProduct = (props) => {
                                                                                         className='form-control'
                                                                                         value={projects.Note}
                                                                                         onChange={(event) => handleOnchangeInput(event.target.value, "Note")}
-                                                                                    />
 
+
+                                                                                    />
                                                                                 </div>
 
 
@@ -922,11 +916,10 @@ const DetailProduct = (props) => {
                                                                                 <div className='item-info py-1 d-flex align-items-center justify-content-between'>
                                                                                     <div className='container'>
                                                                                         <div className='row'>
-                                                                                            <label className='item-info_name  '>
+                                                                                            <div className='item-info_name  '>
                                                                                                 T/T thanh toán :
-                                                                                            </label>
+                                                                                            </div>
                                                                                             <select
-
                                                                                                 className="form-select mt-2"
                                                                                                 onChange={(event) => handleOnchangeInput(event.target.value, "statusPaymentId")}
                                                                                                 value={
@@ -947,7 +940,6 @@ const DetailProduct = (props) => {
 
 
                                                                                             </select >
-
                                                                                         </div>
                                                                                     </div>
 
@@ -1720,23 +1712,16 @@ const DetailProduct = (props) => {
 
                                                                                                         </div>
                                                                                                         <div className='create-by-user d-flex justify-content-end'>
-                                                                                                            Send by:  {item.CreatedByName}
+                                                                                                            Send by:  {item.CreatedBy}
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div className='col-2 d-flex align-items-center' style={{ paddingBottom: "61px" }}>
-                                                                                                        {item.CreatedByPhone === user.account.phone
-                                                                                                            &&
-                                                                                                            <>
-                                                                                                                <button className='btn btn-warning ' style={{ borderRadius: "50%" }} onClick={() => handleChangeStatusEditChat(item)}>
-                                                                                                                    <i class="fa fa-pencil-square" aria-hidden="true"></i>
-                                                                                                                </button>
-                                                                                                                <button className='btn btn-danger mx-3' style={{ borderRadius: "50%" }} onClick={() => handlDeleteChatProject(item.id)}>
-                                                                                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                                                                                </button>
-                                                                                                            </>
-
-                                                                                                        }
-
+                                                                                                        <button className='btn btn-warning ' style={{ borderRadius: "50%" }} onClick={() => handleChangeStatusEditChat(item)}>
+                                                                                                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                                                                                        </button>
+                                                                                                        <button className='btn btn-danger mx-3' style={{ borderRadius: "50%" }} onClick={() => handlDeleteChatProject(item.id)}>
+                                                                                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </>
                                                                                             }
@@ -1771,7 +1756,6 @@ const DetailProduct = (props) => {
                                                                                     className='chat-input col-8'
                                                                                     onChange={(event) => setchatContent(event.target.value)}
                                                                                     value={chatContent}
-                                                                                    onClick={() => handleRefeshChat()}
                                                                                 />
 
                                                                                 <div className='icon col-1'>

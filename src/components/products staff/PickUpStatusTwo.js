@@ -11,7 +11,7 @@ import moment from "moment"
 import { toast } from 'react-toastify'
 import _, { debounce } from "lodash"
 
-const PickUpNoStatus = (props) => {
+const PickUpStatusTwo = (props) => {
     let history = useHistory()
     const { user } = React.useContext(UserContext);
     const [collapsed, setCollapsed] = useState(false)
@@ -38,7 +38,7 @@ const PickUpNoStatus = (props) => {
             SetIsSearch(true)
             let res = await getDataSearchByEmplyer(data, user.account.Position, +user.account.shippingUnit_Id)
             if (res && +res.EC === 0) {
-                let data = res.DT.filter(item => item.statuspickupId === 0)
+                let data = res.DT.filter(item => item.statuspickupId === 2)
 
                 setListProjectSearch(data)
             }
@@ -67,7 +67,7 @@ const PickUpNoStatus = (props) => {
 
     const fetchProjectUser = async () => {
 
-        let res = await getDataSortByPickup(+user.account.shippingUnit_Id, 0)
+        let res = await getDataSortByPickup(+user.account.shippingUnit_Id, 2)
         if (res && +res.EC === 0) {
             setListProjectbyStaffPickup(res.DT)
         }
@@ -136,14 +136,15 @@ const PickUpNoStatus = (props) => {
                                             <div className='col-3 content-pickup' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                                 <Link to="/Pickup_staff" style={{ textDecoration: "none", color: "#474141" }}>Tất cả đơn </Link>
                                             </div>
-                                            <div className='col-3 my-2 content-pickup ' style={{ backgroundColor: "#61dafb", cursor: "pointer" }}> Đơn chưa lấy hàng  </div>
+                                            <div className='col-3 my-2 content-pickup ' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
+                                                <Link to="/Pick_up_no_status" style={{ textDecoration: "none", color: "#474141" }}>Đơn chưa lấy hàng </Link>
 
+                                            </div>
                                             <div className='col-3 content-pickup' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                                 <Link to="/Pick_up_status_one" style={{ textDecoration: "none", color: "#474141" }}> Đơn đang lấy hàng </Link>
                                             </div>
-                                            <div className='col-3 content-pickup' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Pick_up_status_two" style={{ textDecoration: "none", color: "#474141" }}> Đơn đã lấy hàng </Link>
-                                            </div>
+                                            <div className='col-3 my-2 content-pickup ' style={{ backgroundColor: "#61dafb", cursor: "pointer" }}> Đơn đã lấy hàng  </div>
+
 
                                         </div>
                                     </div>
@@ -385,4 +386,4 @@ const PickUpNoStatus = (props) => {
 
 }
 
-export default PickUpNoStatus;
+export default PickUpStatusTwo;

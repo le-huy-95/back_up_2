@@ -49,6 +49,8 @@ import ManageproductsDeliveryStatusThree from "../products staff/manageproducts-
 import ManageproductsDeliveryStatusFour from "../products staff/manageproducts-status-four-delivery"
 import PickUpNoStatus from "../products staff/PickUpNoStatus"
 import PickUpStatusOne from "../products staff/PickUpStatusOne"
+import PickUpStatusTwo from "../products staff/PickUpStatusTwo"
+import WarehouseNoStatus from "../products staff/WarehouseNostatus"
 const AppRoutes = (props) => {
 
     return (
@@ -74,6 +76,10 @@ const AppRoutes = (props) => {
                 <PrivateRoutes path="/listuserbygroupDev" component={UserGroupDev}
                 />
                 <PrivateRoutes path="/listuserbygroupStaff" component={UserGroupStaff}
+                />
+                <PrivateRoutes path="/Warehouse_no_status" component={WarehouseNoStatus}
+                />
+                <PrivateRoutes path="/Pick_up_status_two" component={PickUpStatusTwo}
                 />
                 <PrivateRoutes path="/Pick_up_status_one" component={PickUpStatusOne}
                 />

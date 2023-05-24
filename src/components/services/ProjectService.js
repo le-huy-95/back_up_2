@@ -136,8 +136,8 @@ const getProjectWithPaginationWithEmployerWarhouse = (page, limit, unitId) => {
 const getProjectWithPaginationWithEmployerWarehouse_user = (unitId, username, phone) => {
     return axios.get(`/api/v4/getProjectWithEmployerWarehouse/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
 }
-const updateWarehouseInProject = (id, unitId, StatusProduct, username, phone, status_warehouse_Id) => {
-    return axios.put("/api/v4/project/Employer/update/name_Warehouse", { id, unitId, StatusProduct, username, phone, status_warehouse_Id })
+const updateWarehouseInProject = (id, unitId, StatusProduct, username, phone, status_warehouse_Id, warehouse_time, warehouseDone_time) => {
+    return axios.put("/api/v4/project/Employer/update/name_Warehouse", { id, unitId, StatusProduct, username, phone, status_warehouse_Id, warehouse_time, warehouseDone_time })
 }
 const getProjectWithPaginationWithEmployerDelivery = (page, limit, unitId) => {
     return axios.get(`/api/v4/getProjectWithEmployerDelivery?page=${page}&limit=${limit}&unitId=${unitId}`)

@@ -62,6 +62,14 @@ const PickUpStatusOne = (props) => {
         }
     }
 
+    const completePickup = async (item) => {
+        let res = await updatePickupInProject(+user.account.shippingUnit_Id, item.id, user.account.username, user.account.phone, 2, item.pickup_time, new Date())
+        if (res && +res.EC === 0) {
+            await fetchProjectUser()
+        } else {
+            toast.error(res.EM)
+        }
+    }
 
 
 
@@ -144,7 +152,7 @@ const PickUpStatusOne = (props) => {
                                             <div className='col-3 my-2 content-pickup ' style={{ backgroundColor: "#61dafb", cursor: "pointer" }}> Đơn đang lấy hàng  </div>
 
                                             <div className='col-3 content-pickup' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_Picking" style={{ textDecoration: "none", color: "#474141" }}> Đơn đã lấy hàng </Link>
+                                                <Link to="/Pick_up_status_two" style={{ textDecoration: "none", color: "#474141" }}> Đơn đã lấy hàng </Link>
                                             </div>
 
 
@@ -171,7 +179,6 @@ const PickUpStatusOne = (props) => {
                                                         <tr className='table-secondary'>
                                                             <th scope="col"></th>
 
-                                                            <th scope="col">No</th>
                                                             <th scope="col">Id</th>
 
                                                             <th scope="col">Mã đơn</th>
@@ -210,7 +217,6 @@ const PickUpStatusOne = (props) => {
 
                                                                         }
 
-                                                                        <td >{(currentPage - 1) * currentLimit + index + 1}</td>
 
                                                                         <td>{item.id}</td>
                                                                         <td>{item.order}</td>
@@ -238,9 +244,9 @@ const PickUpStatusOne = (props) => {
 
                                                                         </td>
                                                                         <td>
-                                                                            {!item?.User_PickUp &&
+                                                                            {item?.User_PickUp &&
 
-                                                                                <button className='btn btn-danger' onClick={() => updatePickup(item)}> Nhận đơn</button>
+                                                                                <button className='btn btn-info' onClick={() => completePickup(item)}> Hoàn thành</button>
 
                                                                             }
 
@@ -324,10 +330,10 @@ const PickUpStatusOne = (props) => {
                                                                     <td>{item?.pickupDone_time ? moment(`${item?.pickupDone_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
 
                                                                     <td> {item?.User_PickUp ? item?.User_PickUp : "chưa ai nhận đơn"}- {item?.Number_PickUp ? item?.Number_PickUp : "0"}</td>
-                                                                    {!item?.statuspickupId || item?.statuspickupId === 1 ?
+                                                                    {/* {!item?.statuspickupId || item?.statuspickupId === 1 ?
 
                                                                         <td>
-                                                                            <button className='btn btn-info mx-3 my-1' > Hoàn thành</button>
+                                                                            <button className='btn btn-info mx-3 my-1'  > Hoàn thành</button>
                                                                             <br />
                                                                             <button className='btn btn-warning mx-3 my-1' onClick={() => updatePickup(item)}>Hủy nhận đơn</button>
 
@@ -336,7 +342,17 @@ const PickUpStatusOne = (props) => {
                                                                         <td>
                                                                             <button className="btn btn-succes"></button>
                                                                         </td>
-                                                                    }
+                                                                    } */}
+                                                                    <td>
+                                                                        {item?.User_PickUp &&
+
+                                                                            <button className='btn btn-info' onClick={() => completePickup(item)}> Hoàn thành</button>
+
+                                                                        }
+
+
+                                                                    </td>
+
                                                                 </tr>
                                                             </tbody>
                                                         )

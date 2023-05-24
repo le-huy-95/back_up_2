@@ -186,10 +186,10 @@ const Pickup = (props) => {
                                                 <Link to="/Pick_up_no_status" style={{ textDecoration: "none", color: "#474141" }}>Đơn chưa lấy hàng </Link>
                                             </div>
                                             <div className='col-3 content-pickup' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_Picking" style={{ textDecoration: "none", color: "#474141" }}> Đơn đang lấy hàng </Link>
+                                                <Link to="/Pick_up_status_one" style={{ textDecoration: "none", color: "#474141" }}> Đơn đang lấy hàng </Link>
                                             </div>
                                             <div className='col-3 content-pickup' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Manageproducts_Picking" style={{ textDecoration: "none", color: "#474141" }}> Đơn đã lấy hàng </Link>
+                                                <Link to="/Pick_up_status_two" style={{ textDecoration: "none", color: "#474141" }}> Đơn đã lấy hàng </Link>
                                             </div>
 
                                         </div>
