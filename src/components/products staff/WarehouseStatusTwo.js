@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import moment from "moment"
 import _, { debounce } from "lodash"
 
-const WarehouseNoStatus = (props) => {
+const WarehouseStatusTwo = (props) => {
     let history = useHistory()
     const { user } = React.useContext(UserContext);
     const [collapsed, setCollapsed] = useState(false)
@@ -40,7 +40,7 @@ const WarehouseNoStatus = (props) => {
             SetIsSearch(true)
             let res = await getDataSearchByEmplyer(data, user.account.Position, +user.account.shippingUnit_Id)
             if (res && +res.EC === 0) {
-                let data = res.DT.filter(item => item.statuswarehouseId === 0)
+                let data = res.DT.filter(item => item.statuswarehouseId === 2)
 
                 setListProjectSearch(data)
             }
@@ -78,7 +78,7 @@ const WarehouseNoStatus = (props) => {
 
     const fetchProjectUser = async () => {
 
-        let res = await getDataSortByWarehouse(+user.account.shippingUnit_Id, 0)
+        let res = await getDataSortByWarehouse(+user.account.shippingUnit_Id, 2)
         if (res && +res.EC === 0) {
             setListProjectbyStaffWarehouse(res.DT)
         }
@@ -150,15 +150,15 @@ const WarehouseNoStatus = (props) => {
                                             <div className='col-3 content-warehouse' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                                 <Link to="/Warehouse_staff" style={{ textDecoration: "none", color: "#474141" }}>Tất cả đơn hàng </Link>
                                             </div>
-                                            <div className='col-3 my-2 content-warehouse ' style={{ backgroundColor: "#61dafb", cursor: "pointer" }}> Đơn chưa Nhập kho  </div>
-
+                                            <div className='col-3 my-2 content-warehouse ' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
+                                                <Link to="/Warehouse_no_status" style={{ textDecoration: "none", color: "#474141" }}>Đơn chưa Nhập kho </Link>
+                                            </div>
                                             <div className='col-3 content-warehouse' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                                 <Link to="/Warehouse_status_one" style={{ textDecoration: "none", color: "#474141" }}> Đơn đã nhập kho </Link>
                                             </div>
-                                            <div className='col-3 content-warehouse' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Warehouse_status_two" style={{ textDecoration: "none", color: "#474141" }}> Đơn đã xuất kho </Link>
+                                            <div className='col-3 my-2 content-warehouse ' style={{ backgroundColor: "#61dafb", cursor: "pointer" }}>
+                                                Đơn đã xuất kho
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -218,9 +218,9 @@ const WarehouseNoStatus = (props) => {
                                                                     </td>
                                                                     <td>{item?.warehouse_time ? moment(`${item?.warehouse_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
                                                                     <td>{item?.warehouseDone_time ? moment(`${item?.warehouseDone_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
-                                                                    {item.statuswarehouseId === 0 &&
+                                                                    {item.statuswarehouseId === 1 &&
                                                                         <td>
-                                                                            <button className='btn btn-danger mx-3 my-1' onClick={() => updateWArehouse(item)} > Nhận đơn</button>
+                                                                            <button className='btn btn-success mx-3 my-1' onClick={() => complete(item)} > Hoàn thành</button>
                                                                         </td>
 
 
@@ -308,9 +308,9 @@ const WarehouseNoStatus = (props) => {
                                                                     </td>
                                                                     <td>{item?.warehouse_time ? moment(`${item?.warehouse_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
                                                                     <td>{item?.warehouseDone_time ? moment(`${item?.warehouseDone_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
-                                                                    {item.statuswarehouseId === 0 &&
+                                                                    {item.statuswarehouseId === 1 &&
                                                                         <td>
-                                                                            <button className='btn btn-danger mx-3 my-1' onClick={() => updateWArehouse(item)} > Nhận đơn</button>
+                                                                            <button className='btn btn-success mx-3 my-1' onClick={() => complete(item)} > Hoàn thành</button>
                                                                         </td>
 
 
@@ -368,4 +368,4 @@ const WarehouseNoStatus = (props) => {
 
 }
 
-export default WarehouseNoStatus;
+export default WarehouseStatusTwo;

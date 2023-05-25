@@ -325,7 +325,7 @@ const Pickup = (props) => {
                                                             <td colSpan={14}>
                                                                 <div className='d-flex align-item-center justify-content-center'>
 
-                                                                    <h5> Đơn hàng đã được xử lý toàn bộ</h5>
+                                                                    <h5> Đơn hàng  đã được xử lý hết và chưa phát sinh đơn hàng mới</h5>
 
                                                                 </div>
 

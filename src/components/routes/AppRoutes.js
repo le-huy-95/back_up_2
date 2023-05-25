@@ -51,6 +51,13 @@ import PickUpNoStatus from "../products staff/PickUpNoStatus"
 import PickUpStatusOne from "../products staff/PickUpStatusOne"
 import PickUpStatusTwo from "../products staff/PickUpStatusTwo"
 import WarehouseNoStatus from "../products staff/WarehouseNostatus"
+import WarehouseStatusOne from "../products staff/WarehouseStatusOne"
+import WarehouseStatusTwo from "../products staff/WarehouseStatusTwo"
+import DeliveryNostatus from "../products staff/DeliveryNostatus"
+import DeliveryStatusOne from "../products staff/DeliveryStatusOne"
+import DeliveryStatusTwo from "../products staff/DeliveryStatusTwo"
+import DeliveryStatusFour from "../products staff/DeliveryStatusFour"
+import DeliveryStatusThree from "../products staff/DeliveryStatusThree"
 const AppRoutes = (props) => {
 
     return (
@@ -76,6 +83,20 @@ const AppRoutes = (props) => {
                 <PrivateRoutes path="/listuserbygroupDev" component={UserGroupDev}
                 />
                 <PrivateRoutes path="/listuserbygroupStaff" component={UserGroupStaff}
+                />
+                <PrivateRoutes path="/Delivery_status_three" component={DeliveryStatusThree}
+                />
+                <PrivateRoutes path="/Delivery_status_four" component={DeliveryStatusFour}
+                />
+                <PrivateRoutes path="/Delivery_status_two" component={DeliveryStatusTwo}
+                />
+                <PrivateRoutes path="/Delivery_status_one" component={DeliveryStatusOne}
+                />
+                <PrivateRoutes path="/Delivery_no_status" component={DeliveryNostatus}
+                />
+                <PrivateRoutes path="/Warehouse_status_two" component={WarehouseStatusTwo}
+                />
+                <PrivateRoutes path="/Warehouse_status_one" component={WarehouseStatusOne}
                 />
                 <PrivateRoutes path="/Warehouse_no_status" component={WarehouseNoStatus}
                 />
