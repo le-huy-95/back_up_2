@@ -342,7 +342,7 @@ const CreateNewProject = (props) => {
                                     >
                                         <h4 className='mb-3 d-flex align-item-center justify-content-center'> Thêm thông tin sản phẩm và giá cả</h4>
                                         <div className='row'>
-                                            <div className='name-product col-6 mb-2'>
+                                            <div className='name-product col-5 mb-2'>
                                                 <label htmlFor='input-name-product' className='mb-2' >Tên sản phẩm (<span className='red'>*</span>)</label>
 
                                                 <select
@@ -382,7 +382,7 @@ const CreateNewProject = (props) => {
                                                 }
 
                                             </div>
-                                            <div className='number-product col-6 mb-2'>
+                                            <div className='number-product col-4 mb-2'>
                                                 <label htmlFor='input-number-product' className='mb-2' >Số lượng sản phẩm (<span className='red'>*</span>)</label>
                                                 <input
                                                     id='input-number-product'
@@ -403,6 +403,30 @@ const CreateNewProject = (props) => {
 
                                                 }
 
+                                            </div>
+                                            <div className='unit col-3 mb-2'>
+                                                <label htmlFor='input-product'  >Đơn vị:</label>
+                                                <select
+                                                    readOnly
+                                                    className={validInput.unit ? "form-select my-2" : "form-select my-2 is-invalid"}
+                                                    onChange={(event) => handleOnchangeInput(event.target.value, "unit")}
+                                                    value={userdata.unit}
+                                                >
+                                                    <option value="Đơn vị">Lựa chọn </option>
+                                                    <option value="Chiếc">Chiếc</option>
+                                                    <option value="Bộ">Bộ </option>
+                                                    <option value="Tấm">Tấm</option>
+                                                    <option value="Miếng">Miếng</option>
+                                                    <option value="Túi">Túi</option>
+                                                    <option value="Hộp">Hộp</option>
+                                                    <option value="Gói">Gói </option>
+                                                    <option value="Bao tải">Bao tải</option>
+                                                    <option value="Thùng">Thùng</option>
+
+
+
+
+                                                </select >
                                             </div>
                                             <div className='number-product col-12 mb-2'>
                                                 <label htmlFor='input-number-product' className='mb-2' >Kênh mua hàng (<span className='red'>*</span>)</label>
@@ -538,6 +562,23 @@ const CreateNewProject = (props) => {
                                             </div>
 
 
+                                            <div className='unitMoney col-6 mb-2'>
+                                                <label htmlFor='input-product'>Đơn vị tiền :</label>
+                                                <select
+                                                    className={validInput.unit_money ? "form-select my-2" : "form-select my-2 is-invalid"}
+                                                    onChange={(event) => handleOnchangeInput(event.target.value, "unit_money")}
+                                                    value={userdata.unit_money}
+                                                >
+                                                    <option value="Đơn vị">Lựa chọn </option>
+                                                    <option value="VND">VND</option>
+                                                    <option value="USD">USD</option>
+                                                    <option value="RMB">RMB</option>
+
+
+
+
+                                                </select >
+                                            </div>
 
                                         </div>
 

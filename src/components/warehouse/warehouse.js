@@ -138,7 +138,7 @@ const Warehouse = (props) => {
         getAllInWarehouse()
 
     }, [currentPage])
-   
+
 
     const getDataWithcurrentPage = async () => {
         let currentPageAfterRefesh = +localStorage.getItem("Page one warehouse")
@@ -442,7 +442,7 @@ const Warehouse = (props) => {
                                                 }
                                             </div>
 
-                                            <table class="table  table-hover my-3">
+                                            <table class="table table-bordered  table-hover my-3">
                                                 <thead className='table-success' >
                                                     <tr>
                                                         <th scope="col">No</th>
@@ -479,12 +479,14 @@ const Warehouse = (props) => {
                                                         </th>
 
                                                         <th scope="col">Product status</th>
-                                                        <th scope="col">Product Prince (vnd)</th>
+                                                        <th scope="col">Prince </th>
+                                                        <th scope="col">Unit prince </th>
                                                         <th scope="col">Number </th>
+                                                        <th scope="col">Unit Product </th>
                                                         <th scope="col">Suppliers </th>
                                                         <th scope="col">Suppliers address</th>
                                                         <th scope="col">Suppliers phone</th>
-                                                        <th>
+                                                        <th style={{ width: "150px" }} >
                                                             {sorttime === true ?
                                                                 <span>
                                                                     Created at
@@ -592,7 +594,11 @@ const Warehouse = (props) => {
                                                                             </div>
 
                                                                         </td>
+                                                                        <td>{item?.unitMoney}</td>
+
                                                                         <td>{item?.product_number}</td>
+                                                                        <td>{item?.unit}</td>
+
                                                                         <td>{item?.Suppliers}</td>
                                                                         <td style={{ overflowWrap: "anywhere" }}>{item?.Suppliers_address}</td>
                                                                         <td>{item?.Suppliers_phone}</td>
@@ -699,7 +705,7 @@ const Warehouse = (props) => {
                                                             )
                                                             :
                                                             <tr>
-                                                                <td colSpan={12}>
+                                                                <td colSpan={15}>
                                                                     <div className='imageNotFound'>
                                                                         <img src="https://www.wolfgangdigital.com/uploads/blog/How_to_manage_out_of_date_stock_for_eCommerce.jpg" alt="" />
 
@@ -889,7 +895,7 @@ const Warehouse = (props) => {
                                                             )
                                                             :
                                                             <tr>
-                                                                <td colSpan={12}>
+                                                                <td colSpan={15}>
                                                                     <div className='imageNotFound'>
                                                                         <img src="https://www.wolfgangdigital.com/uploads/blog/How_to_manage_out_of_date_stock_for_eCommerce.jpg" alt="" />
 

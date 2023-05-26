@@ -182,7 +182,8 @@ const DeliveryStatusTwo = (props) => {
 
                                                     </tr>
                                                 </thead>
-                                                {listProjectbyStaffDelivery && listProjectbyStaffDelivery.length > 0 &&
+                                                {listProjectbyStaffDelivery && listProjectbyStaffDelivery.length > 0
+                                                    ?
                                                     listProjectbyStaffDelivery.map((item, index) => {
                                                         return (
                                                             <tbody key={`item-${index}`}>
@@ -238,6 +239,19 @@ const DeliveryStatusTwo = (props) => {
                                                             </tbody>
                                                         )
                                                     })
+                                                    :
+
+                                                    <tr class="table-info">
+                                                        <td colSpan={14}>
+                                                            <div className='d-flex align-item-center justify-content-center'>
+
+                                                                <h5> Đơn hàng  đã được xử lý hết và chưa phát sinh đơn hàng mới</h5>
+
+                                                            </div>
+
+                                                        </td>
+
+                                                    </tr>
                                                 }
 
 

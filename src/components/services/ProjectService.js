@@ -177,6 +177,10 @@ const getDataSortByDelivery = (unitId, statusDelivery) => {
 const getDataSortByOverview = (unitId, receiveMoney) => {
     return axios.get(`/api/v4/Project/allStatusInProduct?unitId=${unitId}&receiveMoney=${receiveMoney}`)
 }
+
+const getProjectWithPaginationWithEmployerOverview = (page, limit, unitId) => {
+    return axios.get(`/api/v4/getProjectWithEmployerOverview?page=${page}&limit=${limit}&unitId=${unitId}}`)
+}
 export {
     getProjectWithPagination, fetchProjectByid, CreateProject, getSaleChannel, getStastusPayment,
     updateProject, deleteProject, createChatProject, updateProjectChat, deleteChatProject, getDataSearch,
@@ -192,5 +196,5 @@ export {
     updateWarehouseInProject, getProjectWithPaginationWithEmployerDelivery, getProjectWithPaginationWithEmployerDelivery_user,
     updateDeliveryInProject, getProjectWithPaginationWithALlStatusPickup, getProjectWithPaginationWithALlStatusWarehouse,
     getProjectWithPaginationWithALlStatusDelivery, getAllStatusProductWithEmployer, getDataSearchByEmplyer, getDataSortByPickup,
-    getDataSortByWarehouse, getDataSortByDelivery, getDataSortByOverview
+    getDataSortByWarehouse, getDataSortByDelivery, getDataSortByOverview, getProjectWithPaginationWithEmployerOverview
 }

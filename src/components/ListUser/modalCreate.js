@@ -436,27 +436,27 @@ const ModalCreate = (props) => {
                             //     />
                             // </div>
                             <div className='col-12 col-sm-6 form-group'>
-                             <label >Position (<span className='red'>*</span>)</label>
-                            <select
-                                className={validInput.Position ? "form-control" : "form-control is-invalid"}
-                                onChange={(event) => handleOnchangeInput(event.target.value, "Position")}
-                                value={userdata.Position}
-                           >
-                                <option value="Đơn vị">Lựa chọn chức vụ</option>
-                                <option value="Nhân viên lấy hàng">Nhân viên lấy hàng</option>
-                                <option value="Nhân viên kho hàng">Nhân viên kho hàng</option>
-                                <option value="Nhân viên giao hàng">Nhân viên giao hàng</option>
-                                <option value="Nhân viên  Kế toán">Nhân viên kế toán</option>
+                                <label >Position (<span className='red'>*</span>)</label>
+                                <select
+                                    className={validInput.Position ? "form-control" : "form-control is-invalid"}
+                                    onChange={(event) => handleOnchangeInput(event.target.value, "Position")}
+                                    value={userdata.Position}
+                                >
+                                    <option value="Đơn vị">Lựa chọn chức vụ</option>
+                                    <option value="Nhân viên lấy hàng">Nhân viên lấy hàng</option>
+                                    <option value="Nhân viên kho hàng">Nhân viên kho hàng</option>
+                                    <option value="Nhân viên giao hàng">Nhân viên giao hàng</option>
+                                    <option value="Nhân viên kế toán">Nhân viên kế toán</option>
 
 
-                                
 
 
-                            </select >
-                             </div>
 
-                            }
-                            
+                                </select >
+                            </div>
+
+                        }
+
 
                         {userdata.group == 2 || userdata.group == 3 ?
                             <></>

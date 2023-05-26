@@ -45,6 +45,7 @@ const Products = (props) => {
         Ward_customer: "",
         detail_address_customer: "",
         Note_More: "",
+        createdByName: user.account.username,
         createdBy: user.account.phone,
         shippingUnitId: "",
         shipping_Cost: "",
@@ -57,7 +58,9 @@ const Products = (props) => {
         Ward_of_receipt: "",
         Detail_Place_of_receipt: "",
         flag: 0,
-        done_status: 0
+        done_status: 0,
+        unit: "",
+        unit_money: ""
     }
 
 
@@ -92,7 +95,9 @@ const Products = (props) => {
         salesChannel: true,
         StatusPaymentId: true,
         flag: true,
-        done_status: true
+        done_status: true,
+        unit: true,
+        unit_money: true
 
 
 
@@ -353,10 +358,9 @@ const Products = (props) => {
 
 
     const [collapsed, setCollapsed] = useState(false)
-
     const checkValueDate = () => {
         setValidInput(ValidInputsDefault)
-        let arr = ["name_Product", "number", "salesChannel", "money", "price_drop", "StatusPaymentId", "paid", "totalMoney",
+        let arr = ["name_Product", "number", "unit", "salesChannel", "money", "price_drop", "StatusPaymentId", "paid", "totalMoney", "unit_money",
             "customer_name", "customer_name_phone", "age",
             "Province_customer", "District_customer", "Ward_customer", "detail_address_customer",
             "Province_of_receipt", "District_of_receipt", "Ward_of_receipt", "Detail_Place_of_receipt",
@@ -422,26 +426,26 @@ const Products = (props) => {
 
         }
 
-        if (userdata[arr[9]] && !regxPhone.test(userdata[arr[9]])) {
+        if (userdata[arr[11]] && !regxPhone.test(userdata[arr[11]])) {
             let _validInput = _.cloneDeep(ValidInputsDefault);
-            _validInput[arr[9]] = false
+            _validInput[arr[11]] = false
             setValidInput(_validInput)
             toast.error("please enter a valid Phone Number")
             return;
 
         }
 
-        if (userdata[arr[9]] && !re.test(userdata[arr[9]])) {
+        if (userdata[arr[12]] && !re.test(userdata[arr[12]])) {
             let _validInput = _.cloneDeep(ValidInputsDefault);
-            _validInput[arr[9]] = false
+            _validInput[arr[12]] = false
             setValidInput(_validInput)
             toast.error("age is number only")
             return;
 
         }
-        if (userdata[arr[11]] && userdata[arr[11]] === "Tỉnh/thành phố") {
+        if (userdata[arr[10]] && userdata[arr[10]] === "Tỉnh/thành phố") {
             let _validInput = _.cloneDeep(ValidInputsDefault);
-            _validInput[arr[11]] = false
+            _validInput[arr[10]] = false
             setValidInput(_validInput)
             toast.error("Empty Province customer")
             return;

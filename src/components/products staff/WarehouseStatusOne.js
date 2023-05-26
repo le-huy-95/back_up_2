@@ -171,7 +171,7 @@ const WarehouseStatusOne = (props) => {
                                             <hr />
                                             <table class="table table-bordered table-body-employer-warehouse-One">
                                                 <thead>
-                                                    <tr >
+                                                    <tr className='table-secondary'>
                                                         <th></th>
                                                         <th scope="col">Id</th>
                                                         <th scope="col">Mã đơn</th>
@@ -261,7 +261,7 @@ const WarehouseStatusOne = (props) => {
                                             <hr />
                                             <table class="table table-bordered table-body-employer-warehouse-One">
                                                 <thead>
-                                                    <tr >
+                                                    <tr className='table-secondary'>
                                                         <th></th>
                                                         <th scope="col">Id</th>
                                                         <th scope="col">Mã đơn</th>

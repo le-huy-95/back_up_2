@@ -78,28 +78,27 @@ const NavHeader = (props) => {
                                             <NavDropdown.Item href='/Warehouse' >Warehouse</NavDropdown.Item>
                                         </NavDropdown>
                                     }
-                                    {user?.account?.groupWithRound?.name === "staff" &&
+                                    {user?.account?.groupWithRound?.name === "Staff" &&
                                         <NavDropdown title="employer" id="basic-nav-dropdown" className='dropdown'>
                                             <NavDropdown.Item href='/order-processing'>Manage</NavDropdown.Item>
-                                            {user?.account?.groupWithRound?.name === "staff" && user?.account?.Position === "Nhân viên lấy hàng" &&
+                                            {user?.account?.groupWithRound?.name === "Staff" && user?.account?.Position === "Nhân viên lấy hàng" &&
                                                 <NavDropdown.Item href='/Pickup_staff'>Pick up</NavDropdown.Item>
-
-
                                             }
-
-                                            {user?.account?.groupWithRound?.name === "staff" && user?.account?.Position === "Nhân viên kho hàng" &&
+                                            {user?.account?.groupWithRound?.name === "Staff" && user?.account?.Position === "Nhân viên kho hàng" &&
                                                 <NavDropdown.Item href='/Warehouse_staff'>Warehouse</NavDropdown.Item>
 
                                             }
-                                            {user?.account?.groupWithRound?.name === "staff" && user?.account?.Position === "Nhân viên giao hàng" &&
+                                            {user?.account?.groupWithRound?.name === "Staff" && user?.account?.Position === "Nhân viên giao hàng" &&
                                                 <NavDropdown.Item href='/Delivery_staff'>Delivery</NavDropdown.Item>
+
+                                            }
+                                            {user?.account?.groupWithRound?.name === "Staff" && user?.account?.Position === "Nhân viên kế toán" &&
+                                                <NavDropdown.Item href='/Overview'>Overview</NavDropdown.Item>
 
                                             }
 
 
 
-
-                                            <NavDropdown.Item href='/Overview'>Overview</NavDropdown.Item>
 
 
                                         </NavDropdown>

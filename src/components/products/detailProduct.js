@@ -1051,8 +1051,49 @@ const DetailProduct = (props) => {
                                                                                     </div>
                                                                                 </div>
 
+                                                                                <div className='item-info py-1 d-flex align-items-center justify-content-between'>
+                                                                                    <div className='container'>
+                                                                                        <div className='row'>
+                                                                                            <div className='item-info_name col-12   '>
+                                                                                                Đơn vị  :
+                                                                                            </div>
+
+                                                                                            <input
+                                                                                                id='input-number-product col-12'
+                                                                                                type="text"
+                                                                                                readOnly
+                                                                                                min="1" max="9999"
+                                                                                                className="form-control mt-2 "
+                                                                                                value={projects.unit}
+                                                                                                onChange={(event) => handleOnchangeInput(event.target.value, "unit")}
 
 
+                                                                                            />
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className='item-info py-1 d-flex align-items-center justify-content-between'>
+                                                                                    <div className='container'>
+                                                                                        <div className='row'>
+                                                                                            <div className='item-info_name col-12   '>
+                                                                                                Tiền sử dụng  :
+                                                                                            </div>
+
+                                                                                            <select
+
+                                                                                                className="form-control"
+                                                                                                onChange={(event) => handleOnchangeInput(event.target.value, "unit_money")}
+                                                                                                value={projects.unit_money}
+                                                                                            >
+                                                                                                <option value="Đơn vị">Lựa chọn </option>
+                                                                                                <option value="VND">VND</option>
+                                                                                                <option value="USD">USD</option>
+                                                                                                <option value="RMB">RMB</option>
+                                                                                            </select >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
 
 
                                                                                 <div className='item-info py-1 d-flex align-items-center justify-content-between'>
@@ -1108,7 +1149,7 @@ const DetailProduct = (props) => {
 
 
                                                                                                         : " Đang cập nhật"
-                                                                                                }     Vnd                                                                                                                                               </div>
+                                                                                                }     {projects.unit_money}                                                                                                                                               </div>
                                                                                         </div>
                                                                                     </div>
 
@@ -1310,6 +1351,19 @@ const DetailProduct = (props) => {
                                                                                 </div>
                                                                                 <div className='item-info py-1 d-flex align-items-center justify-content-between'>
                                                                                     <div className='item-info_name  '>
+                                                                                        Đơn vị  :
+                                                                                    </div>
+                                                                                    <b className='item-info_value'>
+                                                                                        {
+                                                                                            projects.unit
+
+                                                                                                ? projects.unit
+                                                                                                : " Đang cập nhật"
+                                                                                        }
+                                                                                    </b>
+                                                                                </div>
+                                                                                <div className='item-info py-1 d-flex align-items-center justify-content-between'>
+                                                                                    <div className='item-info_name  '>
                                                                                         Giá Sản Phẩm:
                                                                                     </div>
                                                                                     <b className='item-info_value'>
@@ -1317,12 +1371,13 @@ const DetailProduct = (props) => {
                                                                                             projects.money
                                                                                                 ? projects.money
                                                                                                 : " Đang cập nhật"
-                                                                                        }       <span style={{ color: "#7790b6" }}> VNĐ</span>
+                                                                                        }       <span style={{ color: "#7790b6" }}> {projects.unit_money}</span>
                                                                                     </b>
                                                                                 </div>
                                                                                 <div className='item-info py-1 d-flex align-items-center justify-content-between'>
                                                                                     <div className='item-info_name  '>
-                                                                                        Giảm giá :                                                                                </div>
+                                                                                        Giảm giá :
+                                                                                    </div>
                                                                                     <b className='item-info_value'>
                                                                                         {
                                                                                             projects.Pricedrop
@@ -1330,7 +1385,7 @@ const DetailProduct = (props) => {
                                                                                                 ? projects.Pricedrop
 
                                                                                                 : " Đang cập nhật"
-                                                                                        }     <span style={{ color: "#7790b6" }}> VNĐ</span>
+                                                                                        }     <span style={{ color: "#7790b6" }}> {projects.unit_money}</span>
                                                                                     </b>
                                                                                 </div>
                                                                                 <div className='item-info py-1 d-flex align-items-center justify-content-between'>
@@ -1346,7 +1401,7 @@ const DetailProduct = (props) => {
 
                                                                                                 : " Đang cập nhật"
 
-                                                                                        }    <span style={{ color: "#7790b6" }}> VNĐ</span>
+                                                                                        }    <span style={{ color: "#7790b6" }}> {projects.unit_money}</span>
                                                                                     </b>
                                                                                 </div>
                                                                                 <div className='item-info py-1 d-flex align-items-center justify-content-between'>
@@ -1356,7 +1411,7 @@ const DetailProduct = (props) => {
                                                                                     <b className='item-info_value'>
                                                                                         {projects.paid
                                                                                             ? projects.paid
-                                                                                            : "Đang cập nhật"} <span style={{ color: "#7790b6" }}> VNĐ</span>
+                                                                                            : "Đang cập nhật"} <span style={{ color: "#7790b6" }}> {projects.unit_money}</span>
                                                                                     </b>
                                                                                 </div>
                                                                                 <div className='item-info py-3 d-flex align-items-center justify-content-between'>
@@ -1368,7 +1423,7 @@ const DetailProduct = (props) => {
                                                                                     <div className='item-info_value'>
                                                                                         <b>
                                                                                             {projects?.total ? projects?.total : " 0"}
-                                                                                            <span style={{ color: "#7790b6" }}> VNĐ</span>
+                                                                                            <span style={{ color: "#7790b6" }}> {projects.unit_money}</span>
 
                                                                                         </b>
                                                                                     </div>
@@ -1383,7 +1438,7 @@ const DetailProduct = (props) => {
 
                                                                                     <b className='item-info_value'>
                                                                                         {projects?.totalWithShippingCost ? projects?.totalWithShippingCost : " Đang cập nhật"}
-                                                                                        <span style={{ color: "#7790b6" }}> VNĐ</span>
+                                                                                        <span style={{ color: "#7790b6" }}> {projects.unit_money}</span>
 
 
                                                                                     </b>

@@ -226,7 +226,8 @@ const DeliveryStatusFour = (props) => {
 
                                                     </tr>
                                                 </thead>
-                                                {listProjectbyStaffDelivery && listProjectbyStaffDelivery.length > 0 &&
+                                                {listProjectbyStaffDelivery && listProjectbyStaffDelivery.length > 0
+                                                    ?
                                                     listProjectbyStaffDelivery.map((item, index) => {
                                                         return (
                                                             <tbody key={`item-${index}`}>
@@ -289,6 +290,19 @@ const DeliveryStatusFour = (props) => {
                                                             </tbody>
                                                         )
                                                     })
+                                                    :
+
+                                                    <tr class="table-info">
+                                                        <td colSpan={14}>
+                                                            <div className='d-flex align-item-center justify-content-center'>
+
+                                                                <h5> Chưa có đơn phát sinh</h5>
+
+                                                            </div>
+
+                                                        </td>
+
+                                                    </tr>
                                                 }
 
 

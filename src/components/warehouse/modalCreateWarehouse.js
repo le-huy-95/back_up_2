@@ -23,6 +23,8 @@ const ModalCreateWarehouse = (props) => {
         Product_Prince: "",
         Number: "",
         Suppliers: "",
+        unit: "",
+        unitMoney: "",
         Suppliers_address: "",
         Suppliers_phone: "",
         product_statusId: 1,
@@ -34,6 +36,8 @@ const ModalCreateWarehouse = (props) => {
         Product_Prince: true,
         Number: true,
         Suppliers: true,
+        unit: true,
+        unitMoney: true,
         Suppliers_address: true,
         Suppliers_phone: true,
 
@@ -47,6 +51,8 @@ const ModalCreateWarehouse = (props) => {
             draft.Product_Prince = "";
             draft.Number = "";
             draft.Suppliers = "";
+            draft.unit = "";
+            draft.unitMoney = "";
             draft.Suppliers_address = "";
             draft.Suppliers_phone = "";
             draft.image = "";
@@ -67,6 +73,12 @@ const ModalCreateWarehouse = (props) => {
             if (name === "Suppliers") {
                 draft.Suppliers = value
             }
+            if (name === "unit") {
+                draft.unit = value
+            }
+            if (name === "unitMoney") {
+                draft.unitMoney = value
+            }
             if (name === "Suppliers_address") {
                 draft.Suppliers_address = value
             }
@@ -82,8 +94,7 @@ const ModalCreateWarehouse = (props) => {
 
 
     const checkValueDate = () => {
-        // if (action === "Update") return true
-        let arr = ["Product", "Product_Prince", "Number", "Suppliers", "Suppliers_address", "Suppliers_phone", "product_statusId"]
+        let arr = ["Product", "Product_Prince", "Number", "Suppliers", "unit", "unitMoney", "Suppliers_address", "Suppliers_phone", "product_statusId"]
         let check = true;
         const regxPhone = /^\+?1?\s*?\(?\d{3}(?:\)|[-|\s])?\s*?\d{3}[-|\s]?\d{4}$/;
         const re = /^[0-9\b]+$/;
@@ -162,16 +173,16 @@ const ModalCreateWarehouse = (props) => {
 
 
 
-            if (listdata[arr[5]] && !regxPhone.test(listdata[arr[5]])) {
+            if (listdata[arr[7]] && !regxPhone.test(listdata[arr[7]])) {
                 setValidInput(draft => {
-                    draft[arr[5]] = false
+                    draft[arr[7]] = false
                 })
                 toast.error("please enter a valid phone")
                 return false
 
             } else {
                 setValidInput(draft => {
-                    draft[arr[5]] = true
+                    draft[arr[7]] = true
                 })
 
             }
@@ -192,7 +203,7 @@ const ModalCreateWarehouse = (props) => {
 
     }
     const handleSubmit = async () => {
-        let arr = ["Product", "Product_Prince", "Number", "Suppliers", "Suppliers_address", "Suppliers_phone", "product_statusId"]
+        let arr = ["Product", "Product_Prince", "Number", "Suppliers", "unit", "unitMoney", "Suppliers_address", "Suppliers_phone", "product_statusId"]
 
         let check = checkValueDate();
 
@@ -205,12 +216,13 @@ const ModalCreateWarehouse = (props) => {
             formData.append('Product_Prince', listdata.Product_Prince);
             formData.append('Number', listdata.Number);
             formData.append('Suppliers', listdata.Suppliers);
+            formData.append('unit', listdata.unit);
+            formData.append('unitMoney', listdata.unitMoney);
             formData.append('Suppliers_address', listdata.Suppliers_address);
             formData.append('Suppliers_phone', listdata.Suppliers_phone);
             formData.append('product_statusId', listdata.product_statusId);
             formData.append('createdBy', listdata.createdBy);
             formData.append('id', listdata.id);
-
 
 
             if (action === "Create") {
@@ -232,6 +244,8 @@ const ModalCreateWarehouse = (props) => {
                         draft.Product_Prince = "";
                         draft.Number = "";
                         draft.Suppliers = "";
+                        draft.unit = "";
+                        draft.unitMoney = "";
                         draft.Suppliers_address = "";
                         draft.Suppliers_phone = "";
                         draft.image = "";
@@ -246,10 +260,11 @@ const ModalCreateWarehouse = (props) => {
 
 
                 }
-                else{
+                else {
                     toast.error("vui long kiem tra lai anh san pham")
                 }
             } if (action === "Update") {
+                console.log("listdata", listdata)
                 let dataCreate = await axios.put("http://localhost:3030/api/v6/upload-warehouse-pic", formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -268,6 +283,8 @@ const ModalCreateWarehouse = (props) => {
                         draft.Product_Prince = "";
                         draft.Number = "";
                         draft.Suppliers = "";
+                        draft.unit = "";
+                        draft.unitMoney = "";
                         draft.Suppliers_address = "";
                         draft.Suppliers_phone = "";
                         draft.image = "";
@@ -279,6 +296,8 @@ const ModalCreateWarehouse = (props) => {
                         })
 
                     }
+                } else {
+                    toast.error(dataCreate.EM)
                 }
             } if (action === "Repeat") {
                 let data = listdata
@@ -296,6 +315,8 @@ const ModalCreateWarehouse = (props) => {
                         draft.Product_Prince = "";
                         draft.Number = "";
                         draft.Suppliers = "";
+                        draft.unit = "";
+                        draft.unitMoney = "";
                         draft.Suppliers_address = "";
                         draft.Suppliers_phone = "";
                         draft.image = "";
@@ -397,6 +418,8 @@ const ModalCreateWarehouse = (props) => {
                 draft.Product_Prince = "";
                 draft.Number = "";
                 draft.Suppliers = "";
+                draft.unit = "";
+                draft.unitMoney = "";
                 draft.Suppliers_address = "";
                 draft.Suppliers_phone = "";
                 draft.image = "";
@@ -412,6 +435,8 @@ const ModalCreateWarehouse = (props) => {
                 draft.Product_Prince = dataWarehouseEdit.product_cost;
                 draft.Number = dataWarehouseEdit.product_number;
                 draft.Suppliers = dataWarehouseEdit.Suppliers;
+                draft.unit = dataWarehouseEdit.unit;
+                draft.unitMoney = dataWarehouseEdit.unitMoney;
                 draft.Suppliers_address = dataWarehouseEdit.Suppliers_address;
                 draft.Suppliers_phone = dataWarehouseEdit.Suppliers_phone;
                 draft.image = dataWarehouseEdit.image;
@@ -427,6 +452,8 @@ const ModalCreateWarehouse = (props) => {
                 draft.Product_Prince = dataWarehouseRepeat.product_cost;
                 draft.Number = dataWarehouseRepeat.product_number;
                 draft.Suppliers = dataWarehouseRepeat.Suppliers;
+                draft.unit = dataWarehouseRepeat.unit;
+                draft.unitMoney = dataWarehouseRepeat.unitMoney;
                 draft.Suppliers_address = dataWarehouseRepeat.Suppliers_address;
                 draft.Suppliers_phone = dataWarehouseRepeat.Suppliers_phone;
                 draft.image = dataWarehouseRepeat.image;
@@ -484,9 +511,11 @@ const ModalCreateWarehouse = (props) => {
                                             />
                                         </div>
                                     }
+
+
                                     {action === "Repeat" ?
 
-                                        <div className='product col-6'>
+                                        <div className='product col-4'>
                                             <label htmlFor='input-product' className='mb-2' >Giá nhập sản phẩm:</label>
                                             <input
                                                 id='input-product'
@@ -500,7 +529,7 @@ const ModalCreateWarehouse = (props) => {
                                             />
                                         </div>
                                         :
-                                        <div className='product col-6'>
+                                        <div className='product col-4'>
                                             <label htmlFor='input-product' className='mb-2' >Giá nhập sản phẩm:</label>
                                             <input
                                                 id='input-product'
@@ -513,7 +542,41 @@ const ModalCreateWarehouse = (props) => {
                                             />
                                         </div>
                                     }
-                                    <div className='product col-6'>
+                                    {action === "Repeat" ?
+
+                                        <div className='product col-2'>
+                                            <label htmlFor='input-product' className='mb-2' >Đơn vị tiền:</label>
+                                            <select
+                                                readOnly
+
+                                                className={validInput.unitMoney ? "form-control" : "form-control is-invalid"}
+                                                onChange={(event) => handleOnchangeInput(event.target.value, "unitMoney")}
+                                                value={listdata.unitMoney}
+                                            >
+                                                <option value="Đơn vị">Lựa chọn </option>
+                                                <option value="VND">VND</option>
+                                                <option value="USD">USD</option>
+                                                <option value="RMB">RMB</option>
+                                            </select >
+                                        </div>
+
+                                        :
+                                        <div className='product col-2'>
+                                            <label htmlFor='input-product' className='mb-2' >Đơn vị tiền:</label>
+                                            <select
+
+                                                className={validInput.unitMoney ? "form-control" : "form-control is-invalid"}
+                                                onChange={(event) => handleOnchangeInput(event.target.value, "unitMoney")}
+                                                value={listdata.unitMoney}
+                                            >
+                                                <option value="Đơn vị">Lựa chọn </option>
+                                                <option value="VND">VND</option>
+                                                <option value="USD">USD</option>
+                                                <option value="RMB">RMB</option>
+                                            </select >
+                                        </div>
+                                    }
+                                    <div className='product col-4'>
                                         <label htmlFor='input-product' className='mb-2' >Số lượng cần nhập:</label>
                                         <input
                                             id='input-product'
@@ -525,6 +588,53 @@ const ModalCreateWarehouse = (props) => {
 
                                         />
                                     </div>
+                                    {action === "Repeat" ?
+
+                                        <div className='product col-2'>
+                                            <label htmlFor='input-product' className='mb-2' > Đơn vị :</label>
+
+                                            <select
+                                                readOnly
+
+                                                className={validInput.unit ? "form-control" : "form-control is-invalid"}
+                                                value={listdata.unit}
+                                                onChange={(event) => handleOnchangeInput(event.target.value, "unit")}
+                                            >
+                                                <option value="Đơn vị">Lựa chọn </option>
+                                                <option value="Chiếc">Chiếc</option>
+                                                <option value="Bộ">Bộ </option>
+                                                <option value="Tấm">Tấm</option>
+                                                <option value="Miếng">Miếng</option>
+                                                <option value="Túi">Túi</option>
+                                                <option value="Hộp">Hộp</option>
+                                                <option value="Gói">Gói </option>
+                                                <option value="Bao tải">Bao tải</option>
+                                                <option value="Thùng">Thùng</option>
+                                            </select >
+
+                                        </div>
+                                        :
+                                        <div className='product col-2'>
+                                            <label htmlFor='input-product' className='mb-2' >Đơn vị:</label>
+                                            <select
+
+                                                className={validInput.unit ? "form-control" : "form-control is-invalid"}
+                                                value={listdata.unit}
+                                                onChange={(event) => handleOnchangeInput(event.target.value, "unit")}
+                                            >
+                                                <option value="Đơn vị">Lựa chọn </option>
+                                                <option value="Chiếc">Chiếc</option>
+                                                <option value="Bộ">Bộ </option>
+                                                <option value="Tấm">Tấm</option>
+                                                <option value="Miếng">Miếng</option>
+                                                <option value="Túi">Túi</option>
+                                                <option value="Hộp">Hộp</option>
+                                                <option value="Gói">Gói </option>
+                                                <option value="Bao tải">Bao tải</option>
+                                                <option value="Thùng">Thùng</option>
+                                            </select >
+                                        </div>
+                                    }
                                     {action === "Repeat" ?
                                         <div className='product col-6'>
                                             <label htmlFor='input-product' className='mb-2' >Đối tác nhập hàng :</label>
@@ -646,7 +756,7 @@ const ModalCreateWarehouse = (props) => {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-            </form>
+            </form >
         </>
     );
 }

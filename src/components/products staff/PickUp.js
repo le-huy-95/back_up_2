@@ -94,14 +94,12 @@ const Pickup = (props) => {
 
     const fetchProjectUser = async () => {
 
-        let res = await getProjectWithPaginationWithEmployerPickUp(currentPage, currentLimit, +user.account.shippingUnit_Id
-        )
+        let res = await getProjectWithPaginationWithEmployerPickUp(currentPage, currentLimit, +user.account.shippingUnit_Id)
         if (res && +res.EC === 0) {
             setTotalPage(+res.DT.totalPage)
             if (res.DT.totalPage > 0 && res.DT.dataProject.length === 0) {
                 setCurrentPage(+res.DT.totalPage)
-                await getProjectWithPaginationWithEmployerPickUp(+res.DT.totalPage, currentLimit, +user.account.shippingUnit_Id
-                )
+                await getProjectWithPaginationWithEmployerPickUp(+res.DT.totalPage, currentLimit, +user.account.shippingUnit_Id)
             }
             if (res.DT.totalPage > 0 && res.DT.dataProject.length > 0) {
                 let data = res.DT.dataProject
@@ -265,7 +263,7 @@ const Pickup = (props) => {
 
                                                         listProjectbyStaffPickup.map((item, index) => {
                                                             return (
-                                                                <tbody>
+                                                                <tbody key={`item-${index}`}>
 
                                                                     <tr >
                                                                         {item?.flag === true ?

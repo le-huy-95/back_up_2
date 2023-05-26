@@ -691,7 +691,7 @@ const Warehouse_status_productId4 = (props) => {
                                                             )
                                                             :
                                                             <tr>
-                                                                <td colSpan={12}>
+                                                                <td colSpan={15}>
                                                                     <div className='imageNotFound'>
                                                                         <img src="https://www.wolfgangdigital.com/uploads/blog/How_to_manage_out_of_date_stock_for_eCommerce.jpg" alt="" />
 
@@ -874,7 +874,7 @@ const Warehouse_status_productId4 = (props) => {
                                                             )
                                                             :
                                                             <tr>
-                                                                <td colSpan={12}>
+                                                                <td colSpan={15}>
                                                                     <div className='imageNotFound'>
                                                                         <img src="https://www.wolfgangdigital.com/uploads/blog/How_to_manage_out_of_date_stock_for_eCommerce.jpg" alt="" />
 
