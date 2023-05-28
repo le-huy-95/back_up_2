@@ -41,27 +41,26 @@ const DeliveryStatusFour = (props) => {
 
 
     const completePickup = async (item) => {
-        let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 2, user.account.username, user.account.phone, "", "", item.Delivery_time, new Date())
+        let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 2, user.account.username, user.account.phone, "", "", item.Delivery_time, new Date(), "")
         if (res && +res.EC === 0) {
             await fetchProjectUser()
         } else {
             toast.error(res.EM)
         }
     }
-    const updateDelivery = async (item) => {
+    // const updateDelivery = async (item) => {
 
-        if (!item.User_Delivery && !item.Number_Delivery) {
-            let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 1, user.account.username, user.account.phone, "", "", new Date(), "")
-            if (res && +res.EC === 0) {
-                console.log("res", res)
-                await fetchProjectUser()
-                await HandleSearchData(valueSearch)
-            } else {
-                toast.error(res.EM)
-            }
-        }
+    //     if (!item.User_Delivery && !item.Number_Delivery) {
+    //         let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 1, user.account.username, user.account.phone, "", "", new Date(), "")
+    //         if (res && +res.EC === 0) {
+    //             await fetchProjectUser()
+    //             await HandleSearchData(valueSearch)
+    //         } else {
+    //             toast.error(res.EM)
+    //         }
+    //     }
 
-    }
+    // }
 
     const fetchProjectUserWithUsername = async () => {
         let res = await getProjectWithPaginationWithEmployerDelivery_user(+user.account.shippingUnit_Id, user.account.username, user.account.phone)
@@ -79,7 +78,8 @@ const DeliveryStatusFour = (props) => {
             SetIsSearch(true)
             let res = await getDataSearchByEmplyer(data, user.account.Position, +user.account.shippingUnit_Id)
             if (res && +res.EC === 0) {
-                let data = res.DT.filter(item => item.statusDeliveryId === 4)
+                let data = res.DT.filter(item => item.statusDeliveryId === 1 && item.Notice_Delivery !== "")
+
 
                 setListProjectSearch(data)
             }
@@ -97,9 +97,11 @@ const DeliveryStatusFour = (props) => {
 
     const fetchProjectUser = async () => {
 
-        let res = await getDataSortByDelivery(+user.account.shippingUnit_Id, 4)
+        let res = await getDataSortByDelivery(+user.account.shippingUnit_Id, 1)
         if (res && +res.EC === 0) {
-            setListProjectbyStaffDelivey(res.DT)
+            console.log("res.DT", res.DT)
+            let data = res.DT.filter(item => item.Notice_Delivery !== "")
+            setListProjectbyStaffDelivey(data)
         }
     }
 
@@ -180,7 +182,7 @@ const DeliveryStatusFour = (props) => {
                                             <div className='col-3 my-2 content-Delivery ' style={{ backgroundColor: "#61dafb", cursor: "pointer" }}> Đơn giao lại </div>
 
                                             <div className='col-3 content-Delivery' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/Delivery_status_three" style={{ textDecoration: "none", color: "#474141" }}> Đơn đã giao hàng </Link>
+                                                <Link to="/Delivery_status_three" style={{ textDecoration: "none", color: "#474141" }}> Đơn hủy giao hàng </Link>
                                             </div>
 
 
@@ -220,6 +222,8 @@ const DeliveryStatusFour = (props) => {
                                                         <th scope="col">Địa chỉ giao hàng </th>
                                                         <th scope="col"> Nhân viên giao hàng</th>
                                                         <th scope="col"> Số tiền phải thu</th>
+                                                        <th scope="col"> Lí do giao lại</th>
+                                                        <th scope="col"> Thời gian nhận đơn</th>
 
                                                         <th scope="col">Thao tác</th>
 
@@ -264,7 +268,15 @@ const DeliveryStatusFour = (props) => {
 
                                                                     </td>
                                                                     <td>{item.totalWithShippingCost} VNĐ</td>
-                                                                    {item.statusDeliveryId === 4 && item.User_Delivery === user.account.username && item.Number_Delivery === user.account.phone
+                                                                    {item.Notice_Delivery ?
+                                                                        <td style={{ color: "red", fontWeight: "500" }}>{item.Notice_Delivery}</td>
+                                                                        :
+                                                                        <td></td>
+
+                                                                    }
+                                                                    <td>{item?.Delivery_time ? moment(`${item?.Delivery_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
+
+                                                                    {item.statusDeliveryId === 1 && item.User_Delivery === user.account.username && item.Number_Delivery === user.account.phone
                                                                         &&
                                                                         <td>
 

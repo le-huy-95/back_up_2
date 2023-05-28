@@ -15,7 +15,6 @@ const ModalCreateWarehouse = (props) => {
     const { showModalCreateWarehouse, handleShowhideModalCreateWarehouse, action, dataWarehouseEdit, fetchProjectUser, previreImage, setprevireImage, dataWarehouseRepeat } = props;
     const { user } = React.useContext(UserContext);
     let history = useHistory()
-
     const [listdata, setListdata] = useImmer({
         id: "",
         image: "",
@@ -230,9 +229,10 @@ const ModalCreateWarehouse = (props) => {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
-                });
+                }).catch((err) => {
+                    toast.error("ảnh vượt quá dung lượng cho phép hoặc không hợp lệ")
+                })
                 if (dataCreate && +dataCreate.EC === 0) {
-                    console.log("dataCreate", dataCreate)
                     toast.success(dataCreate.EM)
                     history.push("/Warehouse")
                     handleShowhideModalCreateWarehouse()
@@ -260,15 +260,15 @@ const ModalCreateWarehouse = (props) => {
 
 
                 }
-                else {
-                    toast.error("vui long kiem tra lai anh san pham")
-                }
+
+
             } if (action === "Update") {
-                console.log("listdata", listdata)
                 let dataCreate = await axios.put("http://localhost:3030/api/v6/upload-warehouse-pic", formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
+                }).catch((err) => {
+                    toast.error("ảnh vượt quá dung lượng cho phép hoặc không hợp lệ")
                 });
                 if (dataCreate && +dataCreate.EC === 0) {
                     console.log("dataCreate", dataCreate)
@@ -296,10 +296,9 @@ const ModalCreateWarehouse = (props) => {
                         })
 
                     }
-                } else {
-                    toast.error(dataCreate.EM)
                 }
             } if (action === "Repeat") {
+                console.log("listdata", listdata)
                 let data = listdata
 
                 let res =
@@ -336,78 +335,6 @@ const ModalCreateWarehouse = (props) => {
             }
         }
     }
-    // const submitData = async () => {
-    //     let arr = ["Product", "Product_Prince", "Number", "Suppliers", "Suppliers_address", "Suppliers_phone", "product_statusId"]
-
-    //     let check = checkValueDate();
-
-    //     if (check === true) {
-    //         let data = listdata
-    //         let res = action === "Create"
-    //             ?
-    //             await createWarehouse(data)
-    //             :
-    //             await updateWarehouse(data)
-
-    //         if (res && +res.EC === 0) {
-
-    //             toast.success(res.EM)
-    //             history.push("/Warehouse")
-    //             handleShowhideModalCreateWarehouse()
-
-    //             await fetchProjectUser()
-    //             setprevireImage("")
-    //             setListdata(draft => {
-    //                 draft.Product = "";
-    //                 draft.Product_Prince = "";
-    //                 draft.Number = "";
-    //                 draft.Suppliers = "";
-    //                 draft.Suppliers_address = "";
-    //                 draft.Suppliers_phone = "";
-    //                 draft.image = "";
-    //                 draft.product_statusId = 1
-    //             });
-    //             for (let i = 0; i < arr.length; i++) {
-    //                 setValidInput(draft => {
-    //                     draft[arr[i]] = true
-    //                 })
-
-    //             }
-
-
-    //         }
-    //         if (action === "Repeat") {
-    //             let res =
-    //                 await createWarehouse(data)
-
-
-    //             if (res && +res.EC === 0) {
-    //                 toast.success(res.EM)
-    //                 handleShowhideModalCreateWarehouse()
-    //                 setprevireImage("")
-    //                 setListdata(draft => {
-    //                     draft.Product = "";
-    //                     draft.Product_Prince = "";
-    //                     draft.Number = "";
-    //                     draft.Suppliers = "";
-    //                     draft.Suppliers_address = "";
-    //                     draft.Suppliers_phone = "";
-    //                     draft.image = "";
-    //                     draft.product_statusId = 1
-    //                 });
-    //                 await fetchProjectUser()
-    //                 for (let i = 0; i < arr.length; i++) {
-    //                     setValidInput(draft => {
-    //                         draft[arr[i]] = true
-    //                     })
-
-    //                 }
-
-
-    //             }
-    //         }
-    //     }
-    // }
 
 
     useEffect(() => {

@@ -62,7 +62,7 @@ const DeliveryStatusOne = (props) => {
 
 
     const completePickup = async (item) => {
-        let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 2, user.account.username, user.account.phone, "", "", item.Delivery_time, new Date())
+        let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 2, user.account.username, user.account.phone, "", "", item.Delivery_time, new Date(), "")
         if (res && +res.EC === 0) {
             await fetchProjectUser()
         } else {
@@ -72,7 +72,7 @@ const DeliveryStatusOne = (props) => {
     const updateDelivery = async (item) => {
 
         if (!item.User_Delivery && !item.Number_Delivery) {
-            let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 1, user.account.username, user.account.phone, "", "", new Date(), "")
+            let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 1, user.account.username, user.account.phone, "", "", new Date(), "", "")
             if (res && +res.EC === 0) {
                 console.log("res", res)
                 await fetchProjectUser()
@@ -83,7 +83,7 @@ const DeliveryStatusOne = (props) => {
         }
         if (item.User_Delivery && item.Number_Delivery) {
 
-            let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 0, "", "", "", "", "", "",)
+            let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 0, "", "", "", "", "", "")
             if (res && +res.EC === 0) {
                 await fetchProjectUser()
                 await HandleSearchData(valueSearch)
@@ -98,7 +98,9 @@ const DeliveryStatusOne = (props) => {
 
         let res = await getDataSortByDelivery(+user.account.shippingUnit_Id, 1)
         if (res && +res.EC === 0) {
-            setListProjectbyStaffDelivey(res.DT)
+            let data = res.DT.filter(item => item.Notice_Delivery === "")
+
+            setListProjectbyStaffDelivey(data)
         }
     }
     const fetchProjectUserWithUsername = async () => {

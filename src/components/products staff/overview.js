@@ -4,9 +4,10 @@ import SidebarStaff from "../sidebar/sidebar staff"
 import { Link, NavLink, useHistory } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import { UserContext } from "../../contexApi/UserContext"
-import { getProjectWithPaginationWithEmployerOverview } from "../services/ProjectService"
+import { getProjectWithPaginationWithEmployerOverview, getProjectWithPaginationWithEmployerOverview_user } from "../services/ProjectService"
 import ReactPaginate from 'react-paginate';
 import ModalChatWithCutomer from "./modalChatWithCutomer"
+import { toast } from 'react-toastify'
 
 const Overview = (props) => {
     let history = useHistory()
@@ -18,9 +19,20 @@ const Overview = (props) => {
     const [isLoading, SetIsLoading] = useState(false)
     const [totalPage, setTotalPage] = useState(0)
     const [showModal, setShowModal] = useState(false)
+    const [listProjectbyuserStaff, setListProjectbyuserStaff] = useState([])
 
     const handleShowModal = () => {
         setShowModal(!showModal)
+    }
+
+    const fetchProjectUserWithUsername = async () => {
+        let res = await getProjectWithPaginationWithEmployerOverview_user(+user.account.shippingUnit_Id, user.account.username, user.account.phone)
+        if (res && +res.EC === 0) {
+            setListProjectbyuserStaff(res.DT)
+        } else {
+            toast.error(res.EM)
+        }
+
     }
     const fetchProjectUser = async () => {
 
@@ -33,10 +45,9 @@ const Overview = (props) => {
             }
             if (res.DT.totalPage > 0 && res.DT.dataProject.length > 0) {
                 let data = res.DT.dataProject
-                console.log("data", data)
+                console.log("data", res.DT)
                 if (data) {
                     setListProjectbyStaffOverview(data)
-                    SetIsLoading(true)
                 }
             }
             if (res.DT.totalPage === 0 && res.DT.dataProject.length === 0) {
@@ -52,6 +63,7 @@ const Overview = (props) => {
 
     useEffect(() => {
         fetchProjectUser();
+        fetchProjectUserWithUsername()
     }, [currentPage])
     return (
         <div className='overview-container '>
@@ -123,7 +135,7 @@ const Overview = (props) => {
                                 </div>
                                 <div className='table-wrapper-overview my-5'>
                                     <div className='container'>
-                                        <div className='title-overview my-3'>Tất cả đơn hàng (5)</div>
+                                        <div className='title-overview my-3'>Tất cả đơn hàng ({listProjectbyStaffOverview.length})</div>
                                         <hr />
                                         <div className='sub-title-overview'>
 
@@ -133,7 +145,7 @@ const Overview = (props) => {
                                                     onPageChange={handlePageClick}
                                                     pageRangeDisplayed={2}
                                                     marginPagesDisplayed={3}
-                                                    pageCount={1}
+                                                    pageCount={totalPage}
                                                     previousLabel="< previous"
                                                     pageClassName="page-item"
                                                     pageLinkClassName="page-link"
@@ -153,18 +165,19 @@ const Overview = (props) => {
                                             </div>
 
                                         </div>
-                                        <table class="table table-bordered table-body-overview">
+                                        <table className="table table-bordered table-body-overview">
                                             <thead>
-                                                <tr >
+                                                <tr className='table-secondary'>
                                                     <th scope="col">No</th>
                                                     <th scope="col">Id</th>
                                                     <th scope="col">Mã đơn</th>
                                                     <th scope="col">Thông tin người tạo </th>
-                                                    <th scope="col">T/T giao hàng</th>
-                                                    <th scope="col">Lý do hủy hàng</th>
+                                                    <th scope="col">T/T thanh toán</th>
                                                     <th scope="col">T/T tk ngân hàng </th>
-                                                    <th scope="col">Tổng tiền thu hộ </th>
-                                                    <th scope="col">Phụ phí</th>
+                                                    <th scope="col">Tổng tiền cần thanh toán </th>
+                                                    <th scope="col">Loại tiền</th>
+
+                                                    <th scope="col">Người nhận đơn</th>
                                                     <th scope="col">Thao tác</th>
 
 
@@ -175,7 +188,7 @@ const Overview = (props) => {
                                                     return (
                                                         <tbody key={`item-${index}`}>
 
-                                                            <tr class="table-success">
+                                                            <tr>
                                                                 <td >{(currentPage - 1) * currentLimit + index + 1}</td>
                                                                 <td>{item.id}</td>
                                                                 <td>{item.order}</td>
@@ -189,8 +202,18 @@ const Overview = (props) => {
 
                                                                     </span>
                                                                 </td>
-                                                                <td>{item?.Status_Delivery?.status ? item?.Status_Delivery?.status : ""} </td>
-                                                                <td>{item?.Cancel_reason ? item?.Cancel_reason : ""}</td>
+                                                                {!item.receiveMoneyId &&
+                                                                    <td style={{ color: "orange", fontWeight: "600" }}>{item?.Status_Received_money?.status ? item?.Status_Received_money?.status : "Chưa xử lý"} </td>
+
+                                                                }
+                                                                {item.receiveMoneyId == 1 &&
+                                                                    <td style={{ color: "blue", fontWeight: "600" }}>{item?.Status_Received_money?.status ? item?.Status_Received_money?.status : "Chưa xử lý"} </td>
+
+                                                                }
+                                                                {item.receiveMoneyId == 2 &&
+                                                                    <td style={{ color: "red", fontWeight: "600" }}>{item?.Status_Received_money?.status ? item?.Status_Received_money?.status : "Chưa xử lý"} </td>
+
+                                                                }
                                                                 <td>
                                                                     <span>
                                                                         {item?.Bank_name ? item?.Bank_name : ""}
@@ -200,13 +223,23 @@ const Overview = (props) => {
                                                                         {item?.Account_number ? item?.Account_number : ""}
                                                                     </span>
                                                                 </td>
-                                                                <td>{item.totalWithShippingCost}</td>
-                                                                <td>{item.Sub_money}</td>
+                                                                <td>{item.total}</td>
+                                                                <td>{item.unit_money}</td>
 
                                                                 <td>
-                                                                    <button className='btn btn-danger'> Thanh toán</button>
+                                                                    {item.User_Overview ? item.User_Overview : "chưa ai nhận đơn"}
+                                                                    <br />
+                                                                    {item.Number_Overview && item.Number_Overview}
+
                                                                 </td>
+
+                                                                {+item.statusDeliveryId === 2 &&
+                                                                    < td >
+                                                                        <button className='btn btn-info'> Nhận đơn</button>
+                                                                    </td>
+                                                                }
                                                             </tr>
+
                                                         </tbody>
                                                     )
                                                 })
@@ -223,37 +256,82 @@ const Overview = (props) => {
                                         <div className='title-overview-One my-3'>đơn hàng đã thanh toán (5)</div>
                                         <hr />
 
-                                        <table class="table table-bordered table-body-overview">
+                                        <table className="table table-bordered table-body-overview">
                                             <thead>
-                                                <tr >
-                                                    <th scope="col">No</th>
-                                                    <th scope="col">Mã đơn</th>
-                                                    <th scope="col"> Người tạo đơn</th>
-                                                    <th scope="col">Số điện thoại người tạo đơn</th>
-                                                    <th scope="col">Số tiền thu hộ khách</th>
-                                                    <th scope="col">Phụ phí</th>
-                                                    <th scope="col">tài khoản ngân hàng</th>
-                                                    <th scope="col">Thao tác</th>
+                                                <th scope="col">Id</th>
+                                                <th scope="col">Mã đơn</th>
+                                                <th scope="col">Thông tin người tạo </th>
+                                                <th scope="col">T/T thanh toán</th>
+                                                <th scope="col">T/T tk ngân hàng </th>
+                                                <th scope="col">Tổng tiền cần thanh toán </th>
+                                                <th scope="col">Loại tiền</th>
+                                                <th scope="col">Người nhận đơn</th>
+                                                <th scope="col">Thao tác</th>
 
-
-                                                </tr>
                                             </thead>
-                                            <tbody>
+                                            {listProjectbyuserStaff && listProjectbyuserStaff.length > 0 &&
+                                                listProjectbyuserStaff.map((item, index) => {
+                                                    return (
+                                                        <tbody key={`item-${index}`}>
 
-                                                <tr class="table-success">
-                                                    <td>1</td>
-                                                    <td>abcssasadsa</td>
-                                                    <td>bánh mochi</td>
-                                                    <td>anh tùng </td>
-                                                    <td>Hà nội</td>
-                                                    <td>0789321456  </td>
-                                                    <td>Anh Tú</td>
+                                                            <tr>
+                                                                <td>{item.id}</td>
+                                                                <td>{item.order}</td>
+                                                                <td>
+                                                                    <span>
+                                                                        {item.createdByName}
+                                                                    </span>
+                                                                    <br />
+                                                                    <span>
+                                                                        {item.createdBy}
 
-                                                    <td>
-                                                        <button className='btn btn-danger'> Thanh toán</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+                                                                    </span>
+                                                                </td>
+                                                                {!item.receiveMoneyId &&
+                                                                    <td style={{ color: "orange", fontWeight: "600" }}>{item?.Status_Received_money?.status ? item?.Status_Received_money?.status : "Chưa xử lý"} </td>
+
+                                                                }
+                                                                {item.receiveMoneyId == 1 &&
+                                                                    <td style={{ color: "blue", fontWeight: "600" }}>{item?.Status_Received_money?.status ? item?.Status_Received_money?.status : "Chưa xử lý"} </td>
+
+                                                                }
+                                                                {item.receiveMoneyId == 2 &&
+                                                                    <td style={{ color: "red", fontWeight: "600" }}>{item?.Status_Received_money?.status ? item?.Status_Received_money?.status : "Chưa xử lý"} </td>
+
+                                                                }
+                                                                <td>
+                                                                    <span>
+                                                                        {item?.Bank_name ? item?.Bank_name : ""}
+                                                                    </span>
+                                                                    <br />
+                                                                    <span>
+                                                                        {item?.Account_number ? item?.Account_number : ""}
+                                                                    </span>
+                                                                </td>
+                                                                <td>{item.total}</td>
+                                                                <td>{item.unit_money}</td>
+                                                                <td>
+                                                                    {item.User_Overview}
+                                                                    <br />
+                                                                    {item.Number_Overview}
+
+                                                                </td>
+
+                                                                {+item.statusDeliveryId === 2 &&
+                                                                    < td >
+                                                                        <button className='btn btn-info'> Nhận đơn</button>
+                                                                    </td>
+                                                                }
+                                                            </tr>
+
+                                                        </tbody>
+                                                    )
+                                                })
+
+                                            }
+
+
+
 
                                         </table>
                                     </div>

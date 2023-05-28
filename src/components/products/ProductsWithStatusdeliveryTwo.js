@@ -635,7 +635,19 @@ const ProductsWithStatusdeliveryTwo = (props) => {
                         <div className='body'>
                             <div className="container">
                                 <div className='name-page'>
-                                    <h4> Orders </h4>
+                                    <div className='title_name_page'>
+                                        <h4> Orders  </h4>
+                                        <Link to="/dashboard_Product" style={{ textDecoration: "none", color: "#474141" }}>
+                                            <button className='btn btn-primary'>
+                                                <span>
+                                                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                                                </span>
+                                                <span className='mx-3'>
+                                                    Thống kê chi tiết
+                                                </span>
+                                            </button>
+                                        </Link>
+                                    </div>
                                     <div className='more'>
 
                                         <button className='btn btn-warning' onClick={() => handleExportData()}>
@@ -649,6 +661,7 @@ const ProductsWithStatusdeliveryTwo = (props) => {
                                     </div>
 
                                 </div>
+
                                 <div className='table-wrapper'>
 
                                     <div className="container">

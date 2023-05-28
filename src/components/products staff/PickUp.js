@@ -21,10 +21,11 @@ const Pickup = (props) => {
     const [isSearch, SetIsSearch] = useState(false)
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [currentLimit, setCurrentLimit] = useState(6)
+    const [currentLimit, setCurrentLimit] = useState(5)
     const [isLoading, SetIsLoading] = useState(false)
     const [totalPage, setTotalPage] = useState(0)
     const [showModal, setShowModal] = useState(false)
+    const [valueSearch, setvalueSearch] = useState("")
 
     const handleShowModal = () => {
         setShowModal(!showModal)
@@ -34,6 +35,8 @@ const Pickup = (props) => {
 
     const HandleSearchData = debounce(async (value) => {
         let data = value
+        setvalueSearch(value)
+
         if (data) {
             SetIsSearch(true)
             let res = await getDataSearchByEmplyer(data, user.account.Position, +user.account.shippingUnit_Id)
@@ -56,6 +59,7 @@ const Pickup = (props) => {
             if (res && +res.EC === 0) {
                 await fetchProjectUserWithUsername()
                 await fetchProjectUser()
+                await HandleSearchData(valueSearch)
             } else {
                 toast.error(res.EM)
             }
@@ -65,6 +69,8 @@ const Pickup = (props) => {
             if (res && +res.EC === 0) {
                 await fetchProjectUserWithUsername()
                 await fetchProjectUser()
+                await HandleSearchData(valueSearch)
+
             } else {
                 toast.error(res.EM)
             }
@@ -76,6 +82,8 @@ const Pickup = (props) => {
         if (res && +res.EC === 0) {
             await fetchProjectUserWithUsername()
             await fetchProjectUser()
+            await HandleSearchData(valueSearch)
+
         } else {
             toast.error(res.EM)
         }
@@ -122,8 +130,6 @@ const Pickup = (props) => {
     useEffect(() => {
         fetchProjectUser();
         fetchProjectUserWithUsername()
-        const today = moment();
-
     }, [currentPage])
     return (
         <div className='employer-pickup-container '>
@@ -304,15 +310,21 @@ const Pickup = (props) => {
                                                                             {item?.Number_PickUp ? item?.Number_PickUp : ""}
 
                                                                         </td>
-                                                                        <td>
-                                                                            {!item?.User_PickUp &&
-
+                                                                        {!item?.User_PickUp &&
+                                                                            <td>
                                                                                 <button className='btn btn-danger' onClick={() => updatePickup(item)}> Nhận đơn</button>
-
-                                                                            }
-
-
-                                                                        </td>
+                                                                            </td>
+                                                                        }
+                                                                        {+item?.statuspickupId === 1 &&
+                                                                            <td>
+                                                                                <button className='btn btn-info' > Đang lấy hàng</button>
+                                                                            </td>
+                                                                        }
+                                                                        {+item?.statuspickupId === 2 &&
+                                                                            <td>
+                                                                                <button className='btn btn-success' > lấy hàng thành công</button>
+                                                                            </td>
+                                                                        }
                                                                     </tr>
                                                                 </tbody>
                                                             )
@@ -489,7 +501,12 @@ const Pickup = (props) => {
                                                                     <td>{item?.pickupDone_time ? moment(`${item?.pickupDone_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
 
                                                                     <td> {item?.User_PickUp ? item?.User_PickUp : "chưa ai nhận đơn"}- {item?.Number_PickUp ? item?.Number_PickUp : "0"}</td>
-                                                                    {!item?.statuspickupId || item?.statuspickupId === 1 ?
+                                                                    {!item?.User_PickUp &&
+                                                                        <td>
+                                                                            <button className='btn btn-danger' onClick={() => updatePickup(item)}> Nhận đơn</button>
+                                                                        </td>
+                                                                    }
+                                                                    {item?.statuspickupId === 1 &&
 
                                                                         <td>
                                                                             <button className='btn btn-info mx-3 my-1' onClick={() => completePickup(item)}> Hoàn thành</button>
@@ -497,9 +514,11 @@ const Pickup = (props) => {
                                                                             <button className='btn btn-warning mx-3 my-1' onClick={() => updatePickup(item)}>Hủy nhận đơn</button>
 
                                                                         </td>
-                                                                        :
+
+                                                                    }
+                                                                    {+item?.statuspickupId === 2 &&
                                                                         <td>
-                                                                            <button className="btn btn-succes"></button>
+                                                                            <button className='btn btn-success' > lấy hàng thành công</button>
                                                                         </td>
                                                                     }
                                                                 </tr>

@@ -60,10 +60,11 @@ const Delivery_staff = (props) => {
 
     }, 200)
     const completePickup = async (item) => {
-        let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 2, user.account.username, user.account.phone, "", "", item.Delivery_time, new Date())
+        let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 2, user.account.username, user.account.phone, "", "", item.Delivery_time, new Date(), "")
         if (res && +res.EC === 0) {
             await fetchProjectUserWithUsername()
             await fetchProjectUser()
+            await HandleSearchData(valueSearch)
         } else {
             toast.error(res.EM)
         }
@@ -75,7 +76,7 @@ const Delivery_staff = (props) => {
     const updateDelivery = async (item) => {
 
         if (!item.User_Delivery && !item.Number_Delivery) {
-            let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 1, user.account.username, user.account.phone, "", "", new Date(), "")
+            let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 1, user.account.username, user.account.phone, "", "", new Date(), "", "")
             if (res && +res.EC === 0) {
                 console.log("res", res)
                 await fetchProjectUserWithUsername()
@@ -87,7 +88,7 @@ const Delivery_staff = (props) => {
         }
         if (item.User_Delivery && item.Number_Delivery) {
 
-            let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 0, "", "", "", "", "", "",)
+            let res = await updateDeliveryInProject(item.id, +user.account.shippingUnit_Id, 0, "", "", "", "", "", "", "")
             if (res && +res.EC === 0) {
                 await fetchProjectUserWithUsername()
                 await fetchProjectUser()
@@ -260,21 +261,18 @@ const Delivery_staff = (props) => {
                                                             <th></th>
                                                             <th scope="col">No</th>
                                                             <th scope="col">Id</th>
-
                                                             <th scope="col">Mã đơn</th>
                                                             <th scope="col">Mặt hàng</th>
                                                             <th scope="col">Người nhận </th>
-                                                            <th scope="col"> Số ĐT người nhận </th>
                                                             <th scope="col"> Trạng thái đơn hàng </th>
-
                                                             <th scope="col">Địa chỉ giao hàng </th>
                                                             <th scope="col"> Nhân viên giao hàng</th>
                                                             <th scope="col"> Số tiền phải thu</th>
                                                             <th scope="col"> Lý do huỷ hàng</th>
                                                             <th scope="col"> Lý do giao lại</th>
+                                                            <th scope="col"> Phụ phí  </th>
                                                             <th scope="col"> Thời gian nhận đơn</th>
                                                             <th scope="col"> Thời gian hoàn thành</th>
-
                                                             <th scope="col">Thao tác</th>
 
 
@@ -302,8 +300,10 @@ const Delivery_staff = (props) => {
                                                                         <td>{item.id}</td>
                                                                         <td>{item.order}</td>
                                                                         <td> {item?.Warehouse?.product}</td>
-                                                                        <td> {item?.name_customer}</td>
-                                                                        <td> {item?.phoneNumber_customer}</td>
+                                                                        <td>
+                                                                            {item?.name_customer}
+                                                                            <br />
+                                                                            {item?.phoneNumber_customer}</td>
                                                                         <td>
                                                                             <span style={{ color: "red", fontWeight: "700" }}>
                                                                                 {item?.Status_Delivery?.status ? item?.Status_Delivery?.status : "chưa giao hàng"}
@@ -319,8 +319,15 @@ const Delivery_staff = (props) => {
 
                                                                         </td>
                                                                         <td>{item.totalWithShippingCost} VNĐ</td>
-                                                                        <td>{item?.Cancel_reason ? item?.Cancel_reason : ""}</td>
-                                                                        <td>{item?.Notice_Delivery ? item?.Notice_Delivery : ""}</td>
+                                                                        <td style={{ color: "red", fontWeight: "700" }}>{item?.Cancel_reason ? item?.Cancel_reason : ""}</td>
+                                                                        <td style={{ color: "red", fontWeight: "700" }}>{item?.Notice_Delivery ? item?.Notice_Delivery : ""}</td>
+
+                                                                        {item.Sub_money ?
+                                                                            <td style={{ color: "red", fontWeight: "500" }}>{item.Sub_money}</td>
+                                                                            :
+                                                                            <td></td>
+
+                                                                        }
                                                                         <td>{item?.Delivery_time ? moment(`${item?.Delivery_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
                                                                         <td>{item?.DeliveryDone_time ? moment(`${item?.DeliveryDone_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
                                                                         {!item.statusDeliveryId
@@ -407,11 +414,9 @@ const Delivery_staff = (props) => {
                                                             <th scope="col">Người nhận </th>
                                                             <th scope="col"> Số ĐT người nhận </th>
                                                             <th scope="col"> Trạng thái đơn hàng </th>
-
                                                             <th scope="col">Địa chỉ giao hàng </th>
                                                             <th scope="col"> Nhân viên giao hàng</th>
                                                             <th scope="col"> Số tiền phải thu</th>
-
                                                             <th scope="col"> Lý do huỷ hàng</th>
                                                             <th scope="col"> Lý do giao lại</th>
                                                             <th scope="col"> Thời gian nhận đơn</th>
@@ -459,7 +464,12 @@ const Delivery_staff = (props) => {
                                                                         </td>
                                                                         <td>{item?.totalWithShippingCost ? item?.totalWithShippingCost : ""} VNĐ</td>
                                                                         <td>{item?.Cancel_reason ? item?.Cancel_reason : ""}</td>
-                                                                        <td>{item?.Notice_Delivery ? item?.Notice_Delivery : ""}</td>
+                                                                        {item.Notice_Delivery ?
+                                                                            <td style={{ color: "red", fontWeight: "500" }}>{item.Notice_Delivery}</td>
+                                                                            :
+                                                                            <td></td>
+
+                                                                        }
                                                                         <td>{item?.Delivery_time ? moment(`${item?.Delivery_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
                                                                         <td>{item?.DeliveryDone_time ? moment(`${item?.DeliveryDone_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
 
@@ -584,6 +594,8 @@ const Delivery_staff = (props) => {
 
                                                         <th scope="col"> Lý do huỷ hàng</th>
                                                         <th scope="col"> Lý do giao lại</th>
+                                                        <th scope="col"> Phụ phí</th>
+
                                                         <th scope="col"> Thời gian nhận đơn</th>
                                                         <th scope="col"> Thời gian hoàn thành</th>
                                                         <th scope="col">Thao tác</th>
@@ -619,7 +631,13 @@ const Delivery_staff = (props) => {
                                                                     </td>
                                                                     <td>{item.totalWithShippingCost} VNĐ</td>
                                                                     <td>{item.Cancel_reason}</td>
-                                                                    <td>{item.Notice_Delivery}</td>
+                                                                    <td>{item?.Notice_Delivery ? item?.Notice_Delivery : ""}</td>
+                                                                    <td>{item?.Sub_money ? item?.Sub_money : ""}</td>
+
+                                                                    {item.statusDeliveryId == 4 &&
+                                                                        <td style={{ backgroundColor: "red" }}>{item.Notice_Delivery}</td>
+
+                                                                    }
                                                                     <td>{item?.Delivery_time ? moment(`${item?.Delivery_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
                                                                     <td>{item?.DeliveryDone_time ? moment(`${item?.DeliveryDone_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
                                                                     {!item.statusDeliveryId
@@ -695,6 +713,7 @@ const Delivery_staff = (props) => {
                                                                         </td>
 
                                                                     }
+
                                                                 </tr>
                                                             </tbody>
                                                         )

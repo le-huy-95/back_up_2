@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { UserContext } from "../../contexApi/UserContext"
 import { toast } from 'react-toastify'
-import { getProjectWithPaginationWithEmployerDelivery, getProjectWithPaginationWithEmployerDelivery_user, updateDeliveryInProject } from "../services/ProjectService"
-
+import { updateDeliveryInProject } from "../services/ProjectService"
+import moment from "moment"
 
 const ModalCancelReason = (props) => {
     const { user } = React.useContext(UserContext);
 
     const { showModal, handleShowModal, dataCancel, dataAgain, action, fetchProjectUser, fetchProjectUserWithUsername } = props
     const [input, setInput] = useState("")
+    const [Notification, setNotification] = useState("")
 
     const complete = async () => {
         if (action === "Cancel") {
 
-            let res = await updateDeliveryInProject(dataCancel.id, +user.account.shippingUnit_Id, 3, user.account.username, user.account.phone, input, "", dataCancel.Delivery_time, new Date())
+            // id, unitId, status_delivery, username, phone, text, textOne, Delivery_time, DeliveryDone_time
+            let res = await updateDeliveryInProject(dataCancel.id, +user.account.shippingUnit_Id, 3, user.account.username, user.account.phone, input, "", dataCancel.Delivery_time, new Date(), Notification)
             if (res && +res.EC === 0) {
                 await fetchProjectUserWithUsername()
                 await fetchProjectUser()
@@ -25,7 +27,7 @@ const ModalCancelReason = (props) => {
             }
         }
         if (action === "Again") {
-            let res = await updateDeliveryInProject(dataAgain.id, +user.account.shippingUnit_Id, 4, user.account.username, user.account.phone, "", input, dataAgain.Delivery_time, "")
+            let res = await updateDeliveryInProject(dataAgain.id, +user.account.shippingUnit_Id, 1, user.account.username, user.account.phone, "", input, dataAgain.Delivery_time, "")
             if (res && +res.EC === 0) {
                 await fetchProjectUserWithUsername()
                 await fetchProjectUser()
@@ -35,8 +37,15 @@ const ModalCancelReason = (props) => {
                 toast.error(res.EM)
             }
         }
-
     }
+    useEffect(() => {
+        setNotification(`Sản phẩm đã mang về kho ${dataCancel?.District_customer?.name}, ${dataCancel?.Province_customer?.name} ,
+        quý khách vui lòng qua kho lấy sản phẩm và đóng tiền ship ${dataCancel?.shipping_Cost}-${dataCancel?.unit_money} ,
+         phí lưu kho là 10000-${dataCancel?.unit_money}/ngày 
+         tiền kho tính từ ngày ${moment(moment().add(1, 'days')).format("DD/MM/YYYY ")
+            }
+         `)
+    }, [showModal])
 
     return (
         <>

@@ -80,7 +80,8 @@ const WarehouseNoStatus = (props) => {
 
         let res = await getDataSortByWarehouse(+user.account.shippingUnit_Id, 0)
         if (res && +res.EC === 0) {
-            setListProjectbyStaffWarehouse(res.DT)
+            let data = res.DT.filter(item => item.statuspickupId === 2)
+            setListProjectbyStaffWarehouse(data)
         }
     }
 
@@ -170,7 +171,6 @@ const WarehouseNoStatus = (props) => {
                                             <table class="table table-bordered table-body-employer-warehouse-One">
                                                 <thead>
                                                     <tr className='table-secondary'>
-                                                        <th></th>
                                                         <th scope="col">Id</th>
                                                         <th scope="col">Mã đơn</th>
                                                         <th scope="col">Mặt hàng</th>
@@ -192,16 +192,7 @@ const WarehouseNoStatus = (props) => {
                                                             <tbody key={`item-${index}`}>
 
                                                                 <tr>
-                                                                    {item?.flag === 1 ?
-                                                                        <td>
-                                                                            <span style={{ fontSize: "20px", color: "red" }}>
-                                                                                <i class="fa fa-flag" aria-hidden="true"></i>
-                                                                            </span>
-                                                                        </td>
-                                                                        :
-                                                                        <td></td>
 
-                                                                    }
                                                                     <td>{item.id}</td>
                                                                     <td>{item.order}</td>
                                                                     <td> {item?.Warehouse?.product}</td>
@@ -260,7 +251,6 @@ const WarehouseNoStatus = (props) => {
                                             <table class="table table-bordered table-body-employer-warehouse-One">
                                                 <thead>
                                                     <tr className='table-secondary'>
-                                                        <th></th>
                                                         <th scope="col">Id</th>
                                                         <th scope="col">Mã đơn</th>
                                                         <th scope="col">Mặt hàng</th>
@@ -282,16 +272,7 @@ const WarehouseNoStatus = (props) => {
                                                             <tbody key={`item-${index}`}>
 
                                                                 <tr>
-                                                                    {item?.flag === 1 ?
-                                                                        <td>
-                                                                            <span style={{ fontSize: "20px", color: "red" }}>
-                                                                                <i class="fa fa-flag" aria-hidden="true"></i>
-                                                                            </span>
-                                                                        </td>
-                                                                        :
-                                                                        <td></td>
 
-                                                                    }
                                                                     <td>{item.id}</td>
                                                                     <td>{item.order}</td>
                                                                     <td> {item?.Warehouse?.product}</td>

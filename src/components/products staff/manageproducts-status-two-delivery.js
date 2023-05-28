@@ -22,7 +22,7 @@ const ManageproductsDeliveryStatusTwo = (props) => {
         localStorage.getItem("infomation Page employer eight") ? localStorage.getItem("infomation Page employer eight") : 1
 
     )
-    const [currentLimit, setCurrentLimit] = useState(1)
+    const [currentLimit, setCurrentLimit] = useState(6)
     const [isLoading, SetIsLoading] = useState(false)
     const [totalPage, setTotalPage] = useState(0)
     const [showModal, setShowModal] = useState(false)
