@@ -28,6 +28,7 @@ const Overview = (props) => {
     const fetchProjectUserWithUsername = async () => {
         let res = await getProjectWithPaginationWithEmployerOverview_user(+user.account.shippingUnit_Id, user.account.username, user.account.phone)
         if (res && +res.EC === 0) {
+            console.log("res.DT", res.DT)
             setListProjectbyuserStaff(res.DT)
         } else {
             toast.error(res.EM)

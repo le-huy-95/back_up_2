@@ -182,7 +182,7 @@ const getProjectWithPaginationWithEmployerOverview = (page, limit, unitId) => {
     return axios.get(`/api/v4/getProjectWithEmployerOverview?page=${page}&limit=${limit}&unitId=${unitId}`)
 }
 const getProjectWithPaginationWithEmployerOverview_user = (unitId, username, phone) => {
-    return axios.get(`/api/v4/getProjectWithEmployerDelivery/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
+    return axios.get(`/api/v4/getProjectWithEmployerOverview/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
 }
 export {
     getProjectWithPagination, fetchProjectByid, CreateProject, getSaleChannel, getStastusPayment,
