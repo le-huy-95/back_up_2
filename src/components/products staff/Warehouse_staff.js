@@ -112,7 +112,7 @@ const Warehouse_staff = (props) => {
             }
             if (res.DT.totalPage > 0 && res.DT.dataProject.length > 0) {
                 let data = res.DT.dataProject
-
+                console.log("data", data)
                 if (data) {
                     setListProjectbyStaffWarehouse(data)
                 }
@@ -307,6 +307,17 @@ const Warehouse_staff = (props) => {
                                                                             </td>
                                                                         }
 
+                                                                        {+item?.statuswarehouseId === 1 &&
+                                                                            <td>
+                                                                                <button className='btn btn-info' > Đã nhập kho</button>
+                                                                            </td>
+                                                                        }
+                                                                        {+item?.statuswarehouseId === 2 &&
+                                                                            <td>
+                                                                                <button className='btn btn-success' > Đã xuất kho</button>
+                                                                            </td>
+                                                                        }
+
 
                                                                     </tr>
                                                                 </tbody>
@@ -334,8 +345,8 @@ const Warehouse_staff = (props) => {
                                                             <th scope="col">Trạng thái đơn hàng </th>
 
                                                             <th scope="col"> Nhân viên xử lý</th>
-                                                            <th scope="col" >Thời gian nhận đơn</th>
-                                                            <th scope="col" >Thời gian Hoàn thành</th>
+                                                            <th scope="col" >Thời gian nhập kho</th>
+                                                            <th scope="col" >Thời gian xuất kho</th>
                                                             <th scope="col">Thao tác</th>
 
 
@@ -433,8 +444,8 @@ const Warehouse_staff = (props) => {
                                                         <th scope="col">Trạng thái đơn hàng </th>
 
                                                         <th scope="col"> Nhân viên xử lý</th>
-                                                        <th scope="col" >Thời gian nhận đơn</th>
-                                                        <th scope="col" >Thời gian Hoàn thành</th>
+                                                        <th scope="col" >Thời gian nhập kho</th>
+                                                        <th scope="col" >Thời gian xuất kho</th>
                                                         <th scope="col">Thao tác</th>
 
 

@@ -24,7 +24,7 @@ const Manageproducts = (props) => {
         localStorage.getItem("infomation Page employer") ? localStorage.getItem("infomation Page employer") : 1
 
     )
-    const [currentLimit, setCurrentLimit] = useState(1)
+    const [currentLimit, setCurrentLimit] = useState(7)
     const [isSearch, SetIsSearch] = useState(false)
     const [totalPage, setTotalPage] = useState(0)
     const [showModal, setShowModal] = useState(false)
@@ -331,7 +331,10 @@ const Manageproducts = (props) => {
                                                                         <td>{item?.Warehouse?.product}</td>
                                                                         <td>{item.quantity}</td>
                                                                         <td>{moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}</td>
-                                                                        <td> {item?.name_customer}</td>
+                                                                        <td> {item?.name_customer}
+                                                                            <br />
+                                                                            {item?.phoneNumber_customer}
+                                                                        </td>
                                                                         <td>
                                                                             <span style={{ color: "red" }}>
                                                                                 {item?.Status_Pickup?.status ? item?.Status_Pickup?.status : "chưa lấy hàng"}
@@ -394,7 +397,13 @@ const Manageproducts = (props) => {
                                                                                 </span>
                                                                             }
                                                                         </td>
-                                                                        <td>{item.createdBy}</td>                                                    <td>
+                                                                        <td>
+                                                                            {item?.createdByName}
+                                                                            <br />
+                                                                            {item?.createdBy}
+
+                                                                        </td>
+                                                                        <td>
                                                                             <span className='mx-2' style={{ color: "red", cursor: "pointer" }} title='chuyển trang thái đơn hàng bình thường' onClick={() => updateFlag(item)}>
                                                                                 <i class="fa fa-toggle-on" aria-hidden="true"></i>
 

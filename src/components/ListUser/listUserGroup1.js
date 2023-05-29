@@ -296,7 +296,7 @@ const UserGroupBoss = (props) => {
                 <div className='sort-unit my-3'>
                     <div className='container my-3'>
                         <div className='row mx-3'>
-                            <div className='col-2 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
+                            <div className='col-3 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                 <Link to="/listuser" style={{ textDecoration: "none", color: "#474141" }}>All user </Link>
                             </div>
                             <div className='col-2 my-2 content boder-bottom' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>

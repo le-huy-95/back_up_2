@@ -60,7 +60,12 @@ const Products = (props) => {
         flag: 0,
         done_status: 0,
         unit: "",
-        unit_money: ""
+        unit_money: "",
+        name_account: "",
+        Mode_of_payment: "",
+        Bank_name: "",
+        Main_Account: ""
+
     }
 
 
@@ -97,7 +102,11 @@ const Products = (props) => {
         flag: true,
         done_status: true,
         unit: true,
-        unit_money: true
+        unit_money: true,
+        name_account: true,
+        Mode_of_payment: true,
+        Bank_name: true,
+        Main_Account: true
 
 
 
@@ -365,7 +374,8 @@ const Products = (props) => {
             "Province_customer", "District_customer", "Ward_customer", "detail_address_customer",
             "Province_of_receipt", "District_of_receipt", "Ward_of_receipt", "Detail_Place_of_receipt",
             "shippingUnitId", "From_address",
-            "To_address", "shipping_Cost"]
+            "To_address", "shipping_Cost", "Mode_of_payment"
+        ]
         let check = true
         const re = /^[0-9\b]+$/;
         const regxPhone = /^\+?1?\s*?\(?\d{3}(?:\)|[-|\s])?\s*?\d{3}[-|\s]?\d{4}$/;
@@ -491,6 +501,27 @@ const Products = (props) => {
             toast.error("Empty Ward Of Receipt")
             return;
 
+        }
+        if (userdata[arr[25]] === "Nhận tiền thanh toán qua tài khoản ngân hàng" && !userdata.name_account) {
+            let _validInput = _.cloneDeep(ValidInputsDefault);
+            _validInput.name_account = false
+            setValidInput(_validInput)
+            toast.error("can not empty Account name")
+            return;
+        }
+        if (userdata[arr[25]] === "Nhận tiền thanh toán qua tài khoản ngân hàng" && !userdata.Bank_name) {
+            let _validInput = _.cloneDeep(ValidInputsDefault);
+            _validInput.Bank_name = false
+            setValidInput(_validInput)
+            toast.error("can not empty Bank name")
+            return;
+        }
+        if (userdata[arr[25]] === "Nhận tiền thanh toán qua tài khoản ngân hàng" && !userdata.Main_Account) {
+            let _validInput = _.cloneDeep(ValidInputsDefault);
+            _validInput.Main_Account = false
+            setValidInput(_validInput)
+            toast.error("can not empty Main Account")
+            return;
         }
 
         for (let i = 0; i < arr.length; i++) {

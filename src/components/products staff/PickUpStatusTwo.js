@@ -234,9 +234,9 @@ const PickUpStatusTwo = (props) => {
 
                                                                         </td>
                                                                         <td>
-                                                                            {!item?.User_PickUp &&
+                                                                            {item?.statuspickupId === 2 &&
 
-                                                                                <button className='btn btn-danger' onClick={() => updatePickup(item)}> Nhận đơn</button>
+                                                                                <button className='btn btn-success' > lấy hàng thành công</button>
 
                                                                             }
 
@@ -320,19 +320,15 @@ const PickUpStatusTwo = (props) => {
                                                                     <td>{item?.pickupDone_time ? moment(`${item?.pickupDone_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
 
                                                                     <td> {item?.User_PickUp ? item?.User_PickUp : "chưa ai nhận đơn"}- {item?.Number_PickUp ? item?.Number_PickUp : "0"}</td>
-                                                                    {!item?.statuspickupId || item?.statuspickupId === 1 ?
+                                                                    <td>
+                                                                        {item?.statuspickupId === 2 &&
 
-                                                                        <td>
-                                                                            <button className='btn btn-info mx-3 my-1' > Hoàn thành</button>
-                                                                            <br />
-                                                                            <button className='btn btn-warning mx-3 my-1' onClick={() => updatePickup(item)}>Hủy nhận đơn</button>
+                                                                            <button className='btn btn-success' > lấy hàng thành công</button>
 
-                                                                        </td>
-                                                                        :
-                                                                        <td>
-                                                                            <button className="btn btn-succes"></button>
-                                                                        </td>
-                                                                    }
+                                                                        }
+
+
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         )

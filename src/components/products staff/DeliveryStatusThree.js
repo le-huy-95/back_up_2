@@ -205,8 +205,8 @@ const DeliveryStatusThree = (props) => {
                                                         <th scope="col">Người nhận </th>
                                                         <th scope="col"> Số ĐT người nhận </th>
                                                         <th scope="col"> Trạng thái đơn hàng </th>
-
                                                         <th scope="col">Địa chỉ giao hàng </th>
+                                                        <th scope="col"> lí do hủy giao hàng </th>
                                                         <th scope="col"> Nhân viên giao hàng</th>
                                                         <th scope="col"> Số tiền phải thu</th>
 
@@ -246,6 +246,8 @@ const DeliveryStatusThree = (props) => {
                                                                     </td>
 
                                                                     <td>{item.addressDetail},{item?.Ward_customer?.name},{item?.District_customer?.name},{item?.Province_customer?.name}  </td>
+                                                                    <td style={{ color: "red", fontWeight: "700" }}>{item?.Cancel_reason ? item?.Cancel_reason : ""}</td>
+
                                                                     <td>
                                                                         {item?.User_Delivery ? item?.User_Delivery : "chưa ai nhận đơn"}
                                                                         <br />

@@ -187,7 +187,7 @@ const DetailProduct = (props) => {
         ProductId: ProductId,
         image: imageUser,
         chatContent: chatContent,
-        CreatedBy: user.account.username
+        createdByName: user.account.username
 
 
     }

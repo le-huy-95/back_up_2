@@ -218,9 +218,9 @@ const WarehouseStatusTwo = (props) => {
                                                                     </td>
                                                                     <td>{item?.warehouse_time ? moment(`${item?.warehouse_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
                                                                     <td>{item?.warehouseDone_time ? moment(`${item?.warehouseDone_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
-                                                                    {item.statuswarehouseId === 1 &&
+                                                                    {item.statuswarehouseId === 2 &&
                                                                         <td>
-                                                                            <button className='btn btn-success mx-3 my-1' onClick={() => complete(item)} > Hoàn thành</button>
+                                                                            <button className='btn btn-success mx-3 my-1' >Đã hoàn thành</button>
                                                                         </td>
 
 
@@ -308,9 +308,9 @@ const WarehouseStatusTwo = (props) => {
                                                                     </td>
                                                                     <td>{item?.warehouse_time ? moment(`${item?.warehouse_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
                                                                     <td>{item?.warehouseDone_time ? moment(`${item?.warehouseDone_time}`).format("DD/MM/YYYY HH:mm:ss") : ""}</td>
-                                                                    {item.statuswarehouseId === 1 &&
+                                                                    {item.statuswarehouseId === 2 &&
                                                                         <td>
-                                                                            <button className='btn btn-success mx-3 my-1' onClick={() => complete(item)} > Hoàn thành</button>
+                                                                            <button className='btn btn-success mx-3 my-1'  > Hoàn thành</button>
                                                                         </td>
 
 

@@ -291,7 +291,7 @@ const Users = (props) => {
                 <div className='sort-unit my-3'>
                     <div className='container my-3'>
                         <div className='row mx-3'>
-                            <div className='col-2 my-2 content ' style={{ borderBottom: "5px solid #61dafb", cursor: "pointer" }}>All user ({listUserlenght})</div>
+                            <div className='col-3 my-2 content ' style={{ borderBottom: "5px solid #61dafb", cursor: "pointer" }}>All user ({listUserlenght})</div>
                             <div className='col-2 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                 <Link to="/listuserbygroupCustomer" style={{ textDecoration: "none", color: "#474141" }}>Customer</Link>
                             </div>
@@ -306,6 +306,7 @@ const Users = (props) => {
                                 <Link to="/listuserbygroupStaff" style={{ textDecoration: "none", color: "#474141" }}>Staff </Link>
 
                             </div>
+
 
                         </div>
                     </div>
@@ -339,7 +340,7 @@ const Users = (props) => {
                 {isloading == true
                     ?
                     <div className='user-body  '>
-                        <table className="table   table-striped table-hover">
+                        <table className="table table-bordered  table-striped table-hover">
                             <thead >
                                 <tr>
                                     <th scope="col" className='table-success'>No</th>
@@ -395,7 +396,6 @@ const Users = (props) => {
                                     </th>
 
                                     <th scope="col" className='table-success'>Action</th>
-                                    <th scope="col" className='table-success'></th>
 
                                 </tr>
                             </thead>
@@ -453,7 +453,6 @@ const Users = (props) => {
                                                             </div>
 
                                                         </td>
-                                                        <td className='table-light '></td>
                                                         {isOpen && previewsImage &&
                                                             <Lightbox
                                                                 mainSrc={previewsImage}

@@ -145,8 +145,8 @@ const getProjectWithPaginationWithEmployerDelivery = (page, limit, unitId) => {
 const getProjectWithPaginationWithEmployerDelivery_user = (unitId, username, phone) => {
     return axios.get(`/api/v4/getProjectWithEmployerDelivery/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
 }
-const updateDeliveryInProject = (id, unitId, status_delivery, username, phone, text, textOne, Delivery_time, DeliveryDone_time) => {
-    return axios.put("/api/v4/project/Employer/update/name_Delivery", { id, unitId, status_delivery, username, phone, text, textOne, Delivery_time, DeliveryDone_time })
+const updateDeliveryInProject = (id, unitId, status_delivery, username, phone, text, textOne, Delivery_time, DeliveryDone_time, Sub_money, receiveMoneyId) => {
+    return axios.put("/api/v4/project/Employer/update/name_Delivery", { id, unitId, status_delivery, username, phone, text, textOne, Delivery_time, DeliveryDone_time, Sub_money, receiveMoneyId })
 }
 const getProjectWithPaginationWithALlStatusPickup = (page, limit, unitId, statuspickupId) => {
     return axios.get(`/api/v4/getProjectWithEmployer/All/Status_pickup?page=${page}&limit=${limit}&unitId=${unitId}&statuspickupId=${statuspickupId}`)
@@ -179,7 +179,13 @@ const getDataSortByOverview = (unitId, receiveMoney) => {
 }
 
 const getProjectWithPaginationWithEmployerOverview = (page, limit, unitId) => {
-    return axios.get(`/api/v4/getProjectWithEmployerOverview?page=${page}&limit=${limit}&unitId=${unitId}}`)
+    return axios.get(`/api/v4/getProjectWithEmployerOverview?page=${page}&limit=${limit}&unitId=${unitId}`)
+}
+const getProjectWithPaginationWithEmployerOverview_user = (unitId, username, phone) => {
+    return axios.get(`/api/v4/getProjectWithEmployerOverview/nameUser?unitId=${unitId}&username=${username}&phone=${phone}`)
+}
+const updateOverviewInProject = (id, unitId, User_Overview, Number_Overview, receiveMoneyId, Overview_time, OverviewDone_time, done_status) => {
+    return axios.put("/api/v4/project/Employer/update/name_Overview", { id, unitId, User_Overview, Number_Overview, receiveMoneyId, Overview_time, OverviewDone_time, done_status })
 }
 export {
     getProjectWithPagination, fetchProjectByid, CreateProject, getSaleChannel, getStastusPayment,
@@ -196,5 +202,6 @@ export {
     updateWarehouseInProject, getProjectWithPaginationWithEmployerDelivery, getProjectWithPaginationWithEmployerDelivery_user,
     updateDeliveryInProject, getProjectWithPaginationWithALlStatusPickup, getProjectWithPaginationWithALlStatusWarehouse,
     getProjectWithPaginationWithALlStatusDelivery, getAllStatusProductWithEmployer, getDataSearchByEmplyer, getDataSortByPickup,
-    getDataSortByWarehouse, getDataSortByDelivery, getDataSortByOverview, getProjectWithPaginationWithEmployerOverview
+    getDataSortByWarehouse, getDataSortByDelivery, getDataSortByOverview, getProjectWithPaginationWithEmployerOverview,
+    getProjectWithPaginationWithEmployerOverview_user, updateOverviewInProject
 }

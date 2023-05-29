@@ -947,6 +947,7 @@ const Warehouse = (props) => {
                     fetchProjectUser={fetchProjectUser}
                     previreImage={previreImage}
                     setprevireImage={setprevireImage}
+                    getAllInWarehouse={getAllInWarehouse}
                 />
                 <ModalDeleteWarehouse
                     showModalDeleteWarehouse={showModalDeleteWarehouse}

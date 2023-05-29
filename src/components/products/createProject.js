@@ -580,8 +580,79 @@ const CreateNewProject = (props) => {
                                                 </select >
                                             </div>
 
-                                        </div>
 
+                                            <div className='unitMoney col-6 mb-2'>
+                                                <label htmlFor='input-product'> Hình thức nhận tiền thanh toán :</label>
+                                                <select
+                                                    className={validInput.Mode_of_payment ? "form-select my-2" : "form-select my-2 is-invalid"}
+                                                    onChange={(event) => handleOnchangeInput(event.target.value, "Mode_of_payment")}
+                                                    value={userdata.Mode_of_payment}
+                                                >
+                                                    <option value="Lựa chọn">Lựa chọn </option>
+                                                    <option value="Nhận tiền thanh toán ở trung tâm">Nhận tiền ở trung tâm giao dịch</option>
+                                                    <option value="Nhận tiền thanh toán qua tài khoản ngân hàng">Nhận tiền qua tài khoản ngân hàng</option>
+
+
+
+
+                                                </select >
+                                            </div>
+                                            {userdata.Mode_of_payment === "Nhận tiền thanh toán qua tài khoản ngân hàng"
+
+                                                &&
+                                                <>
+
+                                                    <div className='total-product col-6'>
+                                                        <label htmlFor='input-total-product' className='mb-2' >Tên chủ tài khoản</label>
+                                                        <input
+                                                            id='input-total-product'
+                                                            type="text"
+                                                            className={validInput.name_account ? "form-control" : "form-control is-invalid"}
+                                                            value={userdata.name_account}
+                                                            onChange={(event) => handleOnchangeInput(event.target.value, "name_account")}
+
+                                                        />
+
+                                                    </div>
+
+                                                    <div className='unitMoney col-6 mb-2'>
+                                                        <label htmlFor='input-product'> Tên ngân hàng :</label>
+                                                        <select
+                                                            className={validInput.Bank_name ? "form-select my-2" : "form-select my-2 is-invalid"}
+                                                            onChange={(event) => handleOnchangeInput(event.target.value, "Bank_name")}
+                                                            value={userdata.Bank_name}
+                                                        >
+                                                            <option value="Lựa chọn ">Lựa chọn </option>
+                                                            <option value="Vietcombank">Vietcombank</option>
+                                                            <option value="Vietinbank">Vietinbank</option>
+                                                            <option value="Agribank">Agribank</option>
+                                                            <option value="Techcombank">Techcombank</option>
+                                                            <option value="Tpbank">Tpbank</option>
+                                                            <option value="Vpbank">Vpbank</option>
+                                                            <option value="Mbbank">Mbbank</option>
+                                                            <option value="Oceanbank">Oceanbank</option>
+                                                            <option value="Bidv">Bidv</option>
+                                                            <option value="Acbbank">Acbbank</option>
+                                                            <option value="Sacombank">Sacombank</option>
+                                                            <option value="VIB">VIB</option>
+                                                        </select >
+                                                    </div>
+                                                    <div className='total-product col-6'>
+                                                        <label htmlFor='input-total-product' className='mb-2' >Số tài khoản</label>
+                                                        <input
+                                                            id='input-total-product'
+                                                            type="text"
+                                                            className={validInput.Main_Account ? "form-control" : "form-control is-invalid"}
+                                                            value={userdata.Main_Account}
+                                                            onChange={(event) => handleOnchangeInput(event.target.value, "Main_Account")}
+
+                                                        />
+
+                                                    </div>
+                                                </>
+                                            }
+
+                                        </div>
 
                                     </div>
                                     <div className='create-customer my-5 '>
