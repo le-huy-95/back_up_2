@@ -435,12 +435,7 @@ const Users = (props) => {
                                                         <td className='table-light'>{item.Group ? item.Group.name : ""}</td>
                                                         <td className='table-light'>{moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}</td>
                                                         <td className='table-light ' >
-                                                            {/* <button className="btn btn-warning " title='chỉnh sửa sản phẩm' onClick={() => handleOpenModalEdit(item)} style={{ borderRadius: "50%" }} title="Edit">
-                                                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                                                        </button>
-                                                        <button className="btn btn-danger mx-2" title='xóa sản phẩm' onClick={() => handleOpenModalDelete(item)} title="Delete" style={{ borderRadius: "50%" }}>
-                                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                                        </button> */}
+
                                                             <div className='d-flex'>
                                                                 <div onClick={() => handleOpenModalEdit(item)} style={{ cursor: "pointer", fontSize: "25px" }}>
                                                                     <i class="fa fa-pencil" aria-hidden="true"></i>

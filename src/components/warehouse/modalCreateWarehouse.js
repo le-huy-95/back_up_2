@@ -272,7 +272,6 @@ const ModalCreateWarehouse = (props) => {
                     toast.error("ảnh vượt quá dung lượng cho phép hoặc không hợp lệ")
                 });
                 if (dataCreate && +dataCreate.EC === 0) {
-                    console.log("dataCreate", dataCreate)
                     toast.success(dataCreate.EM)
                     history.push("/Warehouse")
                     handleShowhideModalCreateWarehouse()
@@ -324,6 +323,8 @@ const ModalCreateWarehouse = (props) => {
                         draft.product_statusId = 1
                     });
                     await fetchProjectUser()
+                    await getAllInWarehouse()
+
                     for (let i = 0; i < arr.length; i++) {
                         setValidInput(draft => {
                             draft[arr[i]] = true

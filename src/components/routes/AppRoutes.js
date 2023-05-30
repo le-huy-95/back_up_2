@@ -58,6 +58,11 @@ import DeliveryStatusOne from "../products staff/DeliveryStatusOne"
 import DeliveryStatusTwo from "../products staff/DeliveryStatusTwo"
 import DeliveryStatusFour from "../products staff/DeliveryStatusFour"
 import DeliveryStatusThree from "../products staff/DeliveryStatusThree"
+import OverviewNoStatus from "../products staff/overviewStatusNo"
+import OverviewStatusOne from "../products staff/overviewStatusOne"
+import OverviewStatusTwo from "../products staff/overviewStatusTwo"
+import OverviewStatusThree from "../products staff/overviewStatusThree"
+import Myoverview from "../products staff/my-Overview"
 const AppRoutes = (props) => {
 
     return (
@@ -83,6 +88,16 @@ const AppRoutes = (props) => {
                 <PrivateRoutes path="/listuserbygroupDev" component={UserGroupDev}
                 />
                 <PrivateRoutes path="/listuserbygroupStaff" component={UserGroupStaff}
+                />
+                <PrivateRoutes path="/History-Overview" component={Myoverview}
+                />
+                <PrivateRoutes path="/Overview_status-three" component={OverviewStatusThree}
+                />
+                <PrivateRoutes path="/Overview_status-two" component={OverviewStatusTwo}
+                />
+                <PrivateRoutes path="/Overview_status-one" component={OverviewStatusOne}
+                />
+                <PrivateRoutes path="/Overview_no_status" component={OverviewNoStatus}
                 />
                 <PrivateRoutes path="/Delivery_status_three" component={DeliveryStatusThree}
                 />

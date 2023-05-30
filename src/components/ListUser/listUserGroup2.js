@@ -524,18 +524,19 @@ const UserGroupBoss = (props) => {
                                                     <td className='table-light'>{item.sex}</td>
                                                     <td className='table-light'>{item.Group ? item.Group.name : ""}</td>
                                                     <td className='table-light'>{moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}</td>
-                                                    <td className='table-light  '>
-                                                        <div className="dropdown">
-                                                            <div type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <td className='table-light ' >
 
-                                                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                                        <div className='d-flex'>
+                                                            <div onClick={() => handleOpenModalEdit(item)} style={{ cursor: "pointer", fontSize: "25px" }}>
+                                                                <i class="fa fa-pencil" aria-hidden="true"></i>
 
                                                             </div>
-                                                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                                <li style={{ cursor: "pointer" }}><a className="dropdown-item" onClick={() => handleOpenModalEdit(item)} title="Edit">Edit user</a></li>
-                                                                <li style={{ cursor: "pointer" }}><a className="dropdown-item" onClick={() => handleOpenModalDelete(item)} title="Delete">Delete user</a></li>
-                                                            </ul>
+                                                            <div className='mx-3' onClick={() => handleOpenModalDelete(item)} style={{ color: "red", cursor: "pointer", fontSize: "25px" }}>
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </div>
+
                                                         </div>
+
                                                     </td>
                                                     {isOpen && previewsImage &&
                                                         <Lightbox
@@ -546,6 +547,7 @@ const UserGroupBoss = (props) => {
                                                         />
                                                     }
                                                 </tr>
+
 
                                             )
 
