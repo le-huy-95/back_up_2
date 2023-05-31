@@ -38,16 +38,18 @@ const DashboardWarehouse = (props) => {
     const getdata = async () => {
         let res = await getWarehouseForDashboard(user.account.phone)
         if (res && +res.EC === 0) {
-            console.log("res.DT", res.DT)
-            const data = _.countBy(res.DT, 'product')
-            let max_key = Object.keys(data).reduce(function (a, b) { return data[a] > data[b] ? a : b });
-            let arr = Object.values(data);
-            let max_value = Math.max(...arr);
-            setMaxkeys(max_key)
-            setMaxValue(max_value)
-            const dataOne = _.countBy(res.DT, 'Suppliers')
-            let max_key_one = Object.keys(dataOne).reduce(function (a, b) { return dataOne[a] > dataOne[b] ? a : b });
-            setMaxkeysOne(max_key_one)
+            if (res.DT.length > 0) {
+                const data = _.countBy(res.DT, 'product')
+                let max_key = Object.keys(data).reduce(function (a, b) { return data[a] > data[b] ? a : b });
+                let arr = Object.values(data);
+                let max_value = Math.max(...arr);
+                setMaxkeys(max_key)
+                setMaxValue(max_value)
+                const dataOne = _.countBy(res.DT, 'Suppliers')
+                let max_key_one = Object.keys(dataOne).reduce(function (a, b) { return dataOne[a] > dataOne[b] ? a : b });
+                setMaxkeysOne(max_key_one)
+            }
+
         }
     }
     const getTotalMoney = async () => {
@@ -183,123 +185,123 @@ const DashboardWarehouse = (props) => {
                             </span>
                         </div>
                         <div className='container'>
-                        <div className='row all    my-3'>
-                            <div className='title-all my-3'>
-                                <span className='icon-all mx-3'>
-                                    <i class="fa fa-info" aria-hidden="true"></i>
+                            <div className='row all    my-3'>
+                                <div className='title-all my-3'>
+                                    <span className='icon-all mx-3'>
+                                        <i class="fa fa-info" aria-hidden="true"></i>
 
-                                </span>
-                                <span className='name-all'>
-                                    Thông tin chung
-                                </span>
-                            </div>
+                                    </span>
+                                    <span className='name-all'>
+                                        Thông tin chung
+                                    </span>
+                                </div>
 
-                            <hr />
-                            <div className='content-left col-6'>
-                                <div className='container'>
-                                    <h5 className='mx-2'>
-                                        <span className='mx-3'>
-                                            Đơn vị:
+                                <hr />
+                                <div className='content-left col-6'>
+                                    <div className='container'>
+                                        <h5 className='mx-2'>
+                                            <span className='mx-3'>
+                                                Đơn vị:
 
-                                        </span>
-                                        <span style={{ color: "#7790b6" }}>sản phẩm</span>
-                                    </h5>
-                                    <div className='row'>
-                                        {allWarehouseLenght && allWarehouseLenght.length > 0
-                                            &&
-                                            allWarehouseLenght.map((item, index) => {
-                                                return (
-                                                    <>
+                                            </span>
+                                            <span style={{ color: "#7790b6" }}>sản phẩm</span>
+                                        </h5>
+                                        <div className='row'>
+                                            {allWarehouseLenght && allWarehouseLenght.length > 0
+                                                &&
+                                                allWarehouseLenght.map((item, index) => {
+                                                    return (
+                                                        <>
 
-                                                        <div className='item col-5 ' >
-                                                            <div className='icon' style={{ color: "green" }}>
-                                                                <i class="fa fa-battery-full" aria-hidden="true"></i>
+                                                            <div className='item col-5 ' >
+                                                                <div className='icon' style={{ color: "green" }}>
+                                                                    <i class="fa fa-battery-full" aria-hidden="true"></i>
+
+                                                                </div>
+                                                                <div className='title'>Hàng mới nhập</div>
+                                                                <div className='number' style={{ color: "green" }}>
+                                                                    {item.product_statusId1 ? item.product_statusId1 : "0"}
+                                                                </div>
+                                                            </div>
+                                                            <div className='item col-5 '>
+                                                                <div className='icon' style={{ color: "blue" }}>
+                                                                    <i class="fa fa-battery-half" aria-hidden="true"></i>
+
+                                                                </div>
+                                                                <div className='title'>Hàng đang bán</div>
+                                                                <div className='number' style={{ color: "blue" }}>
+                                                                    {item.product_statusId4 ? item.product_statusId4 : "0"}
+                                                                </div>
 
                                                             </div>
-                                                            <div className='title'>Hàng mới nhập</div>
-                                                            <div className='number' style={{ color: "green" }}>
-                                                                {item.product_statusId1 ? item.product_statusId1 : "0"}
-                                                            </div>
-                                                        </div>
-                                                        <div className='item col-5 '>
-                                                            <div className='icon' style={{ color: "blue" }}>
-                                                                <i class="fa fa-battery-half" aria-hidden="true"></i>
+                                                            <div className='item col-11 '>
+                                                                <div className='icon'>
+                                                                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+
+                                                                </div>
+                                                                <div className='title'>Tổng mặt hàng</div>
+                                                                <div className='number'>{item.AllProduct ? item.AllProduct : "0"}</div>
 
                                                             </div>
-                                                            <div className='title'>Hàng đang bán</div>
-                                                            <div className='number' style={{ color: "blue" }}>
-                                                                {item.product_statusId4 ? item.product_statusId4 : "0"}
-                                                            </div>
+                                                            <div className='item col-5 '>
+                                                                <div className='icon' style={{ color: "red" }}>
+                                                                    <i class="fa fa-battery-empty" aria-hidden="true"></i>
 
-                                                        </div>
-                                                        <div className='item col-11 '>
-                                                            <div className='icon'>
-                                                                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-
-                                                            </div>
-                                                            <div className='title'>Tổng mặt hàng</div>
-                                                            <div className='number'>{item.AllProduct ? item.AllProduct : "0"}</div>
-
-                                                        </div>
-                                                        <div className='item col-5 '>
-                                                            <div className='icon' style={{ color: "red" }}>
-                                                                <i class="fa fa-battery-empty" aria-hidden="true"></i>
-
-                                                            </div >
-                                                            <div className='title'>Hàng hết hàng</div>
-                                                            <div className='number' style={{ color: "red" }}>
-                                                                {item.product_statusId2 ? item.product_statusId2 : "0"}
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div className='item col-5 '>
-                                                            <div className='icon' style={{ color: "orange" }}>
-                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                </div >
+                                                                <div className='title'>Hàng hết hàng</div>
+                                                                <div className='number' style={{ color: "red" }}>
+                                                                    {item.product_statusId2 ? item.product_statusId2 : "0"}
+                                                                </div>
 
                                                             </div>
-                                                            <div className='title'> Hàng đã hủy</div>
-                                                            <div className='number' style={{ color: "orange" }}>{item.product_statusId3 ? item.product_statusId3 : "0"}</div>
 
-                                                        </div>
-                                                    </>
-                                                )
-                                            })
-                                        }
+                                                            <div className='item col-5 '>
+                                                                <div className='icon' style={{ color: "orange" }}>
+                                                                    <i class="fa fa-trash" aria-hidden="true"></i>
 
+                                                                </div>
+                                                                <div className='title'> Hàng đã hủy</div>
+                                                                <div className='number' style={{ color: "orange" }}>{item.product_statusId3 ? item.product_statusId3 : "0"}</div>
+
+                                                            </div>
+                                                        </>
+                                                    )
+                                                })
+                                            }
+
+
+                                        </div>
 
                                     </div>
 
+
                                 </div>
+                                <div className='content-right col-6'>
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <BarChart
+                                            width={300}
+                                            height={300}
+                                            data={dataChart}
+                                            margin={{
+                                                top: 20,
+                                                right: 30,
+                                                left: 20,
+                                                bottom: 5,
+                                            }}
+                                        >
+                                            <XAxis dataKey="Tổng_sản_phẩm" />
+                                            <Tooltip />
+                                            <Legend />
+                                            <Bar dataKey="Tất_cả_mặt_hàng" fill="Black" />
+                                            <Bar dataKey="Hàng_mới_nhập" fill="green" />
+                                            <Bar dataKey="Hàng_đang_bán" fill="blue" />
+                                            <Bar dataKey="Hàng_đã_hết" fill="red" />
+                                            <Bar dataKey="Hàng_đã_hủy" fill="orange" />
 
-
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                </div>
                             </div>
-                            <div className='content-right col-6'>
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart
-                                        width={300}
-                                        height={300}
-                                        data={dataChart}
-                                        margin={{
-                                            top: 20,
-                                            right: 30,
-                                            left: 20,
-                                            bottom: 5,
-                                        }}
-                                    >
-                                        <XAxis dataKey="Tổng_sản_phẩm" />
-                                        <Tooltip />
-                                        <Legend />
-                                        <Bar dataKey="Tất_cả_mặt_hàng" fill="Black" />
-                                        <Bar dataKey="Hàng_mới_nhập" fill="green" />
-                                        <Bar dataKey="Hàng_đang_bán" fill="blue" />
-                                        <Bar dataKey="Hàng_đã_hết" fill="red" />
-                                        <Bar dataKey="Hàng_đã_hủy" fill="orange" />
-
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
                         </div>
                         <div className=' main my-5'>
                             <div className='container '>

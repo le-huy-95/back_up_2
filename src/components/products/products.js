@@ -3,7 +3,7 @@ import Sidebar from "../sidebar/sidebar"
 import { Link, NavLink, useHistory } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate';
-import { getProjectWithPagination, updateProject, updateNumberProductInWarehouse } from "../services/ProjectService"
+import { getProjectWithPagination, updateProject, updateNumberProductInWarehouse, createNotification } from "../services/ProjectService"
 import moment from "moment"
 import CreateNewProject from "./createProject"
 import NotificationSuccessModal from "./notification-create-success"
@@ -555,11 +555,16 @@ const Products = (props) => {
         }
 
         if (check === true && previreImage && previreImage.length > 0 && selecCheckSubtmitImage === true) {
+
             let res =
 
                 await CreateProject({ ...userdata })
 
             if (res && +res.EC === 0) {
+                console.log(res.DT)
+                let abc = await createNotification(res.DT.id, res.DT.order, "thêm mới", "", res.DT.createdBy, 1, 0)
+                if (abc && +abc.EC === 0) {
+                }
                 history.push("/Products")
                 await fetchProjectUser()
 
@@ -601,17 +606,20 @@ const Products = (props) => {
                     }
 
 
-
+                } else {
+                    toast.error(res.EM)
                 }
 
-
-
-            } else {
-                toast.error(res.EM)
             }
+
         }
 
+
+
+
     }
+
+
 
     const handleExportData = () => {
         if (listProjectbyUser.length > 0) {

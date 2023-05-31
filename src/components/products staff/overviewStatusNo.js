@@ -134,9 +134,7 @@ const OverviewNoStatus = (props) => {
                                             <div className='col-4 content-Overview' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                                 <Link to="/Overview" style={{ textDecoration: "none", color: "#474141" }}>Tất cả đơn </Link>
                                             </div>
-                                            <div className='col-4 content-Overview' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/History-Overview" style={{ textDecoration: "none", color: "#474141" }}>Đơn hàng của bạn </Link>
-                                            </div>
+
                                             <div className='col-4 my-2 content-Overview ' style={{ backgroundColor: "#61dafb", cursor: "pointer" }}> Đơn chưa đối soát  </div>
 
                                             <div className='col-4 content-Overview' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>

@@ -194,9 +194,7 @@ const Overview = (props) => {
                                     <div className='container my-3'>
                                         <div className='row mx-3'>
                                             <div className='col-4 my-2 content-Overview ' style={{ backgroundColor: "#61dafb", cursor: "pointer" }}> Tất cả đơn  </div>
-                                            <div className='col-4 content-Overview' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
-                                                <Link to="/History-Overview" style={{ textDecoration: "none", color: "#474141" }}>Đơn hàng của bạn </Link>
-                                            </div>
+
                                             <div className='col-4 content-Overview' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                                 <Link to="/Overview_no_status" style={{ textDecoration: "none", color: "#474141" }}>Đơn chưa đối soát </Link>
                                             </div>
@@ -299,7 +297,7 @@ const Overview = (props) => {
                                                                         {item.receiveMoneyId === 1
                                                                             &&
 
-                                                                            <td style={{ color: "blue", fontWeight: "600" }}>{item?.Status_Received_money?.status} </td>
+                                                                            <td style={{ color: "yellow", fontWeight: "600" }}>{item?.Status_Received_money?.status} </td>
 
 
 
@@ -307,7 +305,7 @@ const Overview = (props) => {
                                                                         {item.receiveMoneyId > 1
                                                                             &&
 
-                                                                            <td style={{ color: "green", fontWeight: "600" }}>{item?.Status_Received_money?.status} </td>
+                                                                            <td style={{ color: "blue", fontWeight: "600" }}>{item?.Status_Received_money?.status} </td>
 
 
 

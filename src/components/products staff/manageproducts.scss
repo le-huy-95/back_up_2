@@ -153,18 +153,19 @@
                         }
                     }
                 }
-                 .sort {
-                box-shadow: 0 2px 4px rgb(0 0 0/10%), 0 8px 16px rgb(0 0 0/10%);
-                box-sizing: border-box;
-                background-color: #f0f2f5;
-            
-                 .content {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 25px;
-                    margin: 15px 0;
-                }
+
+                .sort {
+                    box-shadow: 0 2px 4px rgb(0 0 0/10%), 0 8px 16px rgb(0 0 0/10%);
+                    box-sizing: border-box;
+                    background-color: #f0f2f5;
+
+                    .content {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 25px;
+                        margin: 15px 0;
+                    }
                 }
 
                 .table-wrapper-employer {
@@ -178,8 +179,8 @@
                     overflow: auto;
                     max-height: 75vh;
                     background-color: white;
-                    max-height: 500px;
-                     
+                    max-height: 700px;
+
 
                     .title-employer {
                         display: flex;
@@ -209,7 +210,7 @@
                     overflow: auto;
                     max-height: 75vh;
                     background: white;
-                    max-height: 500px;
+                    max-height: 700px;
 
 
 
@@ -221,7 +222,8 @@
                         color: blue;
                         font-weight: 700;
                     }
-                    .sub{
+
+                    .sub {
                         display: flex;
                         align-items: center;
                         justify-content: flex-end;

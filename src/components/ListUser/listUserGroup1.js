@@ -302,7 +302,7 @@ const UserGroupBoss = (props) => {
                             <div className='col-2 my-2 content boder-bottom' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                 <Link to="/listuserbygroupCustomer" style={{ textDecoration: "none", color: "#474141" }}>Customer </Link>
                             </div>
-                            <div className='col-2 my-2 content boder-bottom' style={{ borderBottom: "5px solid #61dafb", cursor: "pointer" }}>Boss ({listUserlenght})</div>
+                            <div className='col-2 my-2 content boder-bottom' style={{ borderBottom: "5px solid #61dafb", cursor: "pointer" }}>Boss ({listUserlenght > 0 ? listUserlenght : "0"})</div>
                             <div className='col-2 content' style={{ borderBottom: "5px solid #f0f2f5", cursor: "pointer" }}>
                                 <Link to="/listuserbygroupDev" style={{ textDecoration: "none", color: "#474141" }}>Dev </Link>
 

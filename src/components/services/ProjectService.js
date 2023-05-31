@@ -187,6 +187,12 @@ const getProjectWithPaginationWithEmployerOverview_user = (unitId, username, pho
 const updateOverviewInProject = (id, unitId, User_Overview, Number_Overview, receiveMoneyId, Overview_time, OverviewDone_time, done_status) => {
     return axios.put("/api/v4/project/Employer/update/name_Overview", { id, unitId, User_Overview, Number_Overview, receiveMoneyId, Overview_time, OverviewDone_time, done_status })
 }
+const createNotification = (ProjectId, Order, Change_content, ChangeBy, CreatedBy, ViewByuser, ViewByStaff) => {
+    return axios.post("/api/v4/add/infomation/notification", { ProjectId, Order, Change_content, ChangeBy, CreatedBy, ViewByuser, ViewByStaff })
+}
+const getAllNotificaltion = (unitId, user) => {
+    return axios.get(`/api/v4/getNotification?unitId=${unitId}&user=${user}`)
+}
 export {
     getProjectWithPagination, fetchProjectByid, CreateProject, getSaleChannel, getStastusPayment,
     updateProject, deleteProject, createChatProject, updateProjectChat, deleteChatProject, getDataSearch,
@@ -203,5 +209,5 @@ export {
     updateDeliveryInProject, getProjectWithPaginationWithALlStatusPickup, getProjectWithPaginationWithALlStatusWarehouse,
     getProjectWithPaginationWithALlStatusDelivery, getAllStatusProductWithEmployer, getDataSearchByEmplyer, getDataSortByPickup,
     getDataSortByWarehouse, getDataSortByDelivery, getDataSortByOverview, getProjectWithPaginationWithEmployerOverview,
-    getProjectWithPaginationWithEmployerOverview_user, updateOverviewInProject
+    getProjectWithPaginationWithEmployerOverview_user, updateOverviewInProject, createNotification, getAllNotificaltion
 }
