@@ -4,7 +4,7 @@ import SidebarStaff from "../sidebar/sidebar staff"
 import { Link, NavLink, useHistory } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import { UserContext } from "../../contexApi/UserContext"
-import { getProjectWithPaginationWithEmployerPickUp, getDataSortByPickup, updatePickupInProject, getDataSearchByEmplyer } from "../services/ProjectService"
+import { getProjectWithPaginationWithEmployerPickUp, getDataSortByPickup, updatePickupInProject, getDataSearchByEmplyer, createNotification } from "../services/ProjectService"
 import ReactPaginate from 'react-paginate';
 import ModalChatWithCutomer from "./modalChatWithCutomer"
 import moment from "moment"
@@ -25,6 +25,7 @@ const PickUpNoStatus = (props) => {
     const [isLoading, SetIsLoading] = useState(false)
     const [totalPage, setTotalPage] = useState(0)
     const [showModal, setShowModal] = useState(false)
+    const [valueSearch, setvalueSearch] = useState("")
 
     const handleShowModal = () => {
         setShowModal(!showModal)
@@ -34,13 +35,13 @@ const PickUpNoStatus = (props) => {
 
     const HandleSearchData = debounce(async (value) => {
         let data = value
+        setvalueSearch(value)
+
         if (data) {
             SetIsSearch(true)
             let res = await getDataSearchByEmplyer(data, user.account.Position, +user.account.shippingUnit_Id)
             if (res && +res.EC === 0) {
-                let data = res.DT.filter(item => item.statuspickupId === 0)
-
-                setListProjectSearch(data)
+                setListProjectSearch(res.DT)
             }
 
         } else {
@@ -55,7 +56,15 @@ const PickUpNoStatus = (props) => {
         if (!item.User_PickUp && !item.Number_PickUp) {
             let res = await updatePickupInProject(+user.account.shippingUnit_Id, item.id, user.account.username, user.account.phone, 1, new Date())
             if (res && +res.EC === 0) {
-                await fetchProjectUser()
+                let abc = await createNotification(item.id, item.order, "đơn hàng đang lấy hàng", "", item.createdBy, 0, 1, item.shippingUnit_Id)
+                if (abc && +abc.EC === 0) {
+                    await fetchProjectUser()
+                    await HandleSearchData(valueSearch)
+                } else {
+                    await fetchProjectUser()
+                    await HandleSearchData(valueSearch)
+                }
+
             } else {
                 toast.error(res.EM)
             }

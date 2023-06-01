@@ -562,32 +562,33 @@ const Products = (props) => {
 
             if (res && +res.EC === 0) {
                 console.log(res.DT)
-                let abc = await createNotification(res.DT.id, res.DT.order, "thêm mới", "", res.DT.createdBy, 1, 0)
+                let abc = await createNotification(res.DT.id, res.DT.order, "thêm mới", "", res.DT.createdBy, 1, 0, userdata.shippingUnitId)
                 if (abc && +abc.EC === 0) {
-                }
-                history.push("/Products")
-                await fetchProjectUser()
-
-                setProductAfterCreate(res.DT)
-
-
-                let projectId = res.DT.id
-                setProjectId(res.DT.id)
-                let order = res.DT.order
-
-                let data = await fetchImagebyOrder(order)
-
-                if (data && +data.EC === 0) {
-                    let ImageId = data.DT;
-                    await assignDataToProjectImage(projectId, ImageId)
+                    history.push("/Products")
                     await fetchProjectUser()
 
+                    setProductAfterCreate(res.DT)
 
 
-                } else {
-                    toast.error("bạn gặp vấn đề , vui lòng kiểm tra lại thông tin")
+                    let projectId = res.DT.id
+                    setProjectId(res.DT.id)
+                    let order = res.DT.order
 
+                    let data = await fetchImagebyOrder(order)
+
+                    if (data && +data.EC === 0) {
+                        let ImageId = data.DT;
+                        await assignDataToProjectImage(projectId, ImageId)
+                        await fetchProjectUser()
+
+
+
+                    } else {
+                        toast.error("bạn gặp vấn đề , vui lòng kiểm tra lại thông tin")
+
+                    }
                 }
+
 
                 if (userdata && userdata.number > 0) {
 

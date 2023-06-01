@@ -187,8 +187,8 @@ const getProjectWithPaginationWithEmployerOverview_user = (unitId, username, pho
 const updateOverviewInProject = (id, unitId, User_Overview, Number_Overview, receiveMoneyId, Overview_time, OverviewDone_time, done_status) => {
     return axios.put("/api/v4/project/Employer/update/name_Overview", { id, unitId, User_Overview, Number_Overview, receiveMoneyId, Overview_time, OverviewDone_time, done_status })
 }
-const createNotification = (ProjectId, Order, Change_content, ChangeBy, CreatedBy, ViewByuser, ViewByStaff) => {
-    return axios.post("/api/v4/add/infomation/notification", { ProjectId, Order, Change_content, ChangeBy, CreatedBy, ViewByuser, ViewByStaff })
+const createNotification = (ProjectId, Order, Change_content, ChangeBy, CreatedBy, ViewByuser, ViewByStaff, unit) => {
+    return axios.post("/api/v4/add/infomation/notification", { ProjectId, Order, Change_content, ChangeBy, CreatedBy, ViewByuser, ViewByStaff, unit })
 }
 const getAllNotificaltion = (unitId, user) => {
     return axios.get(`/api/v4/getNotification?unitId=${unitId}&user=${user}`)

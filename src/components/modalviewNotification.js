@@ -12,14 +12,27 @@ const ModalViewNotification = (props) => {
     const { show, handleShowNotificationModal } = props
     const { user } = React.useContext(UserContext);
     const [list, setList] = useState([])
+    let history = useHistory()
 
     const getALlListNotification = async () => {
         let res = await getAllNotificaltion(+user.account.shippingUnit_Id, user.account.phone)
         if (res && +res.EC === 0) {
-            let data = res.DT.filter(item => item.CreatedBy === user.account.phone)
-            setList(data)
+            if (!user.account.shippingUnit_Id) {
+
+                let data = res.DT.filter(item => item.CreatedBy === user.account.phone && item.Change_content !== "thêm mới")
+                setList(data)
+            }
+            if (user.account.shippingUnit_Id) {
+                setList(res.DT)
+            }
+
         }
     }
+    const handleViewProduct = (item) => {
+        history.push(`/detailProduct/${item.ProjectId}`)
+        handleShowNotificationModal()
+    }
+
     useEffect(() => {
         getALlListNotification()
     }, [show])
@@ -36,26 +49,93 @@ const ModalViewNotification = (props) => {
                             <span className='item-Two'>Chưa đọc</span>
                         </div>
                         <div className='content'>
-                            {list && list.length > 0 &&
-                                list.map((item, index) => {
-                                    return (
-                                        <>
-                                            <div className='notifiaction_content '>
+                            <div className='container'>
+                                {list && list.length > 0
+                                    ?
+                                    list.map((item, index) => {
+                                        return (
+                                            <>
+                                                <div className='notifiaction_content my-3 mx-3 ' key={`item-${index}`}>
 
-                                                <span className='mx-3'> Đơn hàng</span>  <b>{item.Order}</b> {item.Change_content === "thêm mới" && `mới được tạo `}
-                                                <br />
-                                                <span className='time'>
-                                                    {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
-                                                </span>
-                                            </div>
-                                            <hr />
-                                        </>
+                                                    {user?.account?.groupWithRound?.name === "Customer" && item.Change_content === "đơn hàng đang lấy hàng" &&
+                                                        <>
+                                                            <div onClick={() => handleViewProduct(item)}>
 
-                                    )
-                                })
-                            }
+                                                                <span className='mx-3'> Đang đi lấy đơn hàng <b>{item.Order}</b></span>
+                                                                <br />
+                                                                <span className='time'>
+                                                                    {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
+                                                                </span>
+                                                            </div>
+                                                            <hr />
+                                                        </>
+
+                                                    }
+                                                    {user?.account?.groupWithRound?.name === "Customer" && item.Change_content === "đơn hàng đã lấy thành công" &&
+                                                        <>
+
+                                                            <div onClick={() => handleViewProduct(item)}>
+                                                                <span className='mx-3'> Đã lấy đơn hàng <b>{item.Order}</b> thành công</span>
+                                                                <br />
+                                                                <span className='time'>
+                                                                    {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
+                                                                </span>
+                                                            </div>
+                                                            <hr />
+
+                                                        </>
+
+                                                    }
+                                                    {user?.account?.groupWithRound?.name === "Customer" && item.Change_content === "đơn hàng trì hoãn" &&
+                                                        <>
+
+                                                            <div onClick={() => handleViewProduct(item)}>
+                                                                <span className='mx-3'> Delay lấy hàng đơn hàng <b>{item.Order}</b> </span>
+                                                                <br />
+                                                                <span className='time'>
+                                                                    {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
+                                                                </span>
+                                                            </div>
+                                                            <hr />
+
+                                                        </>
+
+                                                    }
+                                                    {user?.account?.groupWithRound?.name === "Staff" && user.account.Position == "Nhân viên lấy hàng" && item.Change_content === "thay đổi thông tin đơn hàng" &&
+                                                        <>
+
+                                                            <span className='mx-3' >Đơn hàng </span>  <b>{item.Order}</b> mới cập nhật thông tin lấy hàng
+                                                            <br />
+                                                            <span className='time'>
+                                                                {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
+                                                            </span>
+                                                            <hr />
+
+                                                        </>
+                                                    }
+                                                    {user?.account?.groupWithRound?.name === "Staff" && user.account.Position == "Nhân viên lấy hàng" && item.Change_content === "thêm mới" &&
+                                                        <>
+
+                                                            <span className='mx-3'> Đơn hàng</span>  <b>{item.Order}</b> {item.Change_content === "thêm mới" && `mới được tạo `}
+                                                            <br />
+                                                            <span className='time'>
+                                                                {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
+                                                            </span>
+                                                        </>
+                                                    }
 
 
+                                                </div>
+                                            </>
+
+                                        )
+                                    })
+                                    :
+                                    <div className='Not-Found'>  chưa có thông báo nào</div>
+                                }
+
+
+                            </div>
                         </div>
 
                     </div>

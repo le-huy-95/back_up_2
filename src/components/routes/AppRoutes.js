@@ -62,7 +62,6 @@ import OverviewNoStatus from "../products staff/overviewStatusNo"
 import OverviewStatusOne from "../products staff/overviewStatusOne"
 import OverviewStatusTwo from "../products staff/overviewStatusTwo"
 import OverviewStatusThree from "../products staff/overviewStatusThree"
-import Myoverview from "../products staff/my-Overview"
 const AppRoutes = (props) => {
 
     return (
@@ -89,8 +88,7 @@ const AppRoutes = (props) => {
                 />
                 <PrivateRoutes path="/listuserbygroupStaff" component={UserGroupStaff}
                 />
-                <PrivateRoutes path="/History-Overview" component={Myoverview}
-                />
+
                 <PrivateRoutes path="/Overview_status-three" component={OverviewStatusThree}
                 />
                 <PrivateRoutes path="/Overview_status-two" component={OverviewStatusTwo}

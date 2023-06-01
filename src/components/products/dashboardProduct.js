@@ -130,6 +130,10 @@ const DashboardProduct = (props) => {
             Number: dataMounth.tháng_5,
         },
         {
+            name: 'tháng 6',
+            Number: dataMounth.tháng_6,
+        },
+        {
             name: 'tháng 7',
             Number: dataMounth.tháng_7,
         },

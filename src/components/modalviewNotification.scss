@@ -37,6 +37,18 @@
 
         .notifiaction_content {
             cursor: pointer;
+
+            .time {
+                display: flex;
+                justify-content: flex-end;
+                font-size: 15px;
+                color: #7790b6;
+            }
         }
+    }
+
+    .Not-Found {
+        display: flex;
+        justify-content: center;
     }
 }

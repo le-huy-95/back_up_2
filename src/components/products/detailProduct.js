@@ -7,7 +7,10 @@ import { fetchProjectByid } from "../services/ProjectService"
 import { toast } from 'react-toastify'
 import moment from "moment"
 import { UserContext } from "../../contexApi/UserContext"
-import { CreateProject, getSaleChannel, getStastusPayment, updateProject, createChatProject, updateProjectChat, deleteChatProject, getNameProduct, getNumberProductinWarehouse, updateNumberProductInWarehouse } from "../services/ProjectService"
+import {
+    CreateProject, getSaleChannel, getStastusPayment, updateProject, createChatProject, updateProjectChat, deleteChatProject, getNameProduct, getNumberProductinWarehouse,
+    createNotification
+} from "../services/ProjectService"
 import { updateImage, updateImageIdandProjectId, fetchImagebyUser } from "../services/imageService"
 import { SRLWrapper } from 'simple-react-lightbox'
 import _ from "lodash"
@@ -187,7 +190,7 @@ const DetailProduct = (props) => {
         ProductId: ProductId,
         image: imageUser,
         chatContent: chatContent,
-        createdByName: user.account.username
+        CreatedByName: user.account.username
 
 
     }
@@ -484,18 +487,82 @@ const DetailProduct = (props) => {
             return;
         }
         let res = await updateProject(projects)
+
+        const combinedObject = { ...projectsDefaut, ...projects }
+
+        const diff = Object.entries(combinedObject).reduce((acc, [key, value]) => {
+            if (
+                !Object.values(projectsDefaut).includes(value) ||
+                !Object.values(projects).includes(value)
+            )
+                acc[key] = value
+
+            return acc
+        }, {})
+
         if (res && +res.EC === 0) {
-            toast.success("update project success")
 
-            handleDeleteActionThree()
-            handleDeleteActionFour()
-            handleDeleteActionFive()
-            handleDeleteActionSix()
-            handleDeleteActionSeven()
-            await getProjects()
 
+
+            if (diff && diff.money || diff.total || diff.totalWithShippingCost || diff.Pricedrop || diff.paid || diff.salesChannelId || diff.statusPaymentId || diff.unit_money || diff.Notemore || diff.Note) {
+                let abc = await createNotification(projects.id, projects.order, "thay đổi thông tin đơn hàng", "", projects.createdBy, 1, 0, projects.shippingUnit_Id)
+                if (abc && +abc.EC === 0) {
+                    toast.success("update project success")
+
+                    handleDeleteActionThree()
+                    handleDeleteActionFour()
+                    handleDeleteActionFive()
+                    handleDeleteActionSix()
+                    handleDeleteActionSeven()
+                    await getProjects()
+
+                }
+            } else if (diff && diff.Province_customerId || diff.District_customerId || diff.Ward_customerId || diff.addressDetail || diff.age_customer || diff.name_customer || diff.phoneNumber_customer) {
+                let abc = await createNotification(projects.id, projects.order, "thay đổi thông tin  người nhận", "", projects.createdBy, 1, 0, projects.shippingUnit_Id)
+                if (abc && +abc.EC === 0) {
+                    toast.success("update project success")
+
+                    handleDeleteActionThree()
+                    handleDeleteActionFour()
+                    handleDeleteActionFive()
+                    handleDeleteActionSix()
+                    handleDeleteActionSeven()
+                    await getProjects()
+
+                }
+            } else if (diff && diff.Address_provinceId || diff.Address_DistrictId || diff.Address_WardId || diff.Detail_Place_of_receipt) {
+                let abc = await createNotification(projects.id, projects.order, "thay đổi thông tin người bán", "", projects.createdBy, 1, 0, projects.shippingUnit_Id)
+                if (abc && +abc.EC === 0) {
+                    toast.success("update project success")
+
+                    handleDeleteActionThree()
+                    handleDeleteActionFour()
+                    handleDeleteActionFive()
+                    handleDeleteActionSix()
+                    handleDeleteActionSeven()
+                    await getProjects()
+
+                }
+            }
+            else {
+                toast.success("update project success")
+
+                handleDeleteActionThree()
+                handleDeleteActionFour()
+                handleDeleteActionFive()
+                handleDeleteActionSix()
+                handleDeleteActionSeven()
+                await getProjects()
+            }
 
         }
+
+
+
+
+
+
+
         else {
             toast.error(res.EM)
         }
@@ -1741,7 +1808,7 @@ const DetailProduct = (props) => {
 
                                                                                                         </div>
                                                                                                         <div className='create-by-user d-flex justify-content-end'>
-                                                                                                            Send by:  {item.CreatedBy}
+                                                                                                            Send by:  {item.CreatedByName}
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div className='col-2 d-flex align-items-center' style={{ paddingBottom: "61px" }}>
@@ -1767,7 +1834,7 @@ const DetailProduct = (props) => {
 
                                                                                                         </div>
                                                                                                         <div className='create-by-user d-flex justify-content-end'>
-                                                                                                            Send by:  {item.CreatedBy}
+                                                                                                            Send by:  {item.CreatedByName}
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div className='col-2 d-flex align-items-center' style={{ paddingBottom: "61px" }}>

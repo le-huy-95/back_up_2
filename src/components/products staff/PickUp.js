@@ -4,7 +4,7 @@ import SidebarStaff from "../sidebar/sidebar staff"
 import { Link, NavLink, useHistory } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
 import { UserContext } from "../../contexApi/UserContext"
-import { getProjectWithPaginationWithEmployerPickUp, getProjectWithPaginationWithEmployerPickUp_user, updatePickupInProject, getDataSearchByEmplyer } from "../services/ProjectService"
+import { getProjectWithPaginationWithEmployerPickUp, getProjectWithPaginationWithEmployerPickUp_user, updatePickupInProject, getDataSearchByEmplyer, createNotification } from "../services/ProjectService"
 import ReactPaginate from 'react-paginate';
 import ModalChatWithCutomer from "./modalChatWithCutomer"
 import moment from "moment"
@@ -57,9 +57,19 @@ const Pickup = (props) => {
         if (!item.User_PickUp && !item.Number_PickUp) {
             let res = await updatePickupInProject(+user.account.shippingUnit_Id, item.id, user.account.username, user.account.phone, 1, new Date(), "")
             if (res && +res.EC === 0) {
-                await fetchProjectUserWithUsername()
-                await fetchProjectUser()
-                await HandleSearchData(valueSearch)
+                let abc = await createNotification(item.id, item.order, "đơn hàng đang lấy hàng", "", item.createdBy, 0, 1, item.shippingUnit_Id)
+                if (abc && +abc.EC === 0) {
+                    await fetchProjectUserWithUsername()
+                    await fetchProjectUser()
+                    await HandleSearchData(valueSearch)
+                } else {
+                    await fetchProjectUserWithUsername()
+                    await fetchProjectUser()
+                    await HandleSearchData(valueSearch)
+                }
+
+
+
             } else {
                 toast.error(res.EM)
             }
@@ -67,9 +77,16 @@ const Pickup = (props) => {
         if (item.User_PickUp && item.Number_PickUp) {
             let res = await updatePickupInProject(+user.account.shippingUnit_Id, item.id, null, null, 0, "", "")
             if (res && +res.EC === 0) {
-                await fetchProjectUserWithUsername()
-                await fetchProjectUser()
-                await HandleSearchData(valueSearch)
+                let abc = await createNotification(item.id, item.order, "đơn hàng trì hoãn", "", item.createdBy, 0, 1, item.shippingUnit_Id)
+                if (abc && +abc.EC === 0) {
+                    await fetchProjectUserWithUsername()
+                    await fetchProjectUser()
+                    await HandleSearchData(valueSearch)
+                } else {
+                    await fetchProjectUserWithUsername()
+                    await fetchProjectUser()
+                    await HandleSearchData(valueSearch)
+                }
 
             } else {
                 toast.error(res.EM)
@@ -80,9 +97,17 @@ const Pickup = (props) => {
     const completePickup = async (item) => {
         let res = await updatePickupInProject(+user.account.shippingUnit_Id, item.id, user.account.username, user.account.phone, 2, item.pickup_time, new Date())
         if (res && +res.EC === 0) {
-            await fetchProjectUserWithUsername()
-            await fetchProjectUser()
-            await HandleSearchData(valueSearch)
+            let abc = await createNotification(item.id, item.order, "đơn hàng đã lấy thành công", "", item.createdBy, 0, 1, item.shippingUnit_Id)
+            if (abc && +abc.EC === 0) {
+
+                await fetchProjectUserWithUsername()
+                await fetchProjectUser()
+                await HandleSearchData(valueSearch)
+            } else {
+                await fetchProjectUserWithUsername()
+                await fetchProjectUser()
+                await HandleSearchData(valueSearch)
+            }
 
         } else {
             toast.error(res.EM)
