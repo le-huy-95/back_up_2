@@ -78,6 +78,12 @@ instance.interceptors.response.use(function (response) {
         case 422: {
             return Promise.reject(error);
         }
+        case 429: {
+            toast.error("Too many requests made from this ip , please try again  after 1 min")
+
+            return Promise.reject(error);
+
+        }
 
         // generic api error (server related) unexpected
         default: {

@@ -201,6 +201,8 @@ const DetailProduct = (props) => {
         if (dataChat) {
             let res = await createChatProject(dataChat)
             if (res && +res.EC === 0) {
+                await createNotification(projects.id, projects.order, "người tạo vừa chat", "", projects.createdBy, 1, 0, projects.shippingUnit_Id)
+
                 await getProjects()
                 setchatContent("")
 
@@ -501,10 +503,10 @@ const DetailProduct = (props) => {
         }, {})
 
         if (res && +res.EC === 0) {
+            console.log("diff", diff)
 
 
-
-            if (diff && diff.money || diff.total || diff.totalWithShippingCost || diff.Pricedrop || diff.paid || diff.salesChannelId || diff.statusPaymentId || diff.unit_money || diff.Notemore || diff.Note) {
+            if (diff && diff.money || diff.total || diff.Pricedrop || diff.paid || diff.statusPaymentId || diff.unit_money || diff.Notemore || diff.Note) {
                 let abc = await createNotification(projects.id, projects.order, "thay đổi thông tin đơn hàng", "", projects.createdBy, 1, 0, projects.shippingUnit_Id)
                 if (abc && +abc.EC === 0) {
                     toast.success("update project success")
@@ -517,7 +519,7 @@ const DetailProduct = (props) => {
                     await getProjects()
 
                 }
-            } else if (diff && diff.Province_customerId || diff.District_customerId || diff.Ward_customerId || diff.addressDetail || diff.age_customer || diff.name_customer || diff.phoneNumber_customer) {
+            } else if (diff.age_customer || diff.name_customer || diff.phoneNumber_customer) {
                 let abc = await createNotification(projects.id, projects.order, "thay đổi thông tin  người nhận", "", projects.createdBy, 1, 0, projects.shippingUnit_Id)
                 if (abc && +abc.EC === 0) {
                     toast.success("update project success")
@@ -530,8 +532,22 @@ const DetailProduct = (props) => {
                     await getProjects()
 
                 }
-            } else if (diff && diff.Address_provinceId || diff.Address_DistrictId || diff.Address_WardId || diff.Detail_Place_of_receipt) {
-                let abc = await createNotification(projects.id, projects.order, "thay đổi thông tin người bán", "", projects.createdBy, 1, 0, projects.shippingUnit_Id)
+            } else if (projects.Province_customerId !== 0 && projects.Province_customerId !== projectsDefaut.Province_customerId || projects.District_customerId !== 0 && projects.District_customerId !== projectsDefaut.District_customerId || projects.Ward_customerId !== 0 && projects.Ward_customerId !== projectsDefaut.Ward_customerId || diff && diff.addressDetail) {
+                let abc = await createNotification(projects.id, projects.order, "thay đổi địa chỉ người nhận", "", projects.createdBy, 1, 0, projects.shippingUnit_Id)
+                if (abc && +abc.EC === 0) {
+                    toast.success("update project success")
+
+                    handleDeleteActionThree()
+                    handleDeleteActionFour()
+                    handleDeleteActionFive()
+                    handleDeleteActionSix()
+                    handleDeleteActionSeven()
+                    await getProjects()
+
+                }
+            }
+            else if (projects.Address_provinceId !== 0 && projects.Address_provinceId !== projectsDefaut.Address_provinceId || projects.Address_DistrictId !== 0 && projects.Address_DistrictId !== projectsDefaut.Address_DistrictId || projects.Address_WardId !== 0 && projects.Address_WardId !== projectsDefaut.Address_WardId || diff && diff.Detail_Place_of_receipt) {
+                let abc = await createNotification(projects.id, projects.order, "thay đổi địa chỉ người bán", "", projects.createdBy, 1, 0, projects.shippingUnit_Id)
                 if (abc && +abc.EC === 0) {
                     toast.success("update project success")
 
@@ -622,6 +638,8 @@ const DetailProduct = (props) => {
             }
         });
         if (dataCreateImage && +dataCreateImage.EC === 1) {
+            await createNotification(projects.id, projects.order, " người tạo bổ xung thêm ảnh", "", projects.createdBy, 1, 0, projects.shippingUnit_Id)
+
             let projectId = projects.id
 
             let order = projects.order
@@ -638,6 +656,7 @@ const DetailProduct = (props) => {
                     // handleDeleteActionFour()
                     setPreviewsImage("")
                     await getProjects()
+
                 }
             } else {
                 toast.error(data.EM)

@@ -40,8 +40,7 @@ const WarehouseNoStatus = (props) => {
             SetIsSearch(true)
             let res = await getDataSearchByEmplyer(data, user.account.Position, +user.account.shippingUnit_Id)
             if (res && +res.EC === 0) {
-                let data = res.DT.filter(item => item.statuswarehouseId === 0)
-
+                let data = res.DT.filter(item => item.statuswarehouseId === 0 && item.statuspickupId === 2)
                 setListProjectSearch(data)
             }
 

@@ -42,6 +42,7 @@ const Login = (props) => {
 
         }
         let res = await LoginUser(valueLogin.trim(), password)
+
         if (res && +res.EC === 0) {
             let groupWithRound = res.DT.groupWithRole;
             let email = res.DT.email;

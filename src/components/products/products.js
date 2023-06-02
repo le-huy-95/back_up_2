@@ -561,7 +561,6 @@ const Products = (props) => {
                 await CreateProject({ ...userdata })
 
             if (res && +res.EC === 0) {
-                console.log(res.DT)
                 let abc = await createNotification(res.DT.id, res.DT.order, "thêm mới", "", res.DT.createdBy, 1, 0, userdata.shippingUnitId)
                 if (abc && +abc.EC === 0) {
                     history.push("/Products")
@@ -634,16 +633,26 @@ const Products = (props) => {
     const handleCreateFlag = async (item) => {
         let res = await updateProject({ ...item, flag: true })
         if (res && +res.EC === 0) {
-            setSortDataSearch(false)
+            console.log("res", item)
+            let abc = await createNotification(item.id, item.order, " đơn gấp", "", item.createdBy, 1, 0, item.shippingUnit_Id
+            )
+            if (abc && +abc.EC === 0) {
+                setSortDataSearch(false)
 
-            await fetchProjectUser()
+                await fetchProjectUser()
+            }
+
         }
     }
     const handleCancelFlag = async (item) => {
         let res = await updateProject({ ...item, flag: false })
         if (res && +res.EC === 0) {
-            setSortDataSearch(false)
-            await fetchProjectUser()
+            let abc = await createNotification(item.id, item.order, " huỷ đơn gấp", "", item.createdBy, 1, 0, item.shippingUnit_Id)
+            if (abc && +abc.EC === 0) {
+                setSortDataSearch(false)
+                await fetchProjectUser()
+            }
+
         }
     }
 

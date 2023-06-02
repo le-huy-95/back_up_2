@@ -19,7 +19,7 @@ const Warehouse_staff = (props) => {
     const [listProjectbyUsernameStaffWarehouse, setlistProjectbyUsernameStaffWarehouse] = useState([])
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [currentLimit, setCurrentLimit] = useState(6)
+    const [currentLimit, setCurrentLimit] = useState(7)
     const [isSearch, SetIsSearch] = useState(false)
     const [totalPage, setTotalPage] = useState(0)
     const [showModal, setShowModal] = useState(false)
@@ -112,7 +112,7 @@ const Warehouse_staff = (props) => {
             }
             if (res.DT.totalPage > 0 && res.DT.dataProject.length > 0) {
                 let data = res.DT.dataProject
-                console.log("data", data)
+                console.log("res.DT", res.DT)
                 if (data) {
                     setListProjectbyStaffWarehouse(data)
                 }

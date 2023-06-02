@@ -9,10 +9,11 @@ import moment from "moment"
 
 
 const ModalViewNotification = (props) => {
+    let history = useHistory()
+
     const { show, handleShowNotificationModal } = props
     const { user } = React.useContext(UserContext);
     const [list, setList] = useState([])
-    let history = useHistory()
 
     const getALlListNotification = async () => {
         let res = await getAllNotificaltion(+user.account.shippingUnit_Id, user.account.phone)
@@ -101,26 +102,82 @@ const ModalViewNotification = (props) => {
                                                         </>
 
                                                     }
-                                                    {user?.account?.groupWithRound?.name === "Staff" && user.account.Position == "Nhân viên lấy hàng" && item.Change_content === "thay đổi thông tin đơn hàng" &&
+                                                    {user?.account?.groupWithRound?.name === "Staff" && item.Change_content === "thay đổi thông tin đơn hàng" &&
                                                         <>
-
-                                                            <span className='mx-3' >Đơn hàng </span>  <b>{item.Order}</b> mới cập nhật thông tin lấy hàng
-                                                            <br />
-                                                            <span className='time'>
-                                                                {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
-                                                            </span>
+                                                            <div>
+                                                                <span className='mx-3' >Đơn hàng </span>  <b>{item.Order}</b> đã cập nhật thông tin đơn hàng
+                                                                <br />
+                                                                <span className='time'>
+                                                                    {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
+                                                                </span>
+                                                            </div>
                                                             <hr />
 
                                                         </>
                                                     }
-                                                    {user?.account?.groupWithRound?.name === "Staff" && user.account.Position == "Nhân viên lấy hàng" && item.Change_content === "thêm mới" &&
+                                                    {user?.account?.groupWithRound?.name === "Staff" && item.Change_content === "thêm mới" &&
                                                         <>
+                                                            <div>
+                                                                <span className='mx-3'> Đơn hàng</span>  <b>{item.Order}</b> {item.Change_content === "thêm mới" && `mới được tạo `}
+                                                                <br />
+                                                                <span className='time'>
+                                                                    {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
+                                                                </span>
+                                                            </div>
+                                                            <hr />
 
-                                                            <span className='mx-3'> Đơn hàng</span>  <b>{item.Order}</b> {item.Change_content === "thêm mới" && `mới được tạo `}
-                                                            <br />
-                                                            <span className='time'>
-                                                                {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
-                                                            </span>
+                                                        </>
+                                                    }
+                                                    {user?.account?.groupWithRound?.name === "Staff" && item.Change_content === "thay đổi thông tin  người nhận" &&
+                                                        <>
+                                                            <div>
+                                                                <span className='mx-3'> Đơn hàng</span>  <b>{item.Order}</b> đã cập nhật thông tin người nhận
+                                                                <br />
+                                                                <span className='time'>
+                                                                    {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
+                                                                </span>
+                                                            </div>
+                                                            <hr />
+
+                                                        </>
+                                                    }
+                                                    {user?.account?.groupWithRound?.name === "Staff" && item.Change_content === "thay đổi địa chỉ  người nhận" &&
+                                                        <>
+                                                            <div>
+                                                                <span className='mx-3'> Đơn hàng</span>  <b>{item.Order}</b> đã cập nhật thông tin địa chỉ giao hàng
+                                                                <br />
+                                                                <span className='time'>
+                                                                    {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
+                                                                </span>
+                                                            </div>
+                                                            <hr />
+
+                                                        </>
+                                                    }
+                                                    {user?.account?.groupWithRound?.name === "Staff" && item.Change_content === "thay đổi địa chỉ người bán" &&
+                                                        <>
+                                                            <div>
+                                                                <span className='mx-3'> Đơn hàng</span>  <b>{item.Order}</b> đã cập nhật thông tin địa chỉ lấy hàng
+                                                                <br />
+                                                                <span className='time'>
+                                                                    {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
+                                                                </span>
+                                                            </div>
+                                                            <hr />
+
+                                                        </>
+                                                    }
+                                                    {user?.account?.groupWithRound?.name === "Staff" && item.Change_content === "người tạo vừa chat" &&
+                                                        <>
+                                                            <div>
+                                                                <span className='mx-3'> Đơn hàng</span>  <b>{item.Order}</b> vừa có tin nhắn mới
+                                                                <br />
+                                                                <span className='time'>
+                                                                    {moment(`${item.createdAt}`).format("DD/MM/YYYY HH:mm:ss")}
+                                                                </span>
+                                                            </div>
+                                                            <hr />
+
                                                         </>
                                                     }
 
@@ -139,7 +196,7 @@ const ModalViewNotification = (props) => {
                         </div>
 
                     </div>
-                </div>
+                </div >
 
             </Modal >
         </>

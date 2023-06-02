@@ -30,7 +30,7 @@ const DeliveryNostatus = (props) => {
             SetIsSearch(true)
             let res = await getDataSearchByEmplyer(data, user.account.Position, +user.account.shippingUnit_Id)
             if (res && +res.EC === 0) {
-                let data = res.DT.filter(item => item.statusDeliveryId === 0)
+                let data = res.DT.filter(item => item.statuswarehouseId === 2 && item.statusDeliveryId === 0)
 
                 setListProjectSearch(data)
             }
@@ -71,8 +71,9 @@ const DeliveryNostatus = (props) => {
 
         let res = await getDataSortByDelivery(+user.account.shippingUnit_Id, 0)
         if (res && +res.EC === 0) {
+            let data = res.DT.filter(item => item.statuswarehouseId === 2 && item.statusDeliveryId === 0)
 
-            setListProjectbyStaffDelivey(res.DT)
+            setListProjectbyStaffDelivey(data)
         }
     }
 

@@ -13,11 +13,9 @@ import _, { debounce } from "lodash"
 import { Link, NavLink, useHistory } from "react-router-dom"
 import * as XLSX from 'xlsx';
 import { Bars } from 'react-loader-spinner'
-import { ThemeContext } from "../../contexApi/ThemeContext"
 
 const Users = (props) => {
     let history = useHistory()
-    const { color } = React.useContext(ThemeContext);
 
     const [listUser, setListUser] = useState([])
     const [listUserlenght, setListUserlenght] = useState([])

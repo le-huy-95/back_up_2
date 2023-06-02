@@ -6,19 +6,19 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import "font-awesome/css/font-awesome.min.css"
 import { UserProvider } from "./contexApi/UserContext"
 import SimpleReactLightbox from 'simple-react-lightbox'
-import { ThemeProvider } from "./contexApi/ThemeContext"
+import { NotificationProvider } from "./contexApi/NotificationContext"
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider>
-    <UserProvider>
-      <SimpleReactLightbox>
-        <App />
-      </SimpleReactLightbox>
+    <NotificationProvider>
+      <UserProvider>
+        <SimpleReactLightbox>
+          <App />
+        </SimpleReactLightbox>
 
-    </UserProvider>
-    </ThemeProvider>
+      </UserProvider>
+    </NotificationProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

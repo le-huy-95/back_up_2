@@ -48,7 +48,8 @@ const Delivery_staff = (props) => {
             SetIsSearch(true)
             let res = await getDataSearchByEmplyer(data, user.account.Position, +user.account.shippingUnit_Id)
             if (res && +res.EC === 0) {
-                setListProjectSearch(res.DT)
+                let data = res.DT.filter(item => item.statuswarehouseId === 2)
+                setListProjectSearch(data)
             }
 
         } else {
@@ -382,7 +383,7 @@ const Delivery_staff = (props) => {
                                                         })
                                                         :
                                                         <tr class="table-danger">
-                                                            <td colSpan={15}>
+                                                            <td colSpan={17}>
                                                                 <div className='d-flex align-item-center justify-content-center'>
 
                                                                     <h5> Đơn hàng  đã được xử lý hết và chưa phát sinh đơn hàng mới</h5>
@@ -551,7 +552,7 @@ const Delivery_staff = (props) => {
                                                         })
                                                         :
                                                         <tr class="table-info">
-                                                            <td colSpan={15}>
+                                                            <td colSpan={17}>
                                                                 <div className='d-flex align-item-center justify-content-center'>
 
                                                                     <h5> Bạn chưa nhận đơn hàng nào </h5>
